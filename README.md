@@ -46,7 +46,8 @@ $ cd django-datta-able-pro
 This is required because the project has a private REPO dependency: `github.com/app-generator/priv-django-admin-datta-pro`
 
 ```bash
-$ export GITHUB_TOKEN='TOKEN_HERE'  # for Linux, Mac
+$ export GITHUB_TOKEN='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'  # for Linux, Mac
+#'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'
 $ set GITHUB_TOKEN='TOKEN_HERE'     # Windows CMD
 $ $env:GITHUB_TOKEN = 'TOKEN_HERE'  # Windows powerShell 
 ```

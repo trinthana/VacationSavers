@@ -1,0 +1,132 @@
+{% load i18n static admin_datta %}
+
+<ul class="nav pcoded-inner-navbar ">
+    {% if request.user.is_superuser %}
+    <li class="nav-item pcoded-menu-caption">
+      <label>Navigation</label>
+    </li>
+    <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item pcoded-hasmenu">
+      <a href="#" class="nav-link"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span
+          class="pcoded-mtext">Dashboard</span></a>
+      <ul class="pcoded-submenu">
+        <li><a href="{% url 'admin:index' %}">Default</a></li>
+      </ul>
+    </li>
+  {% endif %}
+
+  {% if not request.user.is_authenticated %}
+    <li class="nav-item pcoded-menu-caption">
+      <label>Navigation</label>
+    </li>
+    <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item pcoded-hasmenu">
+      <a href="#" class="nav-link"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span
+          class="pcoded-mtext">Dashboard</span></a>
+      <ul class="pcoded-submenu">
+        <li><a href="{% url 'index' %}">Default</a></li>
+      </ul>
+    </li>
+    <li
+      data-username="Authentication Sign up Sign in reset password Change password Personal information profile settings map form subscribe"
+      class="nav-item pcoded-hasmenu"
+    >
+      <a href="#" class="nav-link"><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span
+          class="pcoded-mtext">Authentication</span><span class="pcoded-badge label label-danger">New</span></a>
+      <ul class="pcoded-submenu">
+        <li><a href="{% url 'login_v1' %}">Sign IN</a></li>
+        <li><a href="{% url 'register_v1' %}">Sign UP</a></li>
+      </ul>
+    </li>
+  {% endif %}
+
+
+  
+  {% if request.user.is_authenticated %}
+  <div class="navbar-content scroll-div ">
+    <ul class="nav pcoded-inner-navbar ">
+      <li class="nav-item pcoded-menu-caption">
+        <label>Travel</label>
+      </li>
+      <li data-username="Tour TourRadar" class="nav-item pcoded-hasmenu">
+        <a href="#" class="nav-link">
+          <span class="pcoded-micon">
+            <i class="fas fa-suitcase"></i>
+          </span>
+          <span class="pcoded-mtext">Tours</span>
+        </a>
+        <ul class="pcoded-submenu">
+          <li><a href="/tour-radar/">TourRadar</a></li>
+        </ul>
+      </li>
+      <li data-username="Flight Smartfares" class="nav-item pcoded-hasmenu">
+        <a href="#" class="nav-link">
+          <span class="pcoded-micon">
+            <i class="fas fa-plane"></i>
+          </span>
+          <span class="pcoded-mtext">Flights</span>
+        </a>
+        <ul class="pcoded-submenu">
+          <li><a href="/flight-smartfares/">Smartfares</a></li>
+        </ul>
+      </li>
+      <li data-username="Hotels Bookings AirBnB VacationRentals" class="nav-item">
+        <a href="" class="nav-link">
+          <span class="pcoded-micon">
+            <i class="feather icon-aperture"></i>
+          </span>
+          <span class="pcoded-mtext">Hotels</span>
+        </a>
+      </li>
+      <li data-username="Cars Rental" class="nav-item">
+        <a href="" class="nav-link">
+          <span class="pcoded-micon">
+            <i class="fas fa-car"></i>
+          </span>
+          <span class="pcoded-mtext">Cars</span>
+        </a>
+      </li>
+{% endif %}
+  
+{% admin_get_menu as app_list %}
+{% if app_list and request.user.is_superuser %}
+    {% for app in app_list %}
+        {% if app.has_perms and not app.pinned %}
+          <li class="nav-item pcoded-hasmenu">
+            <a  href="#" class="nav-link">
+              <span class="pcoded-micon"><i class="{% if app.icon %} {{ app.icon }} {% else %} feather icon-home {% endif %}"></i></span>
+              <span class="pcoded-mtext">{{ app.label|slice:15 }}{% if app.label|length > 15 %}..{% endif %}</span>
+            </a>
+            {% if app.models %}
+              <ul class="pcoded-submenu">
+                {% for model in app.models %}
+                  {% if model.url %}
+                    <li>
+                      <a href="{{ model.url }}">{{ model.label }}</a>
+                    </li>
+                  {% else %}
+                    <li class="nav-item list-unstyled">{{ model.label }}</li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </li>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+<li class="nav-item pcoded-menu-caption">
+    <label>Resources</label>
+  </li>
+  <li data-username="Need Support" class="nav-item">
+    <a href="" class="nav-link" target="_blank">
+      <span class="pcoded-micon">
+        <i class="feather icon-download"></i>
+      </span>
+      <span class="pcoded-mtext">Download</span></a>
+  </li>    
+  <li data-username="Need Support" class="nav-item">
+    <a href="" class="nav-link" target="_blank">
+      <span class="pcoded-micon">
+        <i class="feather icon-help-circle"></i>
+      </span>
+      <span class="pcoded-mtext">Suport</span></a>
+  </li>  
+</ul>

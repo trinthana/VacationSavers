@@ -1,0 +1,19 @@
+{% load static admin_datta %}
+
+<!-- [ navigation menu ] start -->
+<nav class="pcoded-navbar menupos-fixed">
+  <div class="navbar-wrapper ">
+		<div class="navbar-brand header-logo">
+			<a href="/" class="b-brand">
+				<div>
+					<img alt="VacationSavers.com" style="width: 100%" src="{% static 'assets/images/logo.svg' %}"></img>
+				</div>
+			</a>
+			<a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
+		</div>
+    <div class="navbar-content scroll-div ">
+      {% include 'includes/menu-list.html' %}
+    </div>
+  </div>
+</nav>
+<!-- [ navigation menu ] end -->
