@@ -16,7 +16,7 @@ def index(request):
     # Page from the theme 
     return render(request, 'pages/index.html')
 
-@login_required(login_url="/login/")
+@login_required(login_url="/accounts/login/")
 def tourradar(request):
     context = {
     'parent': 'Tours',
@@ -26,7 +26,7 @@ def tourradar(request):
     # Page from the theme 
     return render(request, 'pages/tour-radar.html', context)
 
-@login_required(login_url="/login/")
+@login_required(login_url="/accounts/login/")
 def smartfares(request):
     context = {
     'parent': 'Flights',
