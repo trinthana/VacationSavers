@@ -2,6 +2,7 @@
 
 <ul class="nav pcoded-inner-navbar ">
     {% if request.user.is_superuser %}
+    <!--
     <li class="nav-item pcoded-menu-caption">
       <label>Navigation</label>
     </li>
@@ -11,7 +12,7 @@
       <ul class="pcoded-submenu">
         <li><a href="{% url 'admin:index' %}">Default</a></li>
       </ul>
-    </li>
+    </li>-->
   {% endif %}
 
   {% if not request.user.is_authenticated %}
