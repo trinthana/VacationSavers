@@ -95,7 +95,7 @@
                                 <thead>
                                     <tr>
                                         <th>Timestamp</th>
-                                        <th>Action</th>
+                                        <th>IP</th>
                                         <th>Changes</th>
                                     </tr>
                                 </thead>
@@ -103,11 +103,11 @@
                                     {% for log_entry in auditlogs %}
                                         <tr>
                                             <td>{{ log_entry.timestamp }}</td>
-                                            <td>{{ log_entry.action }}</td>
+                                            <td>{{ log_entry.remote_addr }}</td>
                                             <td>
                                                 <ul>
                                                     {% for change in log_entry.changes %}
-                                                        <li>{{ change.field }}: {{ change.old }} to {{ change.new }}</li>
+                                                        <li>{{ log_entry.changes_display_dict }} </li>
                                                     {% endfor %}
                                                 </ul>
                                             </td>
@@ -160,7 +160,8 @@
             <div class="tab-pane fade" id="user-set-passwort" role="tabpanel"
                 aria-labelledby="user-set-passwort-tab">
                 <div class="card">
-                    <form id="changepass-form" action="/change_password/" method="post">{% csrf_token %}
+                    <form id="changepass-form" action="{% url 'change_password' %}" method="post">
+                    {% csrf_token %}
                     <div class="card-header">
                         <h5>
                             <i class="feather icon-shield text-c-blue wid-20"></i>
