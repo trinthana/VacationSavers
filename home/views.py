@@ -1,7 +1,7 @@
 from django import template
-from django.http import HttpResponse
-from django.contrib.auth import logout, update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.contrib.auth import logout, update_session_auth_hash, authenticate, login
+from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 from django.template import loader
 from django.urls import reverse
 from auditlog.models import LogEntry
-
+from . import helpers
 
 # Create your views here.
 @login_required(login_url="/accounts/login/")
@@ -89,7 +89,7 @@ def profile(request, **kwargs):
     #    return JsonResponse({'errors': str( form.errors )}, status=400)
 
 @login_required(login_url="/accounts/login/")
-def change_password(request):
+def change_password2(request):
     if request.method == 'POST':
 
         form = PasswordChangeForm(request.user, request.POST)
@@ -97,9 +97,10 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user)  # Update session to prevent reauthentication
             messages.success(request, 'Your password was successfully updated!')
-            return redirect('change_password')
+            return redirect('password_change_done')
         else:
             messages.error(request, 'Please correct the error below.')
+            return redirect('change_password')
     else:
         form = PasswordChangeForm(request.user)
 
@@ -118,3 +119,30 @@ def change_password(request):
         'auditlogs': log_entries,
         'form': form
     })
+
+def change_password(request, **kwargs):
+
+    form = SetPasswordForm(user=request.user, data=request.POST)
+    if form.is_valid():
+        user = form.save()
+        update_session_auth_hash(request, user)
+        message = 'Password successfully changed.'
+        status = 200
+        return redirect('password_change_done')
+    else:
+        message = form.errors
+        status = 400
+        return redirect('change_password')
+    return JsonResponse({
+        'message': message
+    }, status=status)
+
+
+def delete_account(request, **kwargs):
+    result, message = helpers.delete_user(request.user)
+    if not result:
+        return JsonResponse({
+            'errors': message
+        }, status=400)
+    logout(request)
+    return HttpResponseRedirect('/login/')

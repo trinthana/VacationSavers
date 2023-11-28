@@ -9,7 +9,9 @@
           <h5 class="m-b-10">{{ segment }}</h5>
         </div>
         <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'index' %}"><i class="feather icon-home"></i></a></li>
+          <li class="breadcrumb-item">
+            <a href="{% url 'index' %}"><i class="feather icon-home"></i></a>
+          </li>
           <li class="breadcrumb-item"><a href="#!">{{ parent }}</a></li>
           <li class="breadcrumb-item"><a href="#!">{{ segment }}</a></li>
         </ul>

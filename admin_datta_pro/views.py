@@ -187,66 +187,6 @@ def user_profile(request):
   return render(request, 'pages/navigation/user-profile.html', context)
 
 @login_required(login_url='/accounts/login/')
-def profile(request, **kwargs):
-
-    context = {
-      'parent': 'user',
-      'segment': 'user_profile'
-    }
-    if request.method == 'GET':
-        user = CustomUser.objects.get(username=request.user.username)
-        social_acc = user.socialaccount_set.first()
-
-        if social_acc:
-            user.image = social_acc.get_avatar_url()
-
-        return render(request, 'accounts/user-profile.html', context={
-            'user': {
-                'fullname': user.fullname,
-                'bio': user.bio,
-                'email': user.email,
-                'phone': user.phone,
-                'website': user.website,
-                'zipcode': user.zipcode,
-                'address': user.address,
-                'image': user.image,
-                'username': user.username,
-                'login_with_oauth': social_acc is not None,
-                'provider': social_acc.provider if social_acc is not None else None
-            }
-        })
-
-    if request.method == 'POST':
-
-        form = EditProfileForm(request.POST, instance=CustomUser.objects.get(username=kwargs.get('username', request.user.username)))
-
-        # Validate form
-        if form.is_valid():
-
-            user  = form.save()
-            image = request.FILES.get('avatar-input', None)
-
-            if cfg_FTP_UPLOAD() and image:
-
-                try:
-                    avatar_url = helpers.upload(user.username, image)
-                    user.image = os.getenv("upload_url") + '/'.join(avatar_url.split("/")[-2:])
-                    user.save()
-                except Exception as e:
-                    print(str(e))
-                    print("There is a problem in connection with FTP")
-                    return JsonResponse({
-                        'errors': 'There is a problem in connection with FTP'
-                    }, status=400)
-
-            # All good        
-            return JsonResponse({}, status=200)
-
-        # We have validation errors,
-        return JsonResponse({'errors': str( form.errors )}, status=400)
-
-
-@login_required(login_url='/accounts/login/')
 def social_profile(request):
   context = {
     'parent': 'user',

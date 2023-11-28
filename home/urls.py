@@ -7,7 +7,7 @@ urlpatterns = [
     path('tour-radar/', views.tourradar, name='radar'),
     path('flight-smartfares/', views.smartfares, name='smartfares'),
     path('user/profile/', views.profile, name='user_profile'),
-    path('change_password/', views.change_password, name='change_password'),
+    path('change_password/', views.change_password, name='changepassword'),
 
     # Matches any html file
     #re_path(r'^.*\.*', views.pages, name='pages'),
