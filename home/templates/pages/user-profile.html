@@ -49,11 +49,6 @@
                         {{ user.email }}
                     </a>
                 </li>
-                <li class="list-group-item border-bottom-0">
-                    <span class="f-w-500"><i
-                            class="feather icon-globe m-r-10"></i>Website</span>
-                    <span class="float-end">{{ user.website }}</span>
-                </li>
             </ul>
             <div class="card-body">
                 <br />    
@@ -223,55 +218,42 @@
         <h5 class="modal-title" id="exampleModalLabel">Edit profile</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-        <form class="form">{% csrf_token %}
-      <div class="modal-body" id="form">
-          <div class="d-flex flex-wrap p-2 gap-3">
-              {% if user.login_with_oauth and user.email == '' %}
-                  <div class="alert alert-warning alert-dismissible fade show col-12" role="alert">
-                      Please add your email address.
-                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                {% endif %}
-
-              <div class="d-flex flex-column">
-                  <img src="{% if user.image%}{{user.image}}{% else %}{% static 'assets/images/user/avatar-5.jpg' %}{% endif %}" class="img-radius img-fluid wid-80" id="avatar-img" />
-                  <input type="file" id="avatar-input" name="avatar-input" accept="image/*">
-              </div>
-              <div>
-                  <label for="fullname">FullName</label>
-                  <input class="form-control" id="fullname" name="fullname" />
-              </div>
-              <div>
-                  <label for="bio">Bio</label>
-                  <input class="form-control" id="bio" name="bio" />
-              </div>
-              <div>
-                  <label for="email">Email</label>
-                  <input  {% if not user.login_with_oauth or user.email %}readonly{% endif %} class="form-control" id="email" name="email" />
-              </div>
-              <div>
-                  <label for="phone">Phone</label>
-                  <input class="form-control" id="phone" name="phone" />
-              </div>
-              <div>
-                  <label for="website">Website</label>
-                  <input class="form-control" id="website" name="website" />
-              </div>
-              <div>
-                  <label for="zipcode">Zipcode</label>
-                  <input class="form-control" id="zipcode" name="zipcode" />
-              </div>
-              <div class="flex-grow-1">
-                  <label for="address">Address</label>
-                  <input class="form-control" id="address" name="address" />
-              </div>
-          </div>
-      </div>
-        <div id="err_status" class="alert alert-danger m-3 p-2 d-none"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-primary submit-btn" value="Save Changes">
-      </div>
+        <form class="form" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="modal-body" id="form">
+                <div class="d-flex flex-wrap p-2 gap-3">
+                    {% if user.login_with_oauth and user.email == '' %}
+                        <div class="alert alert-warning alert-dismissible fade show col-12" role="alert">
+                            Please add your email address.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endif %}
+                    <!--
+                    <div class="d-flex flex-column">
+                        <img src="{% if user.image%}{{user.image}}{% else %}{% static 'assets/images/user/avatar-5.jpg' %}{% endif %}" class="img-radius img-fluid wid-80" id="avatar-img" />
+                        <input type="file" id="avatar-input" name="avatar-input" accept="image/*">
+                    </div>
+                    -->
+                    <div>
+                        <label for="first_name">First Name</label>
+                        <input class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}" />
+                    </div>
+                    <div>
+                        <label for="last_name">Last Name</label>
+                        <input class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}" />
+                    </div>
+                    <div>
+                        <label for="email">Email</label>
+                        <input  {% if not user.login_with_oauth or user.email %}readonly{% endif %} class="form-control" id="email" name="email"  value="{{ user.email }}" />
+                    </div>
+                </div>
+            </div>
+            <div id="err_status" class="alert alert-danger m-3 p-2 d-none"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary submit-btn" value="Save Changes">
+            </div>
         </form>
     </div>
   </div>

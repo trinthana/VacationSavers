@@ -10,13 +10,17 @@ from django.template import loader
 from django.urls import reverse
 from auditlog.models import LogEntry
 from . import helpers
+from .forms import *
 
 # Create your views here.
 @login_required(login_url="/accounts/login/")
 def index(request):
 
     # Page from the theme 
-    return render(request, 'pages/index.html')
+    if request.user.is_authenticated:
+        return render(request, 'pages/index.html')
+    else:
+        return render(request, 'pages/landing.html')
 
 @login_required(login_url="/accounts/login/")
 def tourradar(request):
@@ -59,16 +63,16 @@ def profile(request, **kwargs):
             'auditlogs': log_entries
         })
 
-    #if request.method == 'POST':
+    if request.method == 'POST':
+        user_profile, created = UserProfile.objects.get_or_create(user=request.user)
 
-    #    form = EditProfileForm(request.POST, instance=CustomUser.objects.get(username=kwargs.get('username', request.user.username)))
+        form = UserProfileForm(request.POST, instance=user_profile)
 
         # Validate form
-    #    if form.is_valid():
+        if form.is_valid():
 
-    #        user  = form.save()
-    #        image = request.FILES.get('avatar-input', None)
-
+            user  = form.save()
+            return redirect('user_profile')
     #        if cfg_FTP_UPLOAD() and image:
 
     #            try:
@@ -83,10 +87,25 @@ def profile(request, **kwargs):
     #                }, status=400)
 
             # All good        
-    #        return JsonResponse({}, status=200)
 
+        else:
+            form = UserProfileForm(instance=user_profile)
+
+        log_entries = LogEntry.objects.filter(object_repr=current_user.username ).order_by('-timestamp')[:10]
         # We have validation errors,
-    #    return JsonResponse({'errors': str( form.errors )}, status=400)
+        return render(request, 'pages/user-profile.html', context={
+            'parent': 'Users',
+            'segment': 'Profile',
+            'user': {
+                'fullname': current_user.first_name + " " + current_user.last_name,
+                'first_name': current_user.first_name,
+                'last_name': current_user.last_name,
+                'email': current_user.email,
+                'username': current_user.username,
+                'form': form,
+            },
+            'auditlogs': log_entries
+        })
 
 @login_required(login_url="/accounts/login/")
 def change_password2(request):
