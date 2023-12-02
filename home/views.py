@@ -13,7 +13,7 @@ from . import helpers
 from .forms import *
 
 # Create your views here.
-@login_required(login_url="/accounts/login/")
+#@login_required(login_url="/accounts/login/")
 def index(request):
 
     # Page from the theme 
