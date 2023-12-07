@@ -10,7 +10,8 @@ from django.template import loader
 from django.urls import reverse
 from auditlog.models import LogEntry
 from . import helpers
-from .forms import *
+from app.forms import *
+from app.models import *
 
 # Create your views here.
 #@login_required(login_url="/accounts/login/")
@@ -47,6 +48,11 @@ def profile(request, **kwargs):
 
     if request.method == 'GET':
         current_user = request.user
+        try:
+            user_profile = request.user.userprofile
+        except UserProfile.DoesNotExist:
+            user_profile = UserProfile(user=request.user)
+
         log_entries = LogEntry.objects.filter(object_repr=current_user.username ).order_by('-timestamp')[:10]
         
 
@@ -58,38 +64,40 @@ def profile(request, **kwargs):
                 'first_name': current_user.first_name,
                 'last_name': current_user.last_name,
                 'email': current_user.email,
-                'username': current_user.username,
+                'address': user_profile.address,
+                'postal_code': user_profile.postal_code,
+                'phone': user_profile.phone,
+                'image': user_profile.image,
+                'subscribed_package': user_profile.subscribed_package,
+                'subscribed_date': user_profile.subscribed_date,
+                'expired_date': user_profile.expired_date,
             },
             'auditlogs': log_entries
         })
 
     if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        if user_form.is_valid():
+            user_form.save()
+        
         user_profile, created = UserProfile.objects.get_or_create(user=request.user)
 
-        form = UserProfileForm(request.POST, instance=user_profile)
+        profile_form = UserProfileForm(request.POST, instance=user_profile)
 
         # Validate form
-        if form.is_valid():
+        if profile_form.is_valid():
 
-            user  = form.save()
+            profile_form.save()
+            
             return redirect('user_profile')
-    #        if cfg_FTP_UPLOAD() and image:
-
-    #            try:
-    #                avatar_url = helpers.upload(user.username, image)
-    #                user.image = os.getenv("upload_url") + '/'.join(avatar_url.split("/")[-2:])
-    #                user.save()
-    #            except Exception as e:
-    #                print(str(e))
-    #                print("There is a problem in connection with FTP")
-    #                return JsonResponse({
-    #                    'errors': 'There is a problem in connection with FTP'
-    #                }, status=400)
-
             # All good        
 
         else:
-            form = UserProfileForm(instance=user_profile)
+            current_user = request.user
+            try:
+                user_profile = request.user.userprofile
+            except UserProfile.DoesNotExist:
+                user_profile = UserProfile(user=request.user)
 
         log_entries = LogEntry.objects.filter(object_repr=current_user.username ).order_by('-timestamp')[:10]
         # We have validation errors,
@@ -101,43 +109,17 @@ def profile(request, **kwargs):
                 'first_name': current_user.first_name,
                 'last_name': current_user.last_name,
                 'email': current_user.email,
-                'username': current_user.username,
-                'form': form,
+                'address': user_profile.address,
+                'postal_code': user_profile.postal_code,
+                'phone': user_profile.phone,
+                'image': user_profile.image,
+                'subscribed_package': user_profile.subscribed_package,
+                'subscribed_date': user_profile.subscribed_date,
+                'expired_date': user_profile.expired_date,
             },
             'auditlogs': log_entries
         })
 
-@login_required(login_url="/accounts/login/")
-def change_password2(request):
-    if request.method == 'POST':
-
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)  # Update session to prevent reauthentication
-            messages.success(request, 'Your password was successfully updated!')
-            return redirect('password_change_done')
-        else:
-            messages.error(request, 'Please correct the error below.')
-            return redirect('change_password')
-    else:
-        form = PasswordChangeForm(request.user)
-
-    current_user = request.user
-    log_entries = LogEntry.objects.filter(object_repr=current_user.username ).order_by('-timestamp')[:10]
-    return render(request, 'pages/user-profile.html', context={
-        'parent': 'Users',
-        'segment': 'Profile',
-        'user': {
-            'fullname': current_user.first_name + " " + current_user.last_name,
-            'first_name': current_user.first_name,
-            'last_name': current_user.last_name,
-            'email': current_user.email,
-            'username': current_user.username,
-        },
-        'auditlogs': log_entries,
-        'form': form
-    })
 
 def change_password(request, **kwargs):
 
