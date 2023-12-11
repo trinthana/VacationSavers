@@ -13,9 +13,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os, random, string
 from pathlib import Path
 from dotenv import load_dotenv
-from django.conf.urls.static import static
-from django.conf import settings
-
 
 load_dotenv()  # take environment variables from .env.
 
