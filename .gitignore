@@ -8,6 +8,8 @@
 build/
 env
 staticfiles
+/media/
+/media/profile_photos/
 
 #src
 *.sqlite*
