@@ -1,0 +1,79 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+	<!-- [ Main Content ] start -->
+	<div class="row">
+		<!-- [ form-element ] start -->
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header">
+					<h5>Change Package Plan </h5>
+				</div>
+				<div class="card-body">
+					<form>
+						<div class="form-group">
+							<label class="form-label">Choose Plan :</label>
+							<div class="row">
+								<div class="col-lg-4">
+									<div class="border card p-3">
+										<div class="form-check custom-radio">
+											<input type="radio" name="radio1" class="form-check-input input-primary"
+												id="customCheckdef1">
+											<label class="form-check-label d-block" for="customCheckdef1">
+												<span>
+													<span class="h5 d-block"><strong class="float-end">$&nbsp;5/month</strong>Premier Saving Plan</span>
+													<span class="f-12 text-muted">
+														(&nbsp;or save with $49/year&nbsp;)
+													</span>
+												</span>
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4">
+									<div class="border card p-3">
+										<div class="form-check custom-radio">
+											<input type="radio" name="radio1" class="form-check-input input-primary"
+												id="customCheckdef2">
+											<label class="form-check-label d-block" for="customCheckdef2">
+												<span>
+													<span class="h5 d-block"><strong class="float-end">$&nbsp;15/month</strong>Elite Savings Plan</span>
+													<span class="f-12 text-muted">
+														(&nbsp;or port for the yearly plan at $149&nbsp;)
+													</span>
+												</span>
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4">
+									<div class="border card p-3">
+										<div class="form-check custom-radio">
+											<input type="radio" name="radio1" class="form-check-input input-primary"
+												id="customCheckdef2">
+											<label class="form-check-label d-block" for="customCheckdef2">
+												<span>
+													<span class="h5 d-block"><strong class="float-end">$&nbsp;12.46</strong>Ultimate Savings Bundle</span>
+													<span class="f-12 text-muted">
+														(&nbsp;or $399 for an entire year!&nbsp;)
+													</span>
+												</span>
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<hr>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+		<!-- [ form-element ] end -->
+	</div>
+	<!-- [ Main Content ] end -->
+
+{% endblock content %}

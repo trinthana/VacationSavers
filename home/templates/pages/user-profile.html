@@ -261,7 +261,7 @@
                     </div>
                     <div>
                         <label for="phone">Phone</label>
-                        <input  class="form-control" id="phone" name="phone"  value="{{ user.phone }}" />
+                        <input  type="text"  class="form-control mob_no" data-mask="9999-999-999" id="phone" name="phone"  value="{{ user.phone }}" />
                     </div>
                     <div class="flex-grow-1">
                         <label for="postal_code">Postal Code</label>
@@ -288,6 +288,10 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+<!-- Input mask Js -->
+<script src="{% static 'assets/js/plugins/imask.min.js' %}"></script>
+<!-- form-picker-custom Js -->
+<script src="{% static 'assets/js/pages/form-masking-custom.js' %}"></script>
 
 <script src="{% static 'assets/js/data.js' %}"></script>
 <script>

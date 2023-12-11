@@ -67,7 +67,7 @@ def profile(request, **kwargs):
         
 
         return render(request, 'pages/user-profile.html', context={
-            'parent': 'Users',
+            'parent': 'Account',
             'segment': 'Profile',
             'user': {
                 'username': current_user.username,
@@ -116,7 +116,7 @@ def profile(request, **kwargs):
         log_entries = LogEntry.objects.filter(object_repr=current_user.username ).order_by('-timestamp')[:10]
         # We have validation errors,
         return render(request, 'pages/user-profile.html', context={
-            'parent': 'Users',
+            'parent': 'Account',
             'segment': 'Profile',
             'user': {
                 'username': current_user.username,
@@ -162,3 +162,13 @@ def delete_account(request, **kwargs):
         }, status=400)
     logout(request)
     return HttpResponseRedirect('/login/')
+
+@login_required(login_url="/accounts/login/")
+def change_plan(request):
+    context = {
+    'parent': 'Account',
+    'segment': 'Change Plan'
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/change-plan.html', context)

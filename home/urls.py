@@ -8,6 +8,7 @@ urlpatterns = [
     path('tour-radar/', views.tourradar, name='radar'),
     path('flight-smartfares/', views.smartfares, name='smartfares'),
     path('user/profile/', views.profile, name='user_profile'),
+    path('change_plan/', views.change_plan, name='change_plan'),
     path('change_password/', views.change_password, name='changepassword'),
 
     # Matches any html file
