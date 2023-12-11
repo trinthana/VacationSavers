@@ -24,6 +24,16 @@ def index(request):
         return render(request, 'pages/landing.html')
 
 @login_required(login_url="/accounts/login/")
+def timefortickets(request):
+    context = {
+    'parent': 'Tickets',
+    'segment': 'Time for Tickets'
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/ticket-timefortickets.html', context)
+
+@login_required(login_url="/accounts/login/")
 def tourradar(request):
     context = {
     'parent': 'Tours',
@@ -60,6 +70,7 @@ def profile(request, **kwargs):
             'parent': 'Users',
             'segment': 'Profile',
             'user': {
+                'username': current_user.username,
                 'fullname': current_user.first_name + " " + current_user.last_name,
                 'first_name': current_user.first_name,
                 'last_name': current_user.last_name,
@@ -67,10 +78,10 @@ def profile(request, **kwargs):
                 'address': user_profile.address,
                 'postal_code': user_profile.postal_code,
                 'phone': user_profile.phone,
-                'image': user_profile.image,
+                'image_file': user_profile.image_file,
                 'subscribed_package': user_profile.subscribed_package,
-                'subscribed_date': user_profile.subscribed_date,
-                'expired_date': user_profile.expired_date,
+                'subscribed_date': str(user_profile.subscribed_date or ''),
+                'expired_date': str(user_profile.expired_date or ''),
             },
             'auditlogs': log_entries
         })
@@ -82,17 +93,20 @@ def profile(request, **kwargs):
         
         user_profile, created = UserProfile.objects.get_or_create(user=request.user)
 
-        profile_form = UserProfileForm(request.POST, instance=user_profile)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
 
         # Validate form
         if profile_form.is_valid():
-
+            if 'image_file' in request.FILES:
+                profile_form.image_file = request.FILES['image_file']
+                print('Image = ', request.FILES['image_file'])
             profile_form.save()
             
             return redirect('user_profile')
             # All good        
 
         else:
+            print(profile_form.errors)
             current_user = request.user
             try:
                 user_profile = request.user.userprofile
@@ -105,6 +119,7 @@ def profile(request, **kwargs):
             'parent': 'Users',
             'segment': 'Profile',
             'user': {
+                'username': current_user.username,
                 'fullname': current_user.first_name + " " + current_user.last_name,
                 'first_name': current_user.first_name,
                 'last_name': current_user.last_name,
@@ -112,10 +127,10 @@ def profile(request, **kwargs):
                 'address': user_profile.address,
                 'postal_code': user_profile.postal_code,
                 'phone': user_profile.phone,
-                'image': user_profile.image,
+                'image_file': user_profile.image_file,
                 'subscribed_package': user_profile.subscribed_package,
-                'subscribed_date': user_profile.subscribed_date,
-                'expired_date': user_profile.expired_date,
+                'subscribed_date': str(user_profile.subscribed_date or ''),
+                'expired_date': str(user_profile.expired_date or ''),
             },
             'auditlogs': log_entries
         })

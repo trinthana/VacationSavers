@@ -101,7 +101,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-end profile-notification">
                         <div class="pro-head">
-                            <img src="{% if user.image %}{{user.image}}{% else %}
+                            <img src="/{% if request.user.userprofile.image_file %}{{ request.user.userprofile.image_file }}{% else %}
                                           {% static 'assets/images/user/avatar-5.jpg' %}
                                           {% endif %}" class="img-radius hei-40" alt="User-Profile-Image">
                             <span>

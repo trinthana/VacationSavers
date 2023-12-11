@@ -4,6 +4,7 @@ from home import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('ticket-timefortickets/', views.timefortickets, name='timefortickets'),
     path('tour-radar/', views.tourradar, name='radar'),
     path('flight-smartfares/', views.smartfares, name='smartfares'),
     path('user/profile/', views.profile, name='user_profile'),
@@ -12,3 +13,5 @@ urlpatterns = [
     # Matches any html file
     #re_path(r'^.*\.*', views.pages, name='pages'),
 ]
+
+

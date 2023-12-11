@@ -16,4 +16,4 @@ class UserProfileForm(forms.ModelForm):
     # email = forms.
     class Meta:
         model = UserProfile
-        fields = ['address', 'postal_code', 'phone', 'image', 'subscribed_package', 'subscribed_date', 'expired_date']
+        fields = ['address', 'postal_code', 'phone', 'image_file', 'subscribed_package', 'subscribed_date', 'expired_date']

@@ -19,9 +19,12 @@
                     <span class="badge badge-success">Pro</span>
                 </div>
                 <div class="media user-about-block align-items-center mt-0 mb-3">
+                    <div class="position-relative d-inline-block">
+                        <img src="/{% if user.image_file %}{{user.image_file }}{% else %}{% static 'assets/images/user/avatar-5.jpg' %}{% endif %}" alt="User Profile Photo" class="img-radius img-fluid wid-80" id="image" />
+                    </div>
                     <div class="media-body ms-3">
                         <h6 class="mb-1">
-                            {{ user.username }} {% if user.provider %} <span> (via {{ user.provider }}) </span>{% endif %}
+                            {{ user.username }} 
                         </h6>
                         <p class="mb-0 text-muted">
                             {{ user.fullname }}
@@ -32,22 +35,34 @@
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                    <span class="f-w-500"><i class="feather icon-user-check m-r-10"></i>First Name</span>
-                    <a href="mailto:{{ user.email }}" class="float-end text-body">
-                        {{ user.first_name }}
-                    </a>
-                </li>
-                <li class="list-group-item">
-                    <span class="f-w-500"><i class="feather icon-user-plus m-r-10"></i>Last Name</span>
-                    <a href="mailto:{{ user.email }}" class="float-end text-body">
-                        {{ user.last_name }}
-                    </a>
-                </li>
-                <li class="list-group-item">
                     <span class="f-w-500"><i class="feather icon-mail m-r-10"></i>Email</span>
                     <a href="mailto:{{ user.email }}" class="float-end text-body">
                         {{ user.email }}
                     </a>
+                </li>
+                <li class="list-group-item">
+                    <span class="f-w-500"><i class="feather icon-home m-r-10"></i>Address</span>
+                        <span class="float-end">{{ user.address }}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="f-w-500"><i class="feather icon-globe m-r-10"></i>Postal Code</span>
+                    <span class="float-end">{{ user.postal_code }}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="f-w-500"><i class="feather icon-phone m-r-10"></i>Phone Number</span>
+                    <span class="float-end">{{ user.phone }}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="f-w-500"><i class="feather icon-monitor m-r-10"></i>Package Plan</span>
+                    <span class="float-end">{{ user.subscribed_package }}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="f-w-500"><i class="feather icon-sunrise m-r-10"></i>Plan Start</span>
+                    <span class="float-end">{{ user.subscribed_date }}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="f-w-500"><i class="feather icon-sunset m-r-10"></i>Valid Until</span>
+                    <span class="float-end">{{ user.expired_date }}</span>
                 </li>
             </ul>
             <div class="card-body">
@@ -218,9 +233,8 @@
         <h5 class="modal-title" id="exampleModalLabel">Edit profile</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-        <form class="form" method="POST">
+        <form class="form" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
             <div class="modal-body" id="form">
                 <div class="d-flex flex-wrap p-2 gap-3">
                     {% if user.login_with_oauth and user.email == '' %}
@@ -229,12 +243,10 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     {% endif %}
-                    <!--
                     <div class="d-flex flex-column">
-                        <img src="{% if user.image%}{{user.image}}{% else %}{% static 'assets/images/user/avatar-5.jpg' %}{% endif %}" class="img-radius img-fluid wid-80" id="avatar-img" />
-                        <input type="file" id="avatar-input" name="avatar-input" accept="image/*">
+                        <img src="/{% if user.image_file %}{{user.image_file }}{% else %}{% static 'assets/images/user/avatar-5.jpg' %}{% endif %}" alt="User Profile Photo" class="img-radius img-fluid wid-80" id="image" />
+                        <input type="file" id="image_file" name="image_file" accept="image/*">
                     </div>
-                    -->
                     <div>
                         <label for="first_name">First Name</label>
                         <input class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}" />
@@ -245,7 +257,19 @@
                     </div>
                     <div>
                         <label for="email">Email</label>
-                        <input  {% if not user.login_with_oauth or user.email %}readonly{% endif %} class="form-control" id="email" name="email"  value="{{ user.email }}" />
+                        <input  class="form-control" id="email" name="email"  value="{{ user.email }}" />
+                    </div>
+                    <div>
+                        <label for="phone">Phone</label>
+                        <input  class="form-control" id="phone" name="phone"  value="{{ user.phone }}" />
+                    </div>
+                    <div class="flex-grow-1">
+                        <label for="postal_code">Postal Code</label>
+                        <input  class="form-control" id="postal_code" name="postal_code"  value="{{ user.postal_code }}" />
+                    </div>
+                    <div class="flex-grow-1">
+                        <label for="address">Address</label>
+                        <input  class="form-control" id="address" name="address"  value="{{ user.address }}" />
                     </div>
                 </div>
             </div>

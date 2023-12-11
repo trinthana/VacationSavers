@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser
+from django.utils import timezone
+
 
 class PackageChoices(models.TextChoices):     
     PREMIER = 'PREMIER', 'Premier Savings Plan'
@@ -38,11 +40,12 @@ class UserProfile(models.Model):
     user                = models.OneToOneField(User, on_delete=models.CASCADE)
     address             = models.TextField(default='', blank=True)
     postal_code         = models.CharField(max_length=10, default='', blank=True)
-    phone               = models.CharField(max_length=20,default='', blank=True)
-    image               = models.URLField(default='')
+    phone               = models.CharField(max_length=20, default='', blank=True)
+    image_file          = models.ImageField(upload_to='profile_photos/', null=True, blank=True)
     subscribed_package  = models.CharField(max_length=10, default='', blank=True, choices=PackageChoices.choices)
-    subscribed_date     = models.DateField(null=True)
-    expired_date        = models.DateField(null=True)
+    subscribed_date     = models.DateField(null=True, blank=True)
+    expired_date        = models.DateField(null=True, blank=True)
+    updated_datetime    = models.DateTimeField(default=timezone.now)
 
 class ApplicationToken(models.Model):
 
@@ -52,6 +55,7 @@ class ApplicationToken(models.Model):
     custom1             = models.TextField(default='', blank=True)
     custom2             = models.TextField(default='', blank=True)
     custom3             = models.TextField(default='', blank=True)
+    updated_datetime    = models.DateTimeField(default=timezone.now)
 
 class SubscriptionHistory(models.Model):
 
@@ -59,4 +63,5 @@ class SubscriptionHistory(models.Model):
     subscribed_package  = models.CharField(max_length=10, default='', blank=True, choices=PackageChoices.choices)
     subscribed_date     = models.DateField(null=True)
     expired_date        = models.DateField(null=True)
+    updated_datetime    = models.DateTimeField(default=timezone.now)
    
