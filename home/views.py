@@ -23,7 +23,6 @@ def index(request):
 
     # Page from the theme 
     if request.user.is_authenticated:
-        print(request.user.userprofile.subscribed_package)
         return render(request, 'pages/index.html', context)
     else:
         return render(request, 'pages/landing.html')
