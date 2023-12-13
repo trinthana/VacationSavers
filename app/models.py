@@ -5,7 +5,7 @@ from django.utils import timezone
 
 class PackageChoices(models.TextChoices):     
     PREMIER = 'PREMIER', 'Premier Savings Plan'
-    ELITE = 'ELITE', 'E;ite Savings Plan'
+    ELITE = 'ELITE', 'Elite Savings Plan'
     ULTIMATE = 'ULTIMATE', 'Ultimate Savings Bundle'
 
 class ApplicationChoices(models.TextChoices):     
@@ -47,6 +47,14 @@ class UserProfile(models.Model):
     expired_date        = models.DateField(null=True, blank=True)
     updated_datetime    = models.DateTimeField(default=timezone.now)
 
+class SubscriptionHistory(models.Model):
+
+    user                = models.OneToOneField(User, on_delete=models.CASCADE)
+    subscribed_package  = models.CharField(max_length=10, default='', blank=True, choices=PackageChoices.choices)
+    subscribed_date     = models.DateField(null=True)
+    expired_date        = models.DateField(null=True)
+    updated_datetime    = models.DateTimeField(default=timezone.now)
+
 class ApplicationToken(models.Model):
 
     user                = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -57,11 +65,3 @@ class ApplicationToken(models.Model):
     custom3             = models.TextField(default='', blank=True)
     updated_datetime    = models.DateTimeField(default=timezone.now)
 
-class SubscriptionHistory(models.Model):
-
-    user                = models.OneToOneField(User, on_delete=models.CASCADE)
-    subscribed_package  = models.CharField(max_length=10, default='', blank=True, choices=PackageChoices.choices)
-    subscribed_date     = models.DateField(null=True)
-    expired_date        = models.DateField(null=True)
-    updated_datetime    = models.DateTimeField(default=timezone.now)
-   

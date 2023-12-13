@@ -50,7 +50,7 @@
                 </li>
                 <li class="list-group-item">
                     <span class="f-w-500"><i class="feather icon-phone m-r-10"></i>Phone Number</span>
-                    <span class="float-end">{{ user.phone }}</span>
+                    <span class="float-end" class="form-control mob_no" data-mask="999-9999-999">{{ user.phone }}</span>
                 </li>
                 <li class="list-group-item">
                     <span class="f-w-500"><i class="feather icon-monitor m-r-10"></i>Package Plan</span>
@@ -261,7 +261,7 @@
                     </div>
                     <div>
                         <label for="phone">Phone</label>
-                        <input  type="text"  class="form-control mob_no" data-mask="9999-999-999" id="phone" name="phone"  value="{{ user.phone }}" />
+                        <input type="text" class="form-control mob_no" data-mask="999-9999-999" id="phone" name="phone"  value="{{ user.phone }}" />
                     </div>
                     <div class="flex-grow-1">
                         <label for="postal_code">Postal Code</label>
@@ -287,22 +287,13 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
+{% block extra_js %}
 <!-- Input mask Js -->
 <script src="{% static 'assets/js/plugins/imask.min.js' %}"></script>
-<!-- form-picker-custom Js -->
-<script src="{% static 'assets/js/pages/form-masking-custom.js' %}"></script>
 
 <script src="{% static 'assets/js/data.js' %}"></script>
 <script>
-
-    setStaticAddress('{% static 'assets');
-
-    setUser(
-        {{% for key, val in user.items %}
-            '{{ key }}': '{{ val }}',
-          {% endfor %}}
-    );
+    var regExpMask = IMask(document.querySelector('.mob_no'),{ mask:'000-000-0000'});
 
     function editData ()  {
         const array = ['username','provider' , 'login_with_oauth','image']
@@ -317,7 +308,7 @@
     document.getElementsByClassName('form')[0].onsubmit = (e) => {
         e.preventDefault()
 
-        fetch (`/user_profile/`, {
+        fetch (`/user/profile/`, {
             method: "POST",
             body: new FormData( document.getElementsByClassName('form')[0] ),
         })
@@ -403,7 +394,7 @@
             const alert = document.getElementById('deleteAlert')
             alert.textContent = ''
             fetch('/delete_account/', {
-                method: 'DELETE',
+                method: 'POST',
                 headers: {'X-CSRFToken': csrfToken}
             })
                 .then((response) => {
@@ -432,10 +423,10 @@
             document.getElementById('btn-delete-account').disabled = !e.target.checked
         }
     }
-    document.getElementById('avatar-input').onchange = (e) => {
-        document.getElementById('avatar-img').setAttribute('src', URL.createObjectURL(e.target.files[0]))
+    document.getElementById('image_file').onchange = (e) => {
+        document.getElementById('image').setAttribute('src', URL.createObjectURL(e.target.files[0]))
     }
 
 </script>
 
-{% endblock javascripts %}
+{% endblock extra_js %}

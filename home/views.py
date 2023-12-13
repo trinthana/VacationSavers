@@ -16,10 +16,15 @@ from app.models import *
 # Create your views here.
 #@login_required(login_url="/accounts/login/")
 def index(request):
+    context = {
+    'parent': 'Navigation',
+    'segment': 'Dashboard'
+    }
 
     # Page from the theme 
     if request.user.is_authenticated:
-        return render(request, 'pages/index.html')
+        print(request.user.userprofile.subscribed_package)
+        return render(request, 'pages/index.html', context)
     else:
         return render(request, 'pages/landing.html')
 
@@ -160,8 +165,7 @@ def delete_account(request, **kwargs):
         return JsonResponse({
             'errors': message
         }, status=400)
-    logout(request)
-    return HttpResponseRedirect('/login/')
+    return HttpResponseRedirect('/accounts/login/')
 
 @login_required(login_url="/accounts/login/")
 def change_plan(request):

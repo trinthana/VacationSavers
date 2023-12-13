@@ -1,24 +1,80 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block breadcrumbs %}{% endblock breadcrumbs %}
-
 {% block content %}
 
-	<!-- [ Main Content ] start -->
-	<div class="row">
+<!-- [ Main Content ] start -->
+<div class="row">
+    <!-- [ Recommended Applications ] start -->
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Recommended Applications</h5>
+                <span class="d-block m-t-5">Click to open <code>application</code>, you may need to
+                    <code>change package plan</code>
+                    to be able to select some applications</span>
+            </div>
+            <div class="card-body row">
 
+				<!-- First card -->
+                <div class="col-xl-3 col-md-6">
+					<div class="card user-card user-card-3 support-bar1 theme-bg">
+						<div class="card-body ">
+							<div class="text-center"><br>
+								<img class="img-fluid wid-150 "
+									src="{% static 'assets/images/product/smartfares.svg' %}" alt="Smartfares"><br><br>
+								<h3 class="mb-1 mt-3 f-w-400">Smartfares</h3>
+								<p class="mb-3 text-muted">Flights</p>
+							</div>
+						</div>
+						<div class="card-body hover-data text-white">
+							<div class="">
+								<h4 class="text-white">Open Smartfares?</h4>
+								<p class="mb-1"></p>
+								<p class="mb-3">SmartFares is a travel reservation service that specializes in providing consumers with the best fares available in the marketplace.</p>
+								<a href="/flight-smartfares/"><button type="button" class="btn  btn-warning"><i class="feather icon-link"></i>
+									Open</button></a>
+							</div>
+						</div>
+					</div>
+                </div>
 
-	</div>
-	<!-- [ Main Content ] end -->
+                <!-- Second card -->
+                <div class="col-xl-3 col-md-6">
+                    <div class="card user-card user-card-3 support-bar1 theme-bg2">
+						<div class="card-body ">
+							<div class="text-center">
+								<img class="img-fluid wid-150 "
+									src="{% static 'assets/images/product/ticket.png' %}" alt="Time for Tickets">
+								<h3 class="mb-1 mt-3 f-w-400">Time for Tickets</h3>
+								<p class="mb-3 text-muted">Tickets</p>
+							</div>
+						</div>
+						<div class="card-body hover-data text-white">
+							<div class="">
+								<h4 class="text-white">Open Time for Tickets?</h4>
+								<p class="mb-1"></p>
+								<p class="mb-3">One of the most reliable sites in the industry, with no fees, lower prices, and verified high-quality sellers.</p>
+								{% if request.user.userprofile.subscribed_package %}
+								<a href="/ticket-timefortickets/"><button type="button" class="btn  btn-warning"><i class="feather icon-link"></i>
+									Open</button></a>
+								{% else %}
+									<p class="mb-3 text-muted">You do not currently meet the eligibility criteria for accessing this application. Kindly consider subscribing to proceed."</p>
+								{% endif %}
+							</div>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Recommended Applications ] end -->
+</div>
+<!-- [ Main Content ] end -->
+
 
 {% endblock content %}
 
 {% block extra_js %}
-<!-- apexcharts js -->
-<script src="{% static 'assets/js/plugins/apexcharts.min.js' %}"></script>
-<script src="{% static 'assets/js/plugins/jsvectormap.min.js' %}"></script>
-<script src="{% static 'assets/js/plugins/world.js' %}"></script>
-<!-- dashboard-custom js -->
-<script src="{% static 'assets/js/pages/dashboard-custom.js' %}"></script>
+
 {% endblock extra_js %}
