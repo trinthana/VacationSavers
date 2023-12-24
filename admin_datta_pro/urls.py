@@ -176,19 +176,20 @@ urlpatterns = [
   path('landing-page/', views.landing_page, name="landing_page"),
 
   # Authentication -> Register
-  path('accounts/register/', views.RegistrationViewV1.as_view(), name="register_v1"),
+  path('accounts/register-v1/', views.RegistrationViewV1.as_view(), name="register-v1"),
   path('accounts/register-v2/', views.RegistrationViewV2.as_view(), name="register_v2"),
   path('accounts/register-v3/', views.RegistrationViewV3.as_view(), name="register_v3"),
-  path('accounts/register-v4/', views.RegistrationViewV4.as_view(), name="register_v4"),
+  path('accounts/register/', views.RegistrationViewV4.as_view(), name="register"),
   path('accounts/register-v5/', views.RegistrationViewV5.as_view(), name="register_v5"),
+  path('accounts/register-withcode/', views.RegistrationWithCodeView.as_view(), name="register_withcode"),
   # Authentication -> Login
-  path('accounts/login/', views.LoginViewV1.as_view(), name="login_v1"),
+  path('accounts/login/', views.LoginViewV2.as_view(), name="login"),
   path('accounts/login-v2/', views.LoginViewV2.as_view(), name="login_v2"),
   path('accounts/login-v3/', views.LoginViewV3.as_view(), name="login_v3"),
   path('accounts/login-v4/', views.LoginViewV4.as_view(), name="login_v4"),
   path('accounts/login-v5/', views.LoginViewV5.as_view(), name="login_v5"),
   # Authentication -> Reset Password
-  path('accounts/password-reset/', views.PasswordResetV1.as_view(), name="password_reset_v1"),
+  path('accounts/password-reset/', views.PasswordResetV1.as_view(), name="password_reset"),
   path('accounts/password-reset-v2/', views.PasswordResetV2.as_view(), name="password_reset_v2"),
   path('accounts/password-reset-v3/', views.PasswordResetV3.as_view(), name="password_reset_v3"),
   path('accounts/password-reset-v4/', views.PasswordResetV4.as_view(), name="password_reset_v4"),

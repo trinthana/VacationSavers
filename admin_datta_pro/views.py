@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView, PasswordResetConfirmView
-from admin_datta_pro.forms import RegistrationForm, LoginForm, UserPasswordResetForm, UserSetPasswordForm, UserPasswordChangeForm
+from admin_datta_pro.forms import RegistrationForm, LoginForm, UserPasswordResetForm, UserSetPasswordForm, UserPasswordChangeForm, RegistrationWithCodeForm
 from django.contrib.auth import logout
 from django.views.generic import CreateView
+from django.contrib.sessions.models import Session
+from django.utils import timezone
 
 from django.contrib.auth.decorators import login_required
 
@@ -1094,13 +1096,31 @@ class RegistrationViewV3(CreateView):
 class RegistrationViewV4(CreateView):
   template_name = 'accounts/auth-signup-v4.html'
   form_class = RegistrationForm
-  success_url = '/accounts/login-v4/'
+  success_url = '/accounts/login/'
 
 class RegistrationViewV5(CreateView):
   template_name = 'accounts/auth-signup-v5.html'
   form_class = RegistrationForm
   success_url = '/accounts/login-v5/'
 
+class RegistrationWithCodeView(CreateView):
+  
+  template_name = 'accounts/auth-signup-withcode.html'
+  form_class = RegistrationWithCodeForm
+  success_url = '/accounts/login/'
+
+  def get(self, request, *args, **kwargs):
+    template = self.template_name
+    try:
+      initial_data = {
+        'token': request.session['token'],
+      }
+    except:
+      initial_data = {
+        'token': '',
+      }
+    form = RegistrationWithCodeForm(initial=initial_data)
+    return render(request, template, {'form': form})
 
 # Authentication -> Login
 class LoginViewV1(LoginView):

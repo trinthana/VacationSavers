@@ -14985,6 +14985,7 @@ section.u-image:not(.u-hover-box),
 }
 .u-group .u-container-layout > * {
   position: relative;
+  display: flex;
 }
 .u-group {
   display: flex;

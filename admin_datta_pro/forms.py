@@ -29,6 +29,35 @@ class RegistrationForm(UserCreationForm):
       })
     }
 
+class RegistrationWithCodeForm(UserCreationForm):
+  token = forms.CharField(
+      label=_("Token"),
+      widget=forms.TextInput(attrs={'class': 'form-control', "placeholder": "Token", "required": True, 'readonly': 'readonly'}),
+  )
+  password1 = forms.CharField(
+      label=_("Password"),
+      widget=forms.PasswordInput(attrs={'class': 'form-control', "placeholder": "Password"}),
+  )
+  password2 = forms.CharField(
+      label=_("Password Confirmation"),
+      widget=forms.PasswordInput(attrs={'class': 'form-control', "placeholder": "Confirm Password"}),
+  )
+
+  class Meta:
+    model = User
+    fields = ('username', 'email')
+
+    widgets = {
+      'username': forms.TextInput(attrs={
+          'class': 'form-control',
+          "placeholder": "Username",
+      }),
+      'email': forms.EmailInput(attrs={
+          'class': 'form-control',
+          "placeholder": "Email"
+      }),
+    }
+       
 
 class LoginForm(AuthenticationForm):
   username = UsernameField(widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Username"}))

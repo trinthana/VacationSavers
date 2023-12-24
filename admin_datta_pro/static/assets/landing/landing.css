@@ -12,7 +12,7 @@
   width: 590px;
   min-height: 480px;
   height: auto;
-  margin: 165px auto 60px 0;
+  margin: 65px auto 60px 0;
 }
 
 .u-section-1 .u-container-layout-1 {
@@ -35,11 +35,11 @@
 }
 
 .u-section-1 .u-btn-1 {
-  text-transform: uppercase;
-  font-weight: 700;
+  text-align: center;
+  font-weight: 400;
   background-image: none;
   margin: 31px auto 0 30px;
-  padding: 21px 59px 22px 58px;
+  padding: 11px 49px 12px 48px;
 }
 
 @media (max-width: 1199px) {

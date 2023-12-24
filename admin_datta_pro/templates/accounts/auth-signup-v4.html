@@ -5,12 +5,29 @@
 
 {% block content %}
 
-    <div class="auth-wrapper">
+    <div class="auth-wrapper" style="background-image: url({% static 'assets/landing/vacation.jpg' %}); width: 100%; height: auto; background-repeat: no-repeat; background-size: cover;">
         <div class="auth-content subscribe">
             <div class="card">
                 <div class="row no-gutters">
-                    <div class="col-md-4 col-lg-6 d-none d-md-flex d-lg-flex theme-bg align-items-center justify-content-center">
-                        <img src="{% static 'assets/images/user/user.png' %}" alt="lock images" class="img-fluid">
+                    <div class="col-md-4 col-lg-6 d-none d-md-flex d-lg-flex align-items-center justify-content-center">
+                        <div class="card">
+                            <div class="card-header ">
+                                <h5>Vacation Savers Membership Plan</h5>
+                                <h3>$180 for an entire year</h3>
+                                <h6>* 1 year = 12 months</h6>
+                            </div>
+                            <div class="card-body ">
+                                <h5>Discounts up to 60% below public travel websites. Access to:</h5>
+                                <ul>
+                                    <li>Cruises</li>
+                                    <li>Activities</li>
+                                    <li>Attraction Tickets</li>
+                                    <li>Tours</li>
+                                    <li>Vacation Rentals</li>
+                                    <li>And more ...</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-8 col-lg-6">
                         <div class="card-body text-center">
@@ -33,7 +50,7 @@
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary shadow-2 mb-4">Sign up</button>
-                                    <p class="mb-0 text-muted">Allready have an account? <a href="{% url 'login_v4' %}"> Log in</a></p>
+                                    <p class="mb-0 text-muted">Allready have an account? <a href="{% url 'login' %}"> Log in</a></p>
                                 </form>
                             </div>
                         </div>

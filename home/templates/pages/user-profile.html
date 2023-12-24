@@ -114,13 +114,7 @@
                                         <tr>
                                             <td>{{ log_entry.timestamp }}</td>
                                             <td>{{ log_entry.remote_addr }}</td>
-                                            <td>
-                                                <ul>
-                                                    {% for change in log_entry.changes %}
-                                                        <li>{{ log_entry.changes_display_dict }} </li>
-                                                    {% endfor %}
-                                                </ul>
-                                            </td>
+                                            <td>{{ log_entry.changes_dict }}</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>

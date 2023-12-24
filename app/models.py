@@ -42,6 +42,7 @@ class UserProfile(models.Model):
     postal_code         = models.CharField(max_length=10, default='', blank=True)
     phone               = models.CharField(max_length=20, default='', blank=True)
     image_file          = models.ImageField(upload_to='profile_photos/', null=True, blank=True)
+    token               = models.TextField(default='', blank=True)
     subscribed_package  = models.CharField(max_length=10, default='', blank=True, choices=PackageChoices.choices)
     subscribed_date     = models.DateField(null=True, blank=True)
     expired_date        = models.DateField(null=True, blank=True)

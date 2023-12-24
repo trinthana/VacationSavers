@@ -13,7 +13,7 @@
           <span class="pcoded-mtext">Daskboard</span>
         </a>
       </li>
-  
+  {% if not request.user.is_superuser %} 
     {% if request.user.userprofile.subscribed_package %}
      <li class="nav-item pcoded-menu-caption">
         <label>Travel</label>
@@ -212,13 +212,13 @@
       </li>
     {% endif %}
   
-{% admin_get_menu as app_list %}
-{% if app_list and request.user.is_superuser %}
+  {% else %}
+    {% admin_get_menu as app_list %}
     {% for app in app_list %}
         {% if app.has_perms and not app.pinned %}
           <li class="nav-item pcoded-hasmenu">
             <a  href="#" class="nav-link">
-              <span class="pcoded-micon"><i class="{% if app.icon %} {{ app.icon }} {% else %} feather icon-home {% endif %}"></i></span>
+              <span class="pcoded-micon"><i class="{% if app.icon %} {{ app.icon }} {% else %} feather icon-settingsß {% endif %}"></i></span>
               <span class="pcoded-mtext">{{ app.label|slice:15 }}{% if app.label|length > 15 %}..{% endif %}</span>
             </a>
             {% if app.models %}
@@ -238,6 +238,7 @@
         {% endif %}
     {% endfor %}
 {% endif %}
+<!--
       <li class="nav-item pcoded-menu-caption">
         <label>Resources</label>
       </li>
@@ -255,5 +256,6 @@
           </span>
           <span class="pcoded-mtext">Support</span></a>
       </li>  
+-->
     </ul>
   </div>

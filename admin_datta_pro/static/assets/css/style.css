@@ -150,6 +150,18 @@ strong {
     background: linear-gradient(-135deg, #899FD4 0%, #A389D4 100%);
 }
 
+.theme-bg3 {
+    background: linear-gradient(-135deg, #eba462 0%, #b68d24 100%);
+}
+
+.theme-bg4 {
+    background: linear-gradient(-135deg, #b3ad5a 0%, #bdb85d 100%);
+}
+
+.theme-bg5 {
+    background: linear-gradient(-135deg, #f6f3f1 0%, #f8f3e8 100%);
+}
+
 .bg-body {
     background: #f4f7fa !important;
 }
@@ -2553,7 +2565,7 @@ table.dataTable > thead .sorting_desc_disabled:after {
 }
 
 .pcoded-navbar .scroll-div.navbar-content {
-    height: calc(100vh - 70px);
+    /*height: calc(100vh - 70px);*/
 }
 
 .pcoded-navbar .header-logo {
@@ -3016,7 +3028,7 @@ table.dataTable > thead .sorting_desc_disabled:after {
 /* menu[ horizontal ] css start */
 .pcoded-navbar.theme-horizontal {
     display: block;
-    height: 70px;
+    height: 50px;
     width: 100%;
     z-index: 1023;
     box-shadow: none;
@@ -3226,7 +3238,7 @@ table.dataTable > thead .sorting_desc_disabled:after {
 
 .pcoded-navbar.theme-horizontal .navbar-content {
     display: flex;
-    align-items: center;
+    /*align-items: center;*/
 }
 
 .pcoded-navbar.theme-horizontal ~ .pcoded-header {
@@ -12673,10 +12685,10 @@ table.dataTable.dtr-inline.collapsed > tbody > tr[role=row] > th:first-child:bef
 
 /* image varient start */
 .aut-bg-img {
-    background-image: url("../images/bg-images/bg4.jpg");
+    background-image: url("../images/bg-images/bg6.jpg");
     background-size: cover;
     background-attachment: fixed;
-    background-position: center;
+    background-position: right;
 }
 
 .aut-bg-img-side p {

@@ -12,6 +12,7 @@ from auditlog.models import LogEntry
 from . import helpers
 from app.forms import *
 from app.models import *
+from rest_framework_multitoken.models import MultiToken
 
 # Create your views here.
 #@login_required(login_url="/accounts/login/")
@@ -165,6 +166,46 @@ def delete_account(request, **kwargs):
             'errors': message
         }, status=400)
     return HttpResponseRedirect('/accounts/login/')
+
+def verify_code(request, **kwargs):
+    token_used = False
+    try:
+        if request.method == 'GET':
+            inp_token = request.GET['token']
+        elif request.method == 'POST':
+            inp_token = request.POST['token']
+    except:
+        inp_token = ''
+
+    if inp_token is not None and inp_token != '' : 
+        try:
+            token_count = MultiToken.objects.filter(key=inp_token).count()
+            if token_count > 0 :
+                try:
+                    user_profile_count = UserProfile.objects.filter(token=inp_token).count()
+                    if user_profile_count > 0 :
+                        token_used = True
+                    else :
+                        token_used = False
+                except UserProfile.DoesNotExist:
+                    token_used = False
+            
+            else:
+                return render(request, 'pages/signup-withcode.html', context={'message':'This invitation code is not valid.', 'token':inp_token})        
+
+        except MultiToken.DoesNotExist:
+            return render(request, 'pages/signup-withcode.html', context={'message':'This invitation code is not valid.', 'token':inp_token})        
+    else :
+        return render(request, 'pages/signup-withcode.html')
+
+    if not token_used :
+        request.session['token'] = inp_token
+        url = reverse('register_withcode')
+        return HttpResponseRedirect(url)
+
+    else :
+        return render(request, 'pages/signup-withcode.html', context={'message':'This invitation code is already used.', 'token':inp_token})        
+    
 
 @login_required(login_url="/accounts/login/")
 def change_plan(request):

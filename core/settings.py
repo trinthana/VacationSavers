@@ -57,10 +57,24 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+    # Third-Party Apps
+    "rest_framework",
+    'rest_framework.authtoken',
+    'rest_framework_multitoken',
+    
+    # Local Apps
     "app",
     "home",
+    "api",
     "auditlog",
+
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_multitoken.authentication.MultiTokenAuthentication',  
+    ],
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -72,6 +86,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "auditlog.middleware.AuditlogMiddleware",
+    "admin_datta_pro.middleware.RequestMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -93,6 +108,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = "core.wsgi.application"
 
