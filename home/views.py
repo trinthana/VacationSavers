@@ -229,7 +229,7 @@ def access_travel(request):
 
     context = {
     'parent': 'All-in-1',
-    'segment': 'Access Travel',
+    'segment': 'Travel Deals',
     'cvt': cvt
     }
 
@@ -248,7 +248,7 @@ def access_deals(request):
 
     context = {
     'parent': 'All-in-1',
-    'segment': 'Access Deals',
+    'segment': 'Eat, Play, Shop',
     'cvt': cvt
     }
 
