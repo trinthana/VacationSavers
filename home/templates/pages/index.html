@@ -16,7 +16,7 @@
             </div>
             <div class="card-body row">
 
-				<!-- First card -->
+				<!-- Smartfares card -->
                 <div class="col-xl-2 col-md-6">
 					<div class="card user-card user-card-3 support-bar1 theme-bg">
 						<div class="card-body ">
@@ -32,7 +32,7 @@
 					</div>
                 </div>
 
-                <!-- Second card -->
+                <!-- TimetoTicket card -->
                 <div class="col-xl-2 col-md-6">
                     <div class="card user-card user-card-3 support-bar1 theme-bg2">
 						<div class="card-body ">
@@ -51,7 +51,68 @@
 						</div>
                     </div>
                 </div>
-            </div>
+
+				<!-- Access Travel card -->
+                <div class="col-xl-2 col-md-6">
+                    <div class="card user-card user-card-3 support-bar1 theme-bg4">
+						<div class="card-body ">
+							<div class="text-center">
+								<img class="img-fluid wid-150 "
+									src="{% static 'assets/images/product/logo.png' %}" alt="Access Travel">
+								<h3 class="mb-1 mt-3 f-w-400">Travel</h3>
+								<p class="card-text">Travel Deals</p>
+								{% if request.user.userprofile.subscribed_package %}
+								<a href="/access-travel/"><button type="button" class="btn  btn-warning"><i class="feather icon-link"></i>
+									Open</button></a>
+								{% else %}
+									<p class="mb-3 text-muted">You do not currently meet the eligibility criteria for accessing this application. Kindly consider subscribing to proceed."</p>
+								{% endif %}
+							</div>
+						</div>
+                    </div>
+                </div>            
+
+				<!-- Access Deal card -->
+                <div class="col-xl-2 col-md-6">
+                    <div class="card user-card user-card-3 support-bar1 theme-bg3">
+						<div class="card-body ">
+							<div class="text-center">
+								<img class="img-fluid wid-150 "
+									src="{% static 'assets/images/product/logo.png' %}" alt="Time for Tickets">
+								<h3 class="mb-1 mt-3 f-w-400">Eat, Play, Shop</h3>
+								<p class="card-text">Eat, Play, Shop.</p>
+								{% if request.user.userprofile.subscribed_package %}
+								<a href="/access-deals/"><button type="button" class="btn  btn-warning"><i class="feather icon-link"></i>
+									Open</button></a>
+								{% else %}
+									<p class="mb-3 text-muted">You do not currently meet the eligibility criteria for accessing this application. Kindly consider subscribing to proceed."</p>
+								{% endif %}
+							</div>
+						</div>
+                    </div>
+                </div>            
+
+				<!-- TourRadar card -->
+                <div class="col-xl-2 col-md-6">
+                    <div class="card user-card user-card-3 support-bar1 theme-bg">
+						<div class="card-body ">
+							<div class="text-center">
+								<img class="img-fluid wid-150 "
+									src="{% static 'assets/images/product/logo.png' %}" alt="TourRadar">
+								<h3 class="mb-1 mt-3 f-w-400">TourRadar</h3>
+								<p class="card-text">Tours</p>
+								{% if request.user.userprofile.subscribed_package %}
+								<a href="/tour-radar/"><button type="button" class="btn  btn-warning"><i class="feather icon-link"></i>
+									Open</button></a>
+								{% else %}
+									<p class="mb-3 text-muted">You do not currently meet the eligibility criteria for accessing this application. Kindly consider subscribing to proceed."</p>
+								{% endif %}
+							</div>
+						</div>
+                    </div>
+                </div>            
+			
+			</div>
         </div>
     </div>
     <!-- [ Recommended Applications ] end -->

@@ -10,6 +10,7 @@ class PackageChoices(models.TextChoices):
 
 class ApplicationChoices(models.TextChoices):     
     ACCESS = "ACCESS", "Access Development"
+    ACCESSDEAL = "ACCESSDEAL", "Access Development Deals"
     ARRIVIA = "ARRIVIA", "Arrivia"
     EXPEDIA = "EXPEDIA", "Expedia"
     BOOKING = "BOOKING", "Booking.com"
@@ -60,7 +61,7 @@ class ApplicationToken(models.Model):
 
     user                = models.ForeignKey(User, on_delete=models.CASCADE)
     application         = models.CharField(max_length=20,default='', blank=True, choices=ApplicationChoices.choices)
-    token               = models.CharField(max_length=50,default='', blank=True)
+    token               = models.CharField(max_length=200,default='', blank=True)
     custom1             = models.TextField(default='', blank=True)
     custom2             = models.TextField(default='', blank=True)
     custom3             = models.TextField(default='', blank=True)

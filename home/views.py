@@ -29,36 +29,6 @@ def index(request):
         return render(request, 'pages/landing.html')
 
 @login_required(login_url="/accounts/login/")
-def timefortickets(request):
-    context = {
-    'parent': 'Tickets',
-    'segment': 'Time for Tickets'
-    }
-
-    # Page from the theme 
-    return render(request, 'pages/ticket-timefortickets.html', context)
-
-@login_required(login_url="/accounts/login/")
-def tourradar(request):
-    context = {
-    'parent': 'Tours',
-    'segment': 'TourRadar'
-    }
-
-    # Page from the theme 
-    return render(request, 'pages/tour-radar.html', context)
-
-@login_required(login_url="/accounts/login/")
-def smartfares(request):
-    context = {
-    'parent': 'Flights',
-    'segment': 'Smartfares'
-    }
-
-    # Page from the theme 
-    return render(request, 'pages/flight-smartfares.html', context)
-
-@login_required(login_url="/accounts/login/")
 def profile(request, **kwargs):
 
     if request.method == 'GET':
@@ -216,3 +186,71 @@ def change_plan(request):
 
     # Page from the theme 
     return render(request, 'pages/change-plan.html', context)
+
+@login_required(login_url="/accounts/login/")
+def timefortickets(request):
+    context = {
+    'parent': 'Tickets',
+    'segment': 'Time for Tickets'
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/ticket-timefortickets.html', context)
+
+@login_required(login_url="/accounts/login/")
+def tourradar(request):
+    context = {
+    'parent': 'Tours',
+    'segment': 'TourRadar'
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/tour-radar.html', context)
+
+@login_required(login_url="/accounts/login/")
+def smartfares(request):
+    context = {
+    'parent': 'Flights',
+    'segment': 'Smartfares'
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/flight-smartfares.html', context)
+
+@login_required(login_url="/accounts/login/")
+def access_travel(request):
+    # Query the ApplicationToken model to get the token for application 'ACCESS' and the current user
+    try:
+        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESS)
+        cvt = application_token.token
+    except ApplicationToken.DoesNotExist:
+        # Handle the case where no token is found for the specified application and user
+        cvt = None
+
+    context = {
+    'parent': 'All-in-1',
+    'segment': 'Access Travel',
+    'cvt': cvt
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/access-travel.html', context)
+
+@login_required(login_url="/accounts/login/")
+def access_deals(request):
+    # Query the ApplicationToken model to get the token for application 'ACCESSDEAL' and the current user
+    try:
+        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESSDEAL)
+        cvt = application_token.token
+    except ApplicationToken.DoesNotExist:
+        # Handle the case where no token is found for the specified application and user
+        cvt = None
+
+    context = {
+    'parent': 'All-in-1',
+    'segment': 'Access Deals',
+    'cvt': cvt
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/access-deals.html', context)

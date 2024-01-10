@@ -5,7 +5,7 @@
 
 {% block content %}
 
-    <div class="auth-wrapper" style="background-image: url(/static/assets/landing/landing_photo.jpg);  background-repeat: no-repeat; background-size: cover;background-position: top right;max-width: 100%;height: auto;">
+    <div class="auth-wrapper  aut-bg-img">
         <div class="auth-content subscribe">
             <div class="card">
                 <div class="row no-gutters">
@@ -17,7 +17,8 @@
                             <div class="row justify-content-center">
                                 <form method="post" class="col-sm-10">
                                     {% csrf_token %}
-
+                                    <img alt="VacationSavers.com" style="width: 90%; text-align: left important;" src="{% static 'assets/images/logo.png' %}"></img>
+                                    <hr>
                                     <h3 class="mb-4">Invitation Code</h3>
 
                                     <div class="form-group text-left">

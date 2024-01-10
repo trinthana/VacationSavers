@@ -7,6 +7,7 @@ from django.utils import timezone
 from datetime import datetime, timedelta
 from app.models import UserProfile, SubscriptionHistory, PackageChoices
 from .threadlocals import thread_locals
+from app.access_api import import_access_member
 
 def get_session_data(session_key):
     try:
@@ -18,9 +19,7 @@ def get_session_data(session_key):
     
 @receiver(post_save, sender=User)
 def validate_token(sender, instance, created, **kwargs):
-    print('thread_locals signal = ', thread_locals)
-    request = thread_locals.request #getattr(thread_locals, 'request', None)
-    print('thread_locals.token = ', thread_locals.token )
+    request = thread_locals.request 
 
     session_key = request.session.session_key
     try:
@@ -29,6 +28,7 @@ def validate_token(sender, instance, created, **kwargs):
         session_token = None
 
     if created:
+        ret = import_access_member('')
         # Check if the 'token' field is provided in the user instance
         if session_token is not None and session_token != '' : 
 
