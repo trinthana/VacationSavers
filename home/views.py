@@ -221,7 +221,7 @@ def smartfares(request):
 def access_travel(request):
     # Query the ApplicationToken model to get the token for application 'ACCESS' and the current user
     try:
-        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESS)
+        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESSIFRAME)
         cvt = application_token.token
     except ApplicationToken.DoesNotExist:
         # Handle the case where no token is found for the specified application and user
