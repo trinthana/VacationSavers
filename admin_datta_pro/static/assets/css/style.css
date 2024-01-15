@@ -3349,7 +3349,7 @@ table.dataTable > thead .sorting_desc_disabled:after {
 .pcoded-content {
     position: relative;
     display: block;
-    padding: 5px 5px 5px 25px;
+/*    padding: 5px 5px 5px 25px; */
 }
 
 .pcoded-main-container {

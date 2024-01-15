@@ -10,6 +10,7 @@ class PackageChoices(models.TextChoices):
 
 class ApplicationChoices(models.TextChoices):     
     ACCESS = "ACCESS", "Access Development"
+    ACCESSIFRAME = "ACCESSIFRAME", "Access Development Iframe"
     ACCESSDEAL = "ACCESSDEAL", "Access Development Deals"
     ARRIVIA = "ARRIVIA", "Arrivia"
     EXPEDIA = "EXPEDIA", "Expedia"
