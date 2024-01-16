@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from app.access_api import import_access_member
+from app.access_api import import_access_iframe, import_access_deals, import_access_travel
 
 # Create your views here.
 class DefaultView(APIView):
@@ -18,9 +18,20 @@ class HelloView(APIView):
         content = {'message': 'Hello, World!'}
         return Response(content)
 
-class GenAccess(APIView):
+class GenAccess1(APIView):
     #permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        return Response(import_access_member(''))
+        return Response(import_access_iframe(''))
     
+class GenAccess2(APIView):
+    #permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        return Response(import_access_travel(''))
+
+class GenAccess3(APIView):
+    #permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        return Response(import_access_deals(''))

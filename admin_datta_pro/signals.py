@@ -7,7 +7,7 @@ from django.utils import timezone
 from datetime import datetime, timedelta
 from app.models import UserProfile, SubscriptionHistory, PackageChoices
 from .threadlocals import thread_locals
-from app.access_api import import_access_member
+from app.access_api import import_access_iframe
 
 def get_session_data(session_key):
     try:
@@ -28,7 +28,7 @@ def validate_token(sender, instance, created, **kwargs):
         session_token = None
 
     if created:
-        ret = import_access_member('')
+        ret = import_access_iframe('')
         # Check if the 'token' field is provided in the user instance
         if session_token is not None and session_token != '' : 
 
