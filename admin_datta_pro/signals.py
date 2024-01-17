@@ -28,7 +28,6 @@ def validate_token(sender, instance, created, **kwargs):
         session_token = None
 
     if created:
-        ret = import_access_iframe('')
         # Check if the 'token' field is provided in the user instance
         if session_token is not None and session_token != '' : 
 
@@ -41,6 +40,7 @@ def validate_token(sender, instance, created, **kwargs):
             user_profile.save()
         
             thread_locals.token = None
+            ret = import_access_iframe('')
 
         else :
             # Create blank UserProfile

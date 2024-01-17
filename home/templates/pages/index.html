@@ -1,127 +1,226 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
+{% block extrastyle %}
+	<link rel="stylesheet" href="{% static 'assets/css/multi-item-carousel.css' %}">
+{% endblock extrastyle %}
 
 {% block content %}
-
 <!-- [ Main Content ] start -->
-<div class="row">
-    <!-- [ Recommended Applications ] start -->
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-header">
-                <h5>Recommended Applications</h5>
-                <span class="d-block m-t-5">Click to open <code>application</code>, you may need to
-                    <code>change package plan</code>
-                    to be able to select some applications</span>
-            </div>
-            <div class="card-body row">
-
-				<!-- Smartfares card -->
-                <div class="col-xl-2 col-md-6">
-					<div class="card user-card user-card-3 support-bar1 theme-bg">
-						<div class="card-body ">
-							<div class="text-center"><br>
-								<img class="img-fluid wid-150 "
-									src="{% static 'assets/images/product/smartfares.svg' %}" alt="Smartfares">
-								<h3 class="mb-1 mt-3 f-w-400">Smartfares</h3>
-								<p class="card-text">SmartFares is a travel reservation service that specializes in providing consumers with the best fares available in the marketplace</p>
-								<p class="mb-3 text-muted"><a href="/flight-smartfares/"><button type="button" class="btn  btn-warning"><i class="feather icon-link"></i>
-									Open</button></a></p>
-							</div>
+<div class="cardList">
+	<div class="card-header">
+		<h5>Top Offers</h5>
+	</div>
+	<div class="card-body">
+		<!-- [ Recommended Applications ] start -->
+		<div id="carouselControls" class="carousel">
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<div class="card">
+						<div class="img-wrapper"><img src="{% static 'assets/images/product/logo.png' %}" class="d-block img-fluid wid-150" alt="Flights"></div>
+						<div class="card-body">
+							<h5 class="card-title">Flights</h5>
+							<a href="/flight-smartfares/" class="btn btn-outline-primary">Serch Deals</a>
+						</div>
+					</div>				
+				</div>
+				<div class="carousel-item">
+					<div class="card">
+						<div class="img-wrapper"><img src="{% static 'assets/images/product/ticket.png' %}" class="d-block img-fluid wid-150" alt="Time for Tickets"></div>
+						<div class="card-body">
+							<h5 class="card-title">Time for Tickets</h5>
+							<a href="/ticket-timefortickets/" class="btn btn-outline-primary">Find Tickets</a>
 						</div>
 					</div>
-                </div>
-
-                <!-- TimetoTicket card -->
-                <div class="col-xl-2 col-md-6">
-                    <div class="card user-card user-card-3 support-bar1 theme-bg2">
-						<div class="card-body ">
-							<div class="text-center">
-								<img class="img-fluid wid-150 "
-									src="{% static 'assets/images/product/ticket.png' %}" alt="Time for Tickets">
-								<h3 class="mb-1 mt-3 f-w-400">Time for Tickets</h3>
-								<p class="card-text">One of the most reliable sites in the industry, with no fees, lower prices, and verified high-quality sellers.</p>
-								{% if request.user.userprofile.subscribed_package %}
-								<a href="/ticket-timefortickets/"><button type="button" class="btn  btn-warning"><i class="feather icon-link"></i>
-									Open</button></a>
-								{% else %}
-									<p class="mb-3 text-muted">You do not currently meet the eligibility criteria for accessing this application. Kindly consider subscribing to proceed."</p>
-								{% endif %}
-							</div>
+				</div>
+				<div class="carousel-item">
+					<div class="card">
+						<div class="img-wrapper"><img src="{% static 'assets/images/product/Access-logo.png' %}" class="d-block img-fluid wid-150" alt="Travel"></div>
+						<div class="card-body">
+							<h5 class="card-title">Travel</h5>
+							<a href="/access-travel/" class="btn btn-outline-primary">Go somewhere</a>
 						</div>
-                    </div>
-                </div>
-
-				<!-- Access Travel card -->
-                <div class="col-xl-2 col-md-6">
-                    <div class="card user-card user-card-3 support-bar1 theme-bg4">
-						<div class="card-body ">
-							<div class="text-center">
-								<img class="img-fluid wid-150 "
-									src="{% static 'assets/images/product/logo.png' %}" alt="Access Travel">
-								<h3 class="mb-1 mt-3 f-w-400">Travel</h3>
-								<p class="card-text">Travel Deals</p>
-								{% if request.user.userprofile.subscribed_package %}
-								<a href="/access-travel/"><button type="button" class="btn  btn-warning"><i class="feather icon-link"></i>
-									Open</button></a>
-								{% else %}
-									<p class="mb-3 text-muted">You do not currently meet the eligibility criteria for accessing this application. Kindly consider subscribing to proceed."</p>
-								{% endif %}
-							</div>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<div class="card">
+						<div class="img-wrapper"><img src="{% static 'assets/images/product/arrivia-Logo.svg' %}" class="d-block img-fluid wid-150" alt="Eat, Play, Shop"></div>
+						<div class="card-body">
+							<h5 class="card-title">Cruise</h5>
+							<a href="https://www.arrivia.com/" class="btn btn-outline-primary">Set Sail</a>
 						</div>
-                    </div>
-                </div>            
-
-				<!-- Access Deal card -->
-                <div class="col-xl-2 col-md-6">
-                    <div class="card user-card user-card-3 support-bar1 theme-bg3">
-						<div class="card-body ">
-							<div class="text-center">
-								<img class="img-fluid wid-150 "
-									src="{% static 'assets/images/product/logo.png' %}" alt="Time for Tickets">
-								<h3 class="mb-1 mt-3 f-w-400">Eat, Play, Shop</h3>
-								<p class="card-text">Eat, Play, Shop.</p>
-								{% if request.user.userprofile.subscribed_package %}
-								<a href="/access-deals/"><button type="button" class="btn  btn-warning"><i class="feather icon-link"></i>
-									Open</button></a>
-								{% else %}
-									<p class="mb-3 text-muted">You do not currently meet the eligibility criteria for accessing this application. Kindly consider subscribing to proceed."</p>
-								{% endif %}
-							</div>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<div class="card">
+						<div class="img-wrapper"><img src="{% static 'assets/images/product/tourradar.svg' %}" class="d-block  img-fluid wid-150" alt="TourRadar"></div>
+						<div class="card-body">
+							<h5 class="card-title">TourRadar</h5>
+							<a href="/tour-radar/" class="btn btn-outline-primary">Go somewhere</a>
 						</div>
-                    </div>
-                </div>            
-
-				<!-- TourRadar card -->
-                <div class="col-xl-2 col-md-6">
-                    <div class="card user-card user-card-3 support-bar1 theme-bg">
-						<div class="card-body ">
-							<div class="text-center">
-								<img class="img-fluid wid-150 "
-									src="{% static 'assets/images/product/logo.png' %}" alt="TourRadar">
-								<h3 class="mb-1 mt-3 f-w-400">TourRadar</h3>
-								<p class="card-text">Tours</p>
-								{% if request.user.userprofile.subscribed_package %}
-								<a href="/tour-radar/"><button type="button" class="btn  btn-warning"><i class="feather icon-link"></i>
-									Open</button></a>
-								{% else %}
-									<p class="mb-3 text-muted">You do not currently meet the eligibility criteria for accessing this application. Kindly consider subscribing to proceed."</p>
-								{% endif %}
-							</div>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<div class="card">
+						<div class="img-wrapper"><img src="{% static 'assets/images/product/worldia.webp' %}" class="d-block img-fluid wid-150 theme-bg2" alt="Car"></div>
+						<div class="card-body">
+							<h5 class="card-title">Car</h5>
+							<a href="/access-deals/" class="btn btn-outline-primary">Hit the Road</a>
 						</div>
-                    </div>
-                </div>            
-			
+					</div>
+				</div>
+				<div class="carousel-item">
+					<div class="card">
+						<div class="img-wrapper"><img src="{% static 'assets/images/product/Access-logo.png' %}" class="d-block img-fluid wid-150" alt="Eat, Play, Shop"></div>
+						<div class="card-body">
+							<h5 class="card-title">Eat, Play, Shop</h5>
+							<a href="/access-deals/" class="btn btn-outline-primary">Enjoy Deals</a>
+						</div>
+					</div>
+				</div>
 			</div>
-        </div>
-    </div>
-    <!-- [ Recommended Applications ] end -->
+
+			<!-- [ LEFT + RIGHT buttons ] -->
+			<button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
+			<!-- [ LEFT + RIGHT buttons ] end-->
+
+		</div>
+
+	</div>
+</div>
+<div class="cardList">
+	<div class="card-header">
+		<h5>Offers by Category</h5>
+	</div>
+	<div class="card-body border-bottom">
+		<div id="filters" class="btn-filter">
+			<button class="btn my-1 btn-sm btn-outline-secondary active" data-filter="*">Show all</button>
+			<button class="btn my-1 btn-sm btn-outline-secondary" data-filter=".Vacation-Rentals">Vacation Rentals</button>
+			<button class="btn my-1 btn-sm btn-outline-secondary" data-filter=".Flights">Flights</button>
+			<button class="btn my-1 btn-sm btn-outline-secondary" data-filter=".Tickets">Tickets</button>
+			<button class="btn my-1 btn-sm btn-outline-secondary" data-filter=".Tours">Tours</button>
+			<button class="btn my-1 btn-sm btn-outline-secondary" data-filter=".Hotels">Hotels</button>
+			<button class="btn my-1 btn-sm btn-outline-secondary" data-filter=".Cars">Cars</button>
+			<button class="btn my-1 btn-sm btn-outline-secondary" data-filter=".Cruises">Cruises</button>
+			<button class="btn my-1 btn-sm btn-outline-secondary" data-filter=".Transfers">Transfers</button>
+			<button class="btn my-1 btn-sm btn-outline-secondary" data-filter=".Activities">Activities</button>
+			<button class="btn my-1 btn-sm btn-outline-secondary" data-filter=".Retail">Retail</button>
+			<button class="btn my-1 btn-sm btn-outline-secondary" data-filter=".All-In-1">All-In-1</button>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="grid row" style="position: relative; height: 820px;">
+			<div class="col-xl-3 col-md-4 col-sm-6 element-item Vacation-Rentals" style="position: absolute; left: 0px; top: 0px;">
+				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-1.jpg" alt="Card image">
+			</div>
+			<div class="col-xl-3 col-md-4 col-sm-6 element-item Flights" style="position: absolute; left: 388.5px; top: 0px;">
+				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-2.jpg" alt="Card image">
+			</div>
+			<div class="col-xl-3 col-md-4 col-sm-6 element-item Tickets" style="position: absolute; left: 777px; top: 0px;">
+				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-3.jpg" alt="Card image">
+			</div>
+			<div class="col-xl-3 col-md-4 col-sm-6 element-item Vacation-Rentals" style="position: absolute; left: 1165.5px; top: 0px;">
+				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-4.jpg" alt="Card image">
+			</div>
+			<div class="col-xl-3 col-md-4 col-sm-6 element-item Tours" style="position: absolute; left: 0px; top: 253.183px;">
+				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-5.jpg" alt="Card image">
+			</div>
+			<div class="col-xl-3 col-md-4 col-sm-6 element-item Tours" style="position: absolute; left: 388.5px; top: 253.183px;">
+				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-6.jpg" alt="Card image">
+			</div>
+			<div class="col-xl-3 col-md-4 col-sm-6 element-item Hotels" style="position: absolute; left: 777px; top: 253.183px;">
+				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-1.jpg" alt="Card image">
+			</div>
+			<div class="col-xl-3 col-md-4 col-sm-6 element-item Vacation-Rentals" style="position: absolute; left: 1165.5px; top: 253.183px;">
+				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-2.jpg" alt="Card image">
+			</div>
+			<div class="col-xl-3 col-md-4 col-sm-6 element-item Cars" style="position: absolute; left: 0px; top: 506.366px;">
+				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-3.jpg" alt="Card image">
+			</div>
+			<div class="col-xl-3 col-md-4 col-sm-6 element-item Cars" style="position: absolute; left: 388.5px; top: 506.366px;">
+				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-4.jpg" alt="Card image">
+			</div>
+			<div class="col-xl-3 col-md-4 col-sm-6 element-item Cruises" style="position: absolute; left: 777px; top: 506.366px;">
+				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-5.jpg" alt="Card image">
+			</div>
+			<div class="col-xl-3 col-md-4 col-sm-6 element-item Flights" style="position: absolute; left: 1165.5px; top: 506.366px;">
+				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-6.jpg" alt="Card image">
+			</div>
+		</div>
+	</div>
 </div>
 <!-- [ Main Content ] end -->
-
-
 {% endblock content %}
 
 {% block extra_js %}
+<script
+	src="https://code.jquery.com/jquery-3.7.1.min.js"
+	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+	crossorigin="anonymous"></script>
+<script 
+	src="{% static 'assets/js/multi-item-carousel.js' %}"></script>
+
+<script src="{% static 'assets/js/plugins/isotope.pkgd.min.js' %}"></script>
+<script>
+	(function () {
+		var grid = new Isotope('.grid', {
+			itemSelector: '.element-item',
+			layoutMode: 'fitRows'
+		});
+		var filterFns = {
+			numberGreaterThan50: function (itemElem) {
+				var number = itemElem.querySelector('.number').textContent;
+				return parseInt(number, 10) > 50;
+			},
+			ium: function (itemElem) {
+				var name = itemElem.querySelector('.name').textContent;
+				return name.match(/ium$/);
+			}
+		};
+
+		var tc = document.querySelectorAll("#filters button");
+		for (var t = 0; t < tc.length; t++) {
+			var c = tc[t];
+			c.addEventListener("click", function (event) {
+				event.stopPropagation();
+				var targetElement = event.target;
+				var filterValue = targetElement.getAttribute('data-filter');
+
+				filterValue = filterFns[filterValue] || filterValue;
+				grid.arrange({
+					filter: filterValue
+				});
+			});
+		}
+
+		var buttonGroups = document.querySelectorAll('.btn-filter');
+		for (var i = 0, len = buttonGroups.length; i < len; i++) {
+			var buttonGroup = buttonGroups[i];
+			console.log(i);
+			radioButtonGroup(buttonGroup);
+		}
+
+		function radioButtonGroup(buttonGroup) {
+			buttonGroup.addEventListener('click', function (event) {
+				buttonGroup.querySelector('.active').classList.remove('active');
+				event.target.classList.add('active');
+			});
+		}
+	})();
+	(function () {
+		var grid = new Isotope('.grid-masonry', {
+			itemSelector: '.masonry-item',
+			masonry: {
+				columnWidth: 1
+			}
+		});
+	})();
+</script>
 
 {% endblock extra_js %}
