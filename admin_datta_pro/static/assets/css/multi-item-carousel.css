@@ -38,11 +38,21 @@
   }
 }
 .card .img-wrapper {
-    height: 7em !important;
+    height: 13em !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
 }
+.img-wrapper i {
+  font-size: 50px !important;
+}
+.grid .card .img-wrapper {
+  height: 10em !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
 .btn-filter {
   text-align: left !important;
 }
@@ -51,6 +61,14 @@
 }
 @media (max-width: 767px) {
   .card .img-wrapper {
-    height: 7em !important;
+    height: 11em !important;
   }
+  .grid .card .img-wrapper {
+    height: 12em !important;
+  }
+}
+
+code {
+  font-size:1em !important;
+  color: orange !important;
 }

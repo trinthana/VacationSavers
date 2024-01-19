@@ -1,6 +1,7 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 {% block extrastyle %}
+	<link rel="stylesheet" href="{% static 'assets/fonts/simple-line-icons/css/simple-line-icons.css' %}">
 	<link rel="stylesheet" href="{% static 'assets/css/multi-item-carousel.css' %}">
 {% endblock extrastyle %}
 
@@ -15,67 +16,22 @@
 		<div id="carouselControls" class="carousel">
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<div class="card">
-						<div class="img-wrapper"><img src="{% static 'assets/images/product/logo.png' %}" class="d-block img-fluid wid-150" alt="Flights"></div>
-						<div class="card-body">
-							<h5 class="card-title">Flights</h5>
-							<a href="/flight-smartfares/" class="btn btn-outline-primary">Serch Deals</a>
-						</div>
-					</div>				
+					{% include 'pages/products/card-flights-vs.html' %}
 				</div>
 				<div class="carousel-item">
-					<div class="card">
-						<div class="img-wrapper"><img src="{% static 'assets/images/product/ticket.png' %}" class="d-block img-fluid wid-150" alt="Time for Tickets"></div>
-						<div class="card-body">
-							<h5 class="card-title">Time for Tickets</h5>
-							<a href="/ticket-timefortickets/" class="btn btn-outline-primary">Find Tickets</a>
-						</div>
-					</div>
+					{% include 'pages/products/card-time-for-tickets.html' %}
 				</div>
 				<div class="carousel-item">
-					<div class="card">
-						<div class="img-wrapper"><img src="{% static 'assets/images/product/Access-logo.png' %}" class="d-block img-fluid wid-150" alt="Travel"></div>
-						<div class="card-body">
-							<h5 class="card-title">Travel</h5>
-							<a href="/access-travel/" class="btn btn-outline-primary">Go somewhere</a>
-						</div>
-					</div>
+					{% include 'pages/products/card-travel-access.html' %}
 				</div>
 				<div class="carousel-item">
-					<div class="card">
-						<div class="img-wrapper"><img src="{% static 'assets/images/product/arrivia-Logo.svg' %}" class="d-block img-fluid wid-150" alt="Eat, Play, Shop"></div>
-						<div class="card-body">
-							<h5 class="card-title">Cruise</h5>
-							<a href="https://www.arrivia.com/" class="btn btn-outline-primary">Set Sail</a>
-						</div>
-					</div>
+					{% include 'pages/products/card-cruises-arrivia.html' %}
 				</div>
 				<div class="carousel-item">
-					<div class="card">
-						<div class="img-wrapper"><img src="{% static 'assets/images/product/tourradar.svg' %}" class="d-block  img-fluid wid-150" alt="TourRadar"></div>
-						<div class="card-body">
-							<h5 class="card-title">TourRadar</h5>
-							<a href="/tour-radar/" class="btn btn-outline-primary">Go somewhere</a>
-						</div>
-					</div>
+					{% include 'pages/products/card-tours-radar.html' %}
 				</div>
 				<div class="carousel-item">
-					<div class="card">
-						<div class="img-wrapper"><img src="{% static 'assets/images/product/worldia.webp' %}" class="d-block img-fluid wid-150 theme-bg2" alt="Car"></div>
-						<div class="card-body">
-							<h5 class="card-title">Car</h5>
-							<a href="/access-deals/" class="btn btn-outline-primary">Hit the Road</a>
-						</div>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<div class="card">
-						<div class="img-wrapper"><img src="{% static 'assets/images/product/Access-logo.png' %}" class="d-block img-fluid wid-150" alt="Eat, Play, Shop"></div>
-						<div class="card-body">
-							<h5 class="card-title">Eat, Play, Shop</h5>
-							<a href="/access-deals/" class="btn btn-outline-primary">Enjoy Deals</a>
-						</div>
-					</div>
+					{% include 'pages/products/card-cars-worldia.html' %}
 				</div>
 			</div>
 
@@ -116,40 +72,40 @@
 	</div>
 	<div class="card-body">
 		<div class="grid row" style="position: relative; height: 820px;">
-			<div class="col-xl-3 col-md-4 col-sm-6 element-item Vacation-Rentals" style="position: absolute; left: 0px; top: 0px;">
+			<div class="col-xl-2 col-md-4 col-sm-6 element-item Flights">
+				{% include 'pages/products/card-flights-vs.html' %}
+			</div>
+			<div class="col-xl-2 col-md-4 col-sm-6 element-item Tickets">
+				{% include 'pages/products/card-time-for-tickets.html' %}
+			</div>
+			<div class="col-xl-2 col-md-4 col-sm-6 element-item All-In-1 Tours">
+				{% include 'pages/products/card-travel-access.html' %}
+			</div>
+			<div class="col-xl-2 col-md-4 col-sm-6 element-item Cruises">
+				{% include 'pages/products/card-cruises-arrivia.html' %}
+			</div>
+			<div class="col-xl-2 col-md-4 col-sm-6 element-item Tours">
+				{% include 'pages/products/card-tours-radar.html' %}
+			</div>
+			<div class="col-xl-2 col-md-4 col-sm-6 element-item Cars">
+				{% include 'pages/products/card-cars-worldia.html' %}
+			</div>
+			<div class="col-xl-2 col-md-4 col-sm-6 element-item Hotels" style="position: absolute; left: 777px; top: 253.183px;">
 				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-1.jpg" alt="Card image">
 			</div>
-			<div class="col-xl-3 col-md-4 col-sm-6 element-item Flights" style="position: absolute; left: 388.5px; top: 0px;">
+			<div class="col-xl-2 col-md-4 col-sm-6 element-item Vacation-Rentals" style="position: absolute; left: 1165.5px; top: 253.183px;">
 				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-2.jpg" alt="Card image">
 			</div>
-			<div class="col-xl-3 col-md-4 col-sm-6 element-item Tickets" style="position: absolute; left: 777px; top: 0px;">
+			<div class="col-xl-2 col-md-4 col-sm-6 element-item Cars" style="position: absolute; left: 0px; top: 506.366px;">
 				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-3.jpg" alt="Card image">
 			</div>
-			<div class="col-xl-3 col-md-4 col-sm-6 element-item Vacation-Rentals" style="position: absolute; left: 1165.5px; top: 0px;">
+			<div class="col-xl-2 col-md-4 col-sm-6 element-item Cars" style="position: absolute; left: 388.5px; top: 506.366px;">
 				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-4.jpg" alt="Card image">
 			</div>
-			<div class="col-xl-3 col-md-4 col-sm-6 element-item Tours" style="position: absolute; left: 0px; top: 253.183px;">
+			<div class="col-xl-2 col-md-4 col-sm-6 element-item Cruises" style="position: absolute; left: 777px; top: 506.366px;">
 				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-5.jpg" alt="Card image">
 			</div>
-			<div class="col-xl-3 col-md-4 col-sm-6 element-item Tours" style="position: absolute; left: 388.5px; top: 253.183px;">
-				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-6.jpg" alt="Card image">
-			</div>
-			<div class="col-xl-3 col-md-4 col-sm-6 element-item Hotels" style="position: absolute; left: 777px; top: 253.183px;">
-				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-1.jpg" alt="Card image">
-			</div>
-			<div class="col-xl-3 col-md-4 col-sm-6 element-item Vacation-Rentals" style="position: absolute; left: 1165.5px; top: 253.183px;">
-				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-2.jpg" alt="Card image">
-			</div>
-			<div class="col-xl-3 col-md-4 col-sm-6 element-item Cars" style="position: absolute; left: 0px; top: 506.366px;">
-				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-3.jpg" alt="Card image">
-			</div>
-			<div class="col-xl-3 col-md-4 col-sm-6 element-item Cars" style="position: absolute; left: 388.5px; top: 506.366px;">
-				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-4.jpg" alt="Card image">
-			</div>
-			<div class="col-xl-3 col-md-4 col-sm-6 element-item Cruises" style="position: absolute; left: 777px; top: 506.366px;">
-				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-5.jpg" alt="Card image">
-			</div>
-			<div class="col-xl-3 col-md-4 col-sm-6 element-item Flights" style="position: absolute; left: 1165.5px; top: 506.366px;">
+			<div class="col-xl-2 col-md-4 col-sm-6 element-item Flights" style="position: absolute; left: 1165.5px; top: 506.366px;">
 				<img class="img-fluid img-thumbnail mb-3" src="https://appsrv1-147a1.kxcdn.com/django-datta-able-enh/images/gallery-grid/img-grd-gal-6.jpg" alt="Card image">
 			</div>
 		</div>

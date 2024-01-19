@@ -208,14 +208,13 @@ def tourradar(request):
     return render(request, 'pages/tour-radar.html', context)
 
 @login_required(login_url="/accounts/login/")
-def smartfares(request):
+def flight_vs(request):
     context = {
-    'parent': 'Flights',
-    'segment': 'Smartfares'
+    'url': 'https://flights.vacationsavers.com/',
     }
 
     # Page from the theme 
-    return render(request, 'pages/flight-smartfares.html', context)
+    return render(request, 'pages/iframe-page.html', context)
 
 @login_required(login_url="/accounts/login/")
 def access_travel(request):

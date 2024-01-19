@@ -13,7 +13,7 @@ urlpatterns = [
 
     path('ticket-timefortickets/', views.timefortickets, name='timefortickets'),
     path('tour-radar/', views.tourradar, name='radar'),
-    path('flight-smartfares/', views.smartfares, name='smartfares'),
+    path('flight-vs/', views.flight_vs, name='flight_vs'),
     path('access-travel/', views.access_travel, name='access_travel'),
     path('access-deals/', views.access_deals, name='access_deals'),
 

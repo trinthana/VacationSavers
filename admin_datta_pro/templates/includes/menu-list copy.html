@@ -19,39 +19,48 @@
         <label>Travel</label>
       </li>
       <li data-username="Vacation Rental" class="nav-item" >
-        <a href="/vacation-rentals/" class="nav-link">
+        <a href="" class="nav-link">
           <span class="pcoded-micon">
             <i class="fas fa-couch"></i>
           </span>
           <span class="pcoded-mtext">Vacation Rentals</span>
         </a>
       </li>
-      <li data-username="Flight Smartfares" class="nav-item">
-        <a href="/flights/" class="nav-link">
+      <li data-username="Flight Smartfares" class="nav-item pcoded-hasmenu">
+        <a href="#" class="nav-link">
           <span class="pcoded-micon">
             <i class="fas fa-plane"></i>
           </span>
           <span class="pcoded-mtext">Flights</span>
         </a>
+        <ul class="pcoded-submenu">
+          <li><a href="/flight-vs/">Flights by VacationSavers</a></li>
+        </ul>
       </li>
-      <li data-username="Tickets timefortickets" class="nav-item">
-        <a href="/tickets/" class="nav-link">
+      <li data-username="Tickets timefortickets" class="nav-item pcoded-hasmenu">
+        <a href="#" class="nav-link">
           <span class="pcoded-micon">
             <i class="fas fa-ticket-alt"></i>
           </span>
           <span class="pcoded-mtext">Tickets</span>
         </a>
+        <ul class="pcoded-submenu">
+            <li><a href="/ticket-timefortickets/">Time for Tickets</a></li>
+        </ul>
       </li>
-      <li data-username="Tour TourRadar" class="nav-item">
-        <a href="/tours/" class="nav-link">
+      <li data-username="Tour TourRadar" class="nav-item pcoded-hasmenu">
+        <a href="#" class="nav-link">
           <span class="pcoded-micon">
             <i class="fas fa-suitcase"></i>
           </span>
           <span class="pcoded-mtext">Tours</span>
         </a>
+        <ul class="pcoded-submenu">
+          <li><a href="/tour-radar/">TourRadar</a></li>
+        </ul>
       </li>
       <li data-username="Hotels Bookings AirBnB VacationRentals" class="nav-item">
-        <a href="/hotels/" class="nav-link">
+        <a href="" class="nav-link">
           <span class="pcoded-micon">
             <i class="fas fa-bed"></i>
           </span>
@@ -59,7 +68,7 @@
         </a>
       </li>
       <li data-username="Cars Rental" class="nav-item">
-        <a href="/cars/" class="nav-link">
+        <a href="" class="nav-link">
           <span class="pcoded-micon">
             <i class="fas fa-car"></i>
           </span>
@@ -67,7 +76,7 @@
         </a>
       </li>
       <li data-username="Cruises Cruise" class="nav-item">
-        <a href="/cruises/" class="nav-link">
+        <a href="" class="nav-link">
           <span class="pcoded-micon">
             <i class="fas fa-ship"></i>
           </span>
@@ -75,7 +84,7 @@
         </a>
       </li>
       <li data-username="Transportations Transfer" class="nav-item">
-        <a href="/transfers/" class="nav-link">
+        <a href="" class="nav-link">
           <span class="pcoded-micon">
             <i class="fas fa-shipping-fast"></i>
           </span>
@@ -83,7 +92,7 @@
         </a>
       </li>
       <li data-username="Activities Activity" class="nav-item">
-        <a href="/activities/" class="nav-link">
+        <a href="" class="nav-link">
           <span class="pcoded-micon">
             <i class="fas fa-helicopter"></i>
           </span>
@@ -91,23 +100,114 @@
         </a>
       </li>
       <li data-username="Retails Retail" class="nav-item">
-        <a href="/retail/" class="nav-link">
+        <a href="" class="nav-link">
           <span class="pcoded-micon">
             <i class="fas fa-shopping-bag"></i>
           </span>
           <span class="pcoded-mtext">Retail</span>
         </a>
       </li>
-      <li data-username="Rails Rail" class="nav-item">
-        <a href="/rails/" class="nav-link">
+      <li data-username="All-in-1 All-in-One Access Travel Deals" class="nav-item pcoded-hasmenu">
+        <a href="" class="nav-link">
           <span class="pcoded-micon">
-            <i class="fas fa-train"></i>
+            <i class="fab fa-fort-awesome"></i>
           </span>
-          <span class="pcoded-mtext">Rails</span>
+          <span class="pcoded-mtext">All-in-1</span>
+        </a>
+        <ul class="pcoded-submenu">
+          <li><a href="/access-travel/">Travel  Deals</a></li>
+          <li><a href="/access-deals/">Eat, Play, Shop</a></li>
+        </ul>
+      </li>
+      {% else %}
+      <li class="nav-item pcoded-menu-caption">
+        <label>Travel</label>
+      </li>
+      <li data-username="Vacation Rental" class="nav-item disabled" >
+        <a href="#" class="nav-link">
+          <span class="pcoded-micon">
+            <i class="fas fa-couch"></i>
+          </span>
+          <span class="pcoded-mtext">Vacation Rentals</span>
         </a>
       </li>
-      <li data-username="All-in-1 All-in-One Access Travel Deals" class="nav-item">
-        <a href="/all-in-1/" class="nav-link">
+      <li data-username="Flight Smartfares" class="nav-item pcoded-hasmenu">
+        <a href="#" class="nav-link">
+          <span class="pcoded-micon">
+            <i class="fas fa-plane"></i>
+          </span>
+          <span class="pcoded-mtext">Flights</span>
+        </a>
+        <ul class="pcoded-submenu">
+          <li><a href="/flight-vs/">Smartfares</a></li>
+        </ul>
+      </li>
+      <li data-username="Tickets timefortickets" class="nav-item disabled">
+        <a href="#" class="nav-link">
+          <span class="pcoded-micon">
+            <i class="fas fa-ticket-alt"></i>
+          </span>
+          <span class="pcoded-mtext">Tickets</span>
+        </a>
+      </li>
+      <li data-username="Tour TourRadar" class="nav-item disabled">
+        <a href="#" class="nav-link">
+          <span class="pcoded-micon">
+            <i class="fas fa-suitcase"></i>
+          </span>
+          <span class="pcoded-mtext">Tours</span>
+        </a>
+       </li>
+      <li data-username="Hotels Bookings AirBnB VacationRentals" class="nav-item disabled">
+        <a href="#" class="nav-link">
+          <span class="pcoded-micon">
+            <i class="fas fa-bed"></i>
+          </span>
+          <span class="pcoded-mtext">Hotels</span>
+        </a>
+      </li>
+      <li data-username="Cars Rental" class="nav-item disabled">
+        <a href="#" class="nav-link">
+          <span class="pcoded-micon">
+            <i class="fas fa-car"></i>
+          </span>
+          <span class="pcoded-mtext">Cars</span>
+        </a>
+      </li>
+      <li data-username="Cruises Cruise" class="nav-item disabled">
+        <a href="#" class="nav-link">
+          <span class="pcoded-micon">
+            <i class="fas fa-ship"></i>
+          </span>
+          <span class="pcoded-mtext">Cruises</span>
+        </a>
+      </li>
+      <li data-username="Transportations Transfer" class="nav-item disabled">
+        <a href="/" class="nav-link">
+          <span class="pcoded-micon">
+            <i class="fas fa-shipping-fast"></i>
+          </span>
+          <span class="pcoded-mtext">Transfers</span>
+        </a>
+      </li>
+      <li data-username="Activities Activity" class="nav-item disabled">
+        <a href="#" class="nav-link">
+          <span class="pcoded-micon">
+            <i class="fas fa-helicopter"></i>
+          </span>
+          <span class="pcoded-mtext">Activities</span>
+        </a>
+      </li>
+      <li data-username="Retails Retail" class="nav-item disabled">
+        <a href="#" class="nav-link">
+          <span class="pcoded-micon">
+            <i class="fas fa-shopping-bag"></i>
+          </span>
+          <span class="pcoded-mtext">Retail</span>
+        </a>
+      </li>
+      <li data-username="All-in-1 All-in-One" class="nav-item disabled">
+        <a href="#" class="nav-link">
           <span class="pcoded-micon">
             <i class="fab fa-fort-awesome"></i>
           </span>
