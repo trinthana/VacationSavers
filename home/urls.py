@@ -16,7 +16,22 @@ urlpatterns = [
     path('flight-vs/', views.flight_vs, name='flight_vs'),
     path('access-travel/', views.access_travel, name='access_travel'),
     path('access-deals/', views.access_deals, name='access_deals'),
+    path('cruise-arrivia/', views.cruise_arrivia, name='cruise_arrivia'),
+    path('car-worldia/', views.car_worldia, name='car_worldia'),
 
+    path('vacation-rentals/', views.vacation_rentals, name='vacation_rentals'),
+    path('flights/', views.flights, name='flights'),
+    path('tickets/', views.tickets, name='tickets'),
+    path('tours/', views.tours, name='tours'),
+    path('hotels/', views.hotels, name='hotels'),
+    path('cars/', views.cars, name='cars'),
+    path('cruises/', views.cruises, name='cruises'),
+    path('transfers/', views.transfers, name='transfers'),
+    path('activities/', views.activities, name='activities'),
+    path('retail/', views.retail, name='retail'),
+    path('rails/', views.rails, name='rails'),
+    path('all-in-1/', views.all_in_1, name='all_in_1'),
+    
     # Matches any html file
     #re_path(r'^.*\.*', views.pages, name='pages'),
 ]

@@ -217,6 +217,24 @@ def flight_vs(request):
     return render(request, 'pages/iframe-page.html', context)
 
 @login_required(login_url="/accounts/login/")
+def cruise_arrivia(request):
+    context = {
+    'url': 'https://www.arrivia.com',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/iframe-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+def car_worldia(request):
+    context = {
+    'url': 'https://www.worldia.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/iframe-page.html', context)
+
+@login_required(login_url="/accounts/login/")
 def access_travel(request):
     # Query the ApplicationToken model to get the token for application 'ACCESS' and the current user
     try:
@@ -253,3 +271,113 @@ def access_deals(request):
 
     # Page from the theme 
     return render(request, 'pages/access-deals.html', context)
+
+@login_required(login_url="/accounts/login/")
+def vacation_rentals(request):
+    context = {
+    'url': 'https://www.worldia.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/product-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+def flights(request):
+    context = {
+    'url': 'https://www.worldia.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/product-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+def tickets(request):
+    context = {
+    'url': 'https://www.worldia.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/product-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+def tours(request):
+    context = {
+    'url': 'https://www.worldia.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/product-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+def hotels(request):
+    context = {
+    'url': 'https://www.worldia.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/product-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+def cars(request):
+    context = {
+    'url': 'https://www.worldia.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/product-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+def cruises(request):
+    context = {
+    'url': 'https://www.worldia.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/product-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+def transfers(request):
+    context = {
+    'url': 'https://www.worldia.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/product-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+def activities(request):
+    context = {
+    'url': 'https://www.worldia.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/product-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+def retail(request):
+    context = {
+    'url': 'https://www.worldia.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/product-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+def rails(request):
+    context = {
+    'url': 'https://www.worldia.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/product-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+
+def all_in_1(request):
+    context = {
+    'url': 'https://www.worldia.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/product-page.html', context)
+

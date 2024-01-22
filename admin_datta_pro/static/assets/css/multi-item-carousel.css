@@ -72,3 +72,11 @@ code {
   font-size:1em !important;
   color: orange !important;
 }
+
+.card .card-title {
+  height: 7em !important;
+}
+
+.grid .card .card-title {
+  height: 10em !important;
+}
