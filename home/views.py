@@ -190,22 +190,21 @@ def change_plan(request):
 @login_required(login_url="/accounts/login/")
 def timefortickets(request):
     context = {
-    'parent': 'Tickets',
-    'segment': 'Time for Tickets'
+    'url': 'https://vacationsavers.timefortickets.com/',
     }
 
     # Page from the theme 
-    return render(request, 'pages/ticket-timefortickets.html', context)
+    return render(request, 'pages/iframe-page.html', context)
+
 
 @login_required(login_url="/accounts/login/")
 def tourradar(request):
     context = {
-    'parent': 'Tours',
-    'segment': 'TourRadar'
+    'url': 'https://vacationsavers.travel.tourradar.com/',
     }
 
     # Page from the theme 
-    return render(request, 'pages/tour-radar.html', context)
+    return render(request, 'pages/iframe-page.html', context)
 
 @login_required(login_url="/accounts/login/")
 def flight_vs(request):
@@ -245,8 +244,6 @@ def access_travel(request):
         cvt = None
 
     context = {
-    'parent': 'All-in-1',
-    'segment': 'Travel Deals',
     'cvt': cvt
     }
 
@@ -264,8 +261,6 @@ def access_deals(request):
         cvt = None
 
     context = {
-    'parent': 'All-in-1',
-    'segment': 'Eat, Play, Shop',
     'cvt': cvt
     }
 

@@ -5,6 +5,8 @@
 <head>
   <title>VacationSavers - {% block title %}Your premier destination for travel booking{% endblock title %}</title>
   {% include 'includes/head.html' %}
+  {% block extraheader %}
+  {% endblock extraheader %}
   {% block style %}
     <!-- Favicon icon -->
     <link rel="icon" href="{% static 'assets/images/favicon.ico' %}" type="image/x-icon">
