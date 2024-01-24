@@ -80,3 +80,9 @@ code {
 .grid .card .card-title {
   height: 10em !important;
 }
+
+p {
+  margin-top: 10px !important;
+}
+
+
