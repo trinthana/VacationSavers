@@ -65,7 +65,7 @@ def import_access_travel(member):
         if response.status_code // 100 == 2:
             #if success then put token back
             for user in user_list:
-                hash = org_key + "-" + prg_key + user.username.upper()
+                hash = org_key + "-" + prg_key+ "-" + user.username.upper()
                 sha_text = calculate_sha256(hash)
 
                 # Create a new ApplicationToken instance for the current user
@@ -133,7 +133,7 @@ def import_access_deals(member):
         if response.status_code // 100 == 2:
             #if success then put token back
             for user in user_list:
-                hash = org_key + "-" + prg_key + user.username.upper()
+                hash = org_key + "-" + prg_key + "-" + user.username.upper()
                 sha_text = calculate_sha256(hash)
 
                 # Create a new ApplicationToken instance for the current user
@@ -163,6 +163,7 @@ def import_access_iframe(member):
             applicationtoken__application = ApplicationChoices.ACCESSIFRAME
         )
     
+    user_list = User.objects.all
     # Extract user data and format it in the desired structure
     if user_list.count() > 0 :
         members = []
@@ -201,7 +202,7 @@ def import_access_iframe(member):
         if response.status_code // 100 == 2:
             #if success then put token back
             for user in user_list:
-                hash = org_key + "-" + prg_key + user.username.upper()
+                hash = org_key + "-" + prg_key + "-" + user.username.upper()
                 sha_text = calculate_sha256(hash)
 
                 # Create a new ApplicationToken instance for the current user
