@@ -163,8 +163,7 @@ def import_access_iframe(member):
             applicationtoken__application = ApplicationChoices.ACCESSIFRAME
         )
     
-    user_list = User.objects.all
-    # Extract user data and format it in the desired structure
+        # Extract user data and format it in the desired structure
     if user_list.count() > 0 :
         members = []
         for user in user_list:
@@ -217,6 +216,43 @@ def import_access_iframe(member):
         else:
             return response.json()
 
+def gen_access_iframe(member):
+    url = "https://amt.accessdevelopment.com/api/v1/imports/"
+    access_token = 'ca3f3acbaa6714057023aee3f5f8960eed66cfa216c5ab75afec2d7cb1679d82'
+    org_key = "203700"
+    prg_key = "203700"
+
+    # Get all users which do not have Access Token yet.
+    user_list = User.objects.filter(
+        applicationtoken__application = ApplicationChoices.ACCESSIFRAME
+    )
+    
+    # Extract user data and format it in the desired structure
+    if user_list.count() > 0 :
+        #if success then put token back
+        for dbuser in user_list:
+            try:
+                hash = org_key + "-" + prg_key + "-" + dbuser.username.upper()
+                sha_text = calculate_sha256(hash)
+
+                application_token = ApplicationToken.objects.get(user=dbuser)
+                
+                # Update the fields you want to change
+                application_token.application = ApplicationChoices.ACCESSIFRAME
+                application_token.token = sha_text
+                
+                # Save the updated record
+                application_token.save()
+                
+            except ApplicationToken.DoesNotExist:
+                # Handle the case where no record exists for the current user
+                return 0  # Redirect to an error page or handle the error appropriately
+            
+        return 1
+
+    else:
+        return 0
+        
 def import_access_member(member):
 
     ret1 = import_access_travel('')
