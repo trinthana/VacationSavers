@@ -20120,3 +20120,78 @@ Help Desk Application css start
 }
 
 /**====== user card css end ======**/
+
+/**====== background image start ======**/
+.bg-img-vr {
+    background-image: url("../images/bg-images/bg-vr.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: right;
+}
+.bg-img-f {
+    background-image: url("../images/bg-images/bg-flights.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: right;
+}
+.bg-img-tk {
+    background-image: url("../images/bg-images/bg-tickets.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: right;
+}
+.bg-img-tr {
+    background-image: url("../images/bg-images/bg-tours.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: right;
+}
+.bg-img-h {
+    background-image: url("../images/bg-images/bg-hotels.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: right;
+}
+.bg-img-c {
+    background-image: url("../images/bg-images/bg-cars.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: right;
+}
+.bg-img-cr {
+    background-image: url("../images/bg-images/bg-cruises.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: right;
+}
+.bg-img-tr {
+    background-image: url("../images/bg-images/bg-transfers.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: right;
+}
+.bg-img-act {
+    background-image: url("../images/bg-images/bg-activities.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: right;
+}
+.bg-img-rt {
+    background-image: url("../images/bg-images/bg-retails.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: right;
+}
+.bg-img-rl {
+    background-image: url("../images/bg-images/bg-rails.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: right;
+}
+.bg-img-aio {
+    background-image: url("../images/bg-images/bg-allinone.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: right;
+}
+/**====== background image end ======**/

@@ -179,111 +179,66 @@ def verify_code(request, **kwargs):
 # Pages for categories
 @login_required(login_url="/accounts/login/")
 def vacation_rentals(request):
-    context = {
-    'url': 'https://www.worldia.com/',
-    }
-
     # Page from the theme 
-    return render(request, 'pages/product-page.html', context)
+    return render(request, 'pages/products/product-vacation-rentals.html')
 
 @login_required(login_url="/accounts/login/")
 def flights(request):
-    context = {
-    'url': 'https://www.worldia.com/',
-    }
-
     # Page from the theme 
-    return render(request, 'pages/product-page.html', context)
+    return render(request, 'pages/products/product-flights.html')
 
 @login_required(login_url="/accounts/login/")
 def tickets(request):
-    context = {
-    'url': 'https://www.worldia.com/',
-    }
-
     # Page from the theme 
-    return render(request, 'pages/product-page.html', context)
+    return render(request, 'pages/products/product-tickets.html')
 
 @login_required(login_url="/accounts/login/")
 def tours(request):
-    context = {
-    'url': 'https://www.worldia.com/',
-    }
-
     # Page from the theme 
-    return render(request, 'pages/product-page.html', context)
+    return render(request, 'pages/products/product-tours.html')
 
 @login_required(login_url="/accounts/login/")
 def hotels(request):
-    context = {
-    'url': 'https://www.worldia.com/',
-    }
-
     # Page from the theme 
-    return render(request, 'pages/product-page.html', context)
+    return render(request, 'pages/products/product-hotels.html')
 
 @login_required(login_url="/accounts/login/")
 def cars(request):
-    context = {
-    'url': 'https://www.worldia.com/',
-    }
-
     # Page from the theme 
-    return render(request, 'pages/product-page.html', context)
+    return render(request, 'pages/products/product-cars.html')
 
 @login_required(login_url="/accounts/login/")
 def cruises(request):
-    context = {
-    'url': 'https://www.worldia.com/',
-    }
-
     # Page from the theme 
-    return render(request, 'pages/product-page.html', context)
+    return render(request, 'pages/products/product-cruises.html')
 
 @login_required(login_url="/accounts/login/")
 def transfers(request):
-    context = {
-    'url': 'https://www.worldia.com/',
-    }
-
     # Page from the theme 
-    return render(request, 'pages/product-page.html', context)
+    return render(request, 'pages/products/product-transfers.html')
 
 @login_required(login_url="/accounts/login/")
 def activities(request):
-    context = {
-    'url': 'https://www.worldia.com/',
-    }
-
     # Page from the theme 
-    return render(request, 'pages/product-page.html', context)
+    return render(request, 'pages/products/product-activities.html')
 
 @login_required(login_url="/accounts/login/")
 def retail(request):
-    context = {
-    'url': 'https://www.worldia.com/',
-    }
-
     # Page from the theme 
-    return render(request, 'pages/product-page.html', context)
+    return render(request, 'pages/products/product-retails.html')
+
 
 @login_required(login_url="/accounts/login/")
 def rails(request):
-    context = {
-    'url': 'https://www.worldia.com/',
-    }
-
     # Page from the theme 
-    return render(request, 'pages/product-page.html', context)
+    return render(request, 'pages/products/product-rails.html')
+
 
 @login_required(login_url="/accounts/login/")
 def all_in_1(request):
-    context = {
-    'url': 'https://www.worldia.com/',
-    }
-
     # Page from the theme 
-    return render(request, 'pages/product-page.html', context)
+    return render(request, 'pages/products/product-allinone.html')
+
 
 # Pages for products
 @login_required(login_url="/accounts/login/")
