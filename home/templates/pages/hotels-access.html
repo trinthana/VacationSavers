@@ -1,0 +1,31 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Hotels {% endblock %} 
+{% block extraheader %}
+<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval'  *.accessdevelopment.com  *.adcrws.com *.mapbox.com translation.googleapis.com cdn.heapanalytics.com heapanalytics.com *.auryc.com *.visualwebsiteoptimizer.com app.vwo.com js.stripe.com core.spreedly.com qqc-api.worldnomads.com *.smartlook.com *.smartlook.cloud *.braintreegateway.com *.braintree-api.com " />
+<meta http-equiv="Content-Security-Policy" content="frame-src 'self' 'unsafe-inline' 'unsafe-eval' *.accessdevelopment.com  *.adcrws.com *.mapbox.com translation.googleapis.com cdn.heapanalytics.com heapanalytics.com *.auryc.com *.visualwebsiteoptimizer.com app.vwo.com js.stripe.com core.spreedly.com qqc-api.worldnomads.com *.smartlook.com *.smartlook.cloud *.braintreegateway.com *.braintree-api.com " />
+<meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' 'unsafe-inline' 'unsafe-eval' *.accessdevelopment.com  *.adcrws.com *.mapbox.com translation.googleapis.com cdn.heapanalytics.com heapanalytics.com *S.auryc.com *.visualwebsiteoptimizer.com app.vwo.com js.stripe.com core.spreedly.com qqc-api.worldnomads.com *.smartlook.com *.smartlook.cloud *.braintreegateway.com *.braintree-api.com " />
+{% endblock extraheader %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}	
+
+<!-- [ Main Content ] start -->
+<div id="divAccess">
+    <!-- [ working-page ] start -->
+    <!-- [ working-page ] end -->
+</div>
+<!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block extra_js %}
+<script
+  type="text/javascript"
+  src="https://booking.accessdevelopment.com/scripts/integration.js?target=divAccess&view=hotels&cvt={{ cvt }}"
+></script>
+{% endblock extra_js %}
+ 

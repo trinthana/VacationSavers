@@ -298,6 +298,40 @@ def car_worldia(request):
     return render(request, 'pages/iframe-page.html', context)
 
 @login_required(login_url="/accounts/login/")
+def car_access(request):
+    # Query the ApplicationToken model to get the token for application 'ACCESS' and the current user
+    try:
+        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESSIFRAME)
+        cvt = application_token.token
+    except ApplicationToken.DoesNotExist:
+        # Handle the case where no token is found for the specified application and user
+        cvt = None
+
+    context = {
+    'cvt': cvt
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/car-access.html', context)
+
+@login_required(login_url="/accounts/login/")
+def hotels_access(request):
+    # Query the ApplicationToken model to get the token for application 'ACCESS' and the current user
+    try:
+        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESSIFRAME)
+        cvt = application_token.token
+    except ApplicationToken.DoesNotExist:
+        # Handle the case where no token is found for the specified application and user
+        cvt = None
+
+    context = {
+    'cvt': cvt
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/hotels-access.html', context)
+
+@login_required(login_url="/accounts/login/")
 def access_travel(request):
     # Query the ApplicationToken model to get the token for application 'ACCESS' and the current user
     try:
