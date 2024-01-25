@@ -176,97 +176,7 @@ def verify_code(request, **kwargs):
     else :
         return render(request, 'pages/signup-withcode.html', context={'message':'This invitation code is already used.', 'token':inp_token})        
     
-
-@login_required(login_url="/accounts/login/")
-def change_plan(request):
-    context = {
-    'parent': 'Account',
-    'segment': 'Change Plan'
-    }
-
-    # Page from the theme 
-    return render(request, 'pages/change-plan.html', context)
-
-@login_required(login_url="/accounts/login/")
-def timefortickets(request):
-    context = {
-    'url': 'https://vacationsavers.timefortickets.com/',
-    }
-
-    # Page from the theme 
-    return render(request, 'pages/iframe-page.html', context)
-
-
-@login_required(login_url="/accounts/login/")
-def tourradar(request):
-    context = {
-    'url': 'https://vacationsavers.travel.tourradar.com/',
-    }
-
-    # Page from the theme 
-    return render(request, 'pages/iframe-page.html', context)
-
-@login_required(login_url="/accounts/login/")
-def flight_vs(request):
-    context = {
-    'url': 'https://flights.vacationsavers.com/',
-    }
-
-    # Page from the theme 
-    return render(request, 'pages/iframe-page.html', context)
-
-@login_required(login_url="/accounts/login/")
-def cruise_arrivia(request):
-    context = {
-    'url': 'https://www.arrivia.com',
-    }
-
-    # Page from the theme 
-    return render(request, 'pages/iframe-page.html', context)
-
-@login_required(login_url="/accounts/login/")
-def car_worldia(request):
-    context = {
-    'url': 'https://www.worldia.com/',
-    }
-
-    # Page from the theme 
-    return render(request, 'pages/iframe-page.html', context)
-
-@login_required(login_url="/accounts/login/")
-def access_travel(request):
-    # Query the ApplicationToken model to get the token for application 'ACCESS' and the current user
-    try:
-        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESSIFRAME)
-        cvt = application_token.token
-    except ApplicationToken.DoesNotExist:
-        # Handle the case where no token is found for the specified application and user
-        cvt = None
-
-    context = {
-    'cvt': cvt
-    }
-
-    # Page from the theme 
-    return render(request, 'pages/access-travel.html', context)
-
-@login_required(login_url="/accounts/login/")
-def access_deals(request):
-    # Query the ApplicationToken model to get the token for application 'ACCESSDEAL' and the current user
-    try:
-        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESSDEAL)
-        cvt = application_token.token
-    except ApplicationToken.DoesNotExist:
-        # Handle the case where no token is found for the specified application and user
-        cvt = None
-
-    context = {
-    'cvt': cvt
-    }
-
-    # Page from the theme 
-    return render(request, 'pages/access-deals.html', context)
-
+# Pages for categories
 @login_required(login_url="/accounts/login/")
 def vacation_rentals(request):
     context = {
@@ -367,7 +277,6 @@ def rails(request):
     return render(request, 'pages/product-page.html', context)
 
 @login_required(login_url="/accounts/login/")
-
 def all_in_1(request):
     context = {
     'url': 'https://www.worldia.com/',
@@ -376,3 +285,99 @@ def all_in_1(request):
     # Page from the theme 
     return render(request, 'pages/product-page.html', context)
 
+# Pages for products
+@login_required(login_url="/accounts/login/")
+def change_plan(request):
+    context = {
+    'parent': 'Account',
+    'segment': 'Change Plan'
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/change-plan.html', context)
+
+@login_required(login_url="/accounts/login/")
+def timefortickets(request):
+    context = {
+    'url': 'https://vacationsavers.timefortickets.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/iframe-page.html', context)
+
+
+@login_required(login_url="/accounts/login/")
+def tourradar(request):
+    context = {
+    'url': 'https://vacationsavers.travel.tourradar.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/iframe-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+def flight_vs(request):
+    context = {
+    'url': 'https://flights.vacationsavers.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/iframe-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+def cruise_arrivia(request):
+    context = {
+    'url': 'https://www.arrivia.com',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/iframe-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+def car_worldia(request):
+    context = {
+    'url': 'https://www.worldia.com/',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/iframe-page.html', context)
+
+@login_required(login_url="/accounts/login/")
+def access_travel(request):
+    # Query the ApplicationToken model to get the token for application 'ACCESS' and the current user
+    try:
+        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESSIFRAME)
+        cvt = application_token.token
+    except ApplicationToken.DoesNotExist:
+        # Handle the case where no token is found for the specified application and user
+        cvt = None
+
+    context = {
+    'cvt': cvt
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/access-travel.html', context)
+
+@login_required(login_url="/accounts/login/")
+def access_deals(request):
+    # Query the ApplicationToken model to get the token for application 'ACCESSDEAL' and the current user
+    try:
+        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESSDEAL)
+        cvt = application_token.token
+    except ApplicationToken.DoesNotExist:
+        # Handle the case where no token is found for the specified application and user
+        cvt = None
+
+    context = {
+    'cvt': cvt
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/access-deals.html', context)
+
+@login_required(login_url="/accounts/login/")
+def gtn(request):
+
+    # Page from the theme 
+    return render(request, 'pages/vacation-rentals-gtn.html')

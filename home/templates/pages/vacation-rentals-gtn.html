@@ -1,0 +1,49 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} TourRadar {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}	
+
+<!-- [ Main Content ] start -->
+<div>
+    <!-- [ working-page ] start -->
+    <div id='gtn-widget-container'>
+        <script>
+        (function(w, i, d, g, e, t) {
+            w.hj = w.hj || function() {
+                (w.gtn.q = w.gtn.q || []).push(arguments)
+            };
+            w._gtnSettings = {
+                gtnKey: 'eU9FbmJLNW5qRllJK2lFcVQ2R3VhcFptL3VPSlJDeDZVNGtNNmtQTUd5MD0=',
+                gtnSecret: 'dDVXbDRKVDhya3NQckw1SzdTMVhsTTd5M21mSWFVdlovQk9PSjBvVWxkUT0=',
+                gtnToken: '32|ox9vTkKMNELVa23AgBhRjIx6mbyCFZFrdiUqA6Qi'
+            };
+            // Optional Additional Parameters, contact widget@gtnllc.com to configure
+            //w._gtnParams = {
+            //    textID: 'ABC123456', // i.e. Customer Identifier
+            //}
+            w._gtnSettings.gtnSession = Date.now();
+            e = i.getElementsByTagName('head')[0];
+            t = i.createElement('script');
+            t.async = 1;
+            t.src = d + g + w._gtnSettings.gtnSession;
+            e.appendChild(t);
+        
+            t.onerror = (err) => {
+                console.error('Error loading the widget script:', err);
+            };
+        })(window, document, 'https://hq-api-dev.gtnllc.com/widget/v1/main', '.js?gtnid=');
+        </script>
+        </div>
+    <!-- [ working-page ] end -->
+</div>
+<!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+ 

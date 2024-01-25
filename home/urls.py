@@ -18,6 +18,7 @@ urlpatterns = [
     path('access-deals/', views.access_deals, name='access_deals'),
     path('cruise-arrivia/', views.cruise_arrivia, name='cruise_arrivia'),
     path('car-worldia/', views.car_worldia, name='car_worldia'),
+    path('vacation-rentals-gtn/', views.gtn, name='gtn'),
 
     path('vacation-rentals/', views.vacation_rentals, name='vacation_rentals'),
     path('flights/', views.flights, name='flights'),
