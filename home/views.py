@@ -224,9 +224,20 @@ def activities(request):
 
 @login_required(login_url="/accounts/login/")
 def retail(request):
-    # Page from the theme 
-    return render(request, 'pages/products/product-retails.html')
+    # Query the ApplicationToken model to get the token for application 'ACCESSDEAL' and the current user
+    try:
+        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESSDEAL)
+        cvt = application_token.token
+    except ApplicationToken.DoesNotExist:
+        # Handle the case where no token is found for the specified application and user
+        cvt = None
 
+    context = {
+    'cvt': cvt
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/products/product-retails.html', context)
 
 @login_required(login_url="/accounts/login/")
 def rails(request):
