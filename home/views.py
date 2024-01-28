@@ -284,7 +284,7 @@ def tourradar(request):
 @login_required(login_url="/accounts/login/")
 def flight_vs(request):
     context = {
-    'url': 'https://flights.vacationsavers.com/',
+    'url': 'https://flights.vacationsavers.com/?cmp=3c26aff8553c068f8857990d2fb95ed447893b85',
     }
 
     # Page from the theme 
