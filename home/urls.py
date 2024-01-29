@@ -22,7 +22,7 @@ urlpatterns = [
     path('hotels-access/', views.hotels_access, name='hotels_access'),
     path('vacation-rentals-gtn/', views.gtn, name='gtn'),
 
-    path('vacation-rentals/', views.gtn2, name='vacation_rentals'),
+    path('vacation-rentals/', views.vacation_rentals, name='vacation_rentals'),
     path('flights/', views.flights, name='flights'),
     path('tickets/', views.tickets, name='tickets'),
     path('tours/', views.tours, name='tours'),
