@@ -380,3 +380,8 @@ def gtn(request):
 
     # Page from the theme 
     return render(request, 'pages/vacation-rentals-gtn.html')
+
+def gtn2(request):
+
+    # Page from the theme 
+    return render(request, 'pages/vacation-rentals.html')
