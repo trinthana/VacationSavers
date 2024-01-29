@@ -376,7 +376,6 @@ def access_deals(request):
     # Page from the theme 
     return render(request, 'pages/access-deals.html', context)
 
-@login_required(login_url="/accounts/login/")
 def gtn(request):
 
     # Page from the theme 
