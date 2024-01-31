@@ -36,10 +36,20 @@
 
 .u-section-1 .u-btn-1 {
   text-align: center;
+  vertical-align: middle;
+  display: table-cell;
   font-weight: 400;
   background-image: none;
   margin: 15px auto 0 15px;
-  padding: 15px 25x 12px 15px;
+  width: 170px;
+  height: 70px;
+}
+
+.height50 {
+  line-height: 50px;
+}
+.height25 {
+  line-height: 25px;
 }
 
 @media (max-width: 1199px) {

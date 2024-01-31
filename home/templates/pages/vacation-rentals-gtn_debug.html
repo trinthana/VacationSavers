@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval'  *.gtnllc.com" />
+    <meta http-equiv="Content-Security-Policy" content="frame-src 'self' 'unsafe-inline' 'unsafe-eval' *.gtnllc.com" />
+
+</head>
+<body>
+
+        <script>
+            (function(w, i, d, g, e, t) {
+                w.hj = w.hj || function() {
+                    (w.gtn.q = w.gtn.q || []).push(arguments)
+                };
+                w._gtnSettings = {
+                    gtnKey: 'eU9FbmJLNW5qRllJK2lFcVQ2R3VhcFptL3VPSlJDeDZVNGtNNmtQTUd5MD0=',
+                    gtnSecret: 'c0FNUGNxYnF3dTA0UHAra29IcTRlNHVrcVBYR0w3Z2xOMTV3enJ5Z2d3OTZ4L2lWV3oxeHdPVkhVUFdFOWlucg==',
+                    gtnToken: '35|9Wk2UQOLyESBRQoUT6CtOYTGv6MwZSCcp8RKUrq8'
+                };
+                // Optional Additional Parameters, contact widget@gtnllc.com to configure
+                w._gtnParams = {
+                    textID: 'ABC123456', // i.e. Customer Identifier
+                }
+                w._gtnSettings.gtnSession = Date.now();
+                e = i.getElementsByTagName('head')[0];
+                t = i.createElement('script');
+                t.async = 1;
+                t.src = d + g + w._gtnSettings.gtnSession;
+                e.appendChild(t);
+            
+                t.onerror = (err) => {
+                    console.error('Error loading the widget script:', err);
+                };
+            })(window, document, 'https://hq-api-dev.gtnllc.com/widget/v1/main', '.js?gtnid=');
+        </script>
+            
+</body>
+</html>
+
