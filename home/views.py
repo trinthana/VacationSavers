@@ -333,7 +333,7 @@ def hotels_booking(request):
     }
 
     # Page from the theme 
-    return render(request, 'pages/tour-worldia.html', context)
+    return render(request, 'pages/hotels-booking.html', context)
 
 @login_required(login_url="/accounts/login/")
 def hotels_access(request):
