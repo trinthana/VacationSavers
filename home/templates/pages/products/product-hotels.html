@@ -5,23 +5,74 @@
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
+{% block extrastyle %}
+	<link rel="stylesheet" href="{% static 'assets/css/multi-item-carousel.css' %}">
+{% endblock extrastyle %}
+
 
 {% block content %}	
-<div class="auth-wrapper  bg-img-h">
-<!-- [ Main Content ] start -->
-    <div class="col-xl-4 col-md-6">
-        <div class="card lazy-dog">
+<div class="row">
+    <!-- [ form-element ] start -->
+    <div class="col-lg-12">
+        <div class="card">
             <div class="card-header">
-                <h4>Hotels</h4>
+                <h5>Hotels</h5>
                 <p>Indulge in premium hotels without the premium price tag. Experience the perfect blend of luxury and value, with exclusive deals that place top-rated hotels within your budget.</p>
             </div>
-            <div class="card-block">
-
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-lg-6">
+                        <img class="ratio ratio-21x9" src="{% static 'assets/images/bg-images/bg-hotels-booking.jpg' %}" />
+                    </div>
+                    <div class="col-lg-3">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <h1 class="alert-info file-btn"><i class="fas fa-bed"></i></h1>
+                        <h3 class="alert-info">Get 5% off your stay instantly</h3>
+                        <ul class="alert-info">
+                            <li>You’re only eligible when booking a property with an instant reward badge.</li>
+                            <li>Choose a payment option that's online or managed by Booking.com.</li>
+                        </ul>
+                        <a href="/hotels-booking/" target="_self">
+                            <button type="button" class="btn shadow-1 btn-primary">Find Deals</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h5>Top Offers</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        <div class="carousel-inner">
+                            <div class="carousel-item">
+                                {% include 'pages/products/card-gtn.html' %}
+                            </div>
+                            <div class="carousel-item active">
+                                {% include 'pages/products/card-flights-vs.html' %}
+                            </div>
+                            <div class="carousel-item">
+                                {% include 'pages/products/card-time-for-tickets.html' %}
+                            </div>
+                            <div class="carousel-item">
+                                {% include 'pages/products/card-travel-access.html' %}
+                            </div>
+                            <div class="carousel-item">
+                                {% include 'pages/products/card-hotels-access.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-<!-- [ Main Content ] end -->
 </div>
+<!-- [ Main Content ] end -->
 
 {% endblock content %}
 
