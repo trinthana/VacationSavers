@@ -17,9 +17,10 @@ urlpatterns = [
     path('access-travel/', views.access_travel, name='access_travel'),
     path('access-deals/', views.access_deals, name='access_deals'),
     path('cruise-arrivia/', views.cruise_arrivia, name='cruise_arrivia'),
-    path('car-worldia/', views.car_worldia, name='car_worldia'),
+    path('tour-worldia/', views.tour_worldia, name='tour_worldia'),
     path('car-access/', views.car_access, name='car_access'),
     path('hotels-access/', views.hotels_access, name='hotels_access'),
+    path('hotels-booking/', views.hotels_booking, name='hotels_booking'),
     path('vacation-rentals-gtn/', views.gtn, name='gtn'),
 
     path('vacation-rentals/', views.vacation_rentals, name='vacation_rentals'),

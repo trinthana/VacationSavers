@@ -300,13 +300,13 @@ def cruise_arrivia(request):
     return render(request, 'pages/iframe-page.html', context)
 
 @login_required(login_url="/accounts/login/")
-def car_worldia(request):
+def tour_worldia(request):
     context = {
-    'url': 'https://www.worldia.com/',
+    'url': 'https://vacationsavers.worldia.com',
     }
 
     # Page from the theme 
-    return render(request, 'pages/iframe-page.html', context)
+    return render(request, 'pages/tour-worldia.html', context)
 
 @login_required(login_url="/accounts/login/")
 def car_access(request):
@@ -324,6 +324,16 @@ def car_access(request):
 
     # Page from the theme 
     return render(request, 'pages/car-access.html', context)
+
+@login_required(login_url="/accounts/login/")
+def hotels_booking(request):
+
+    context = {
+    'usr': request.user.username,
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/tour-worldia.html', context)
 
 @login_required(login_url="/accounts/login/")
 def hotels_access(request):

@@ -58,7 +58,10 @@
 
   {% include 'includes/scripts.html' %}
 
- 
+  {% block fixed_plugin %}
+    {% include 'includes/fixed-plugin.html' %}
+  {% endblock fixed_plugin %}
+  
   {% block extra_js %}{% endblock extra_js %}
 
 
