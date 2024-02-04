@@ -20195,3 +20195,14 @@ Help Desk Application css start
     background-position: right;
 }
 /**====== background image end ======**/
+
+/**====== overide bootstrap start ======**/
+
+.tooltip-inner {
+    max-width: 700px !important;
+    /* If max-width does not work, try using width instead */
+    width: 700px !important; 
+}
+
+/**====== overide bootstrap end ======**/
+
