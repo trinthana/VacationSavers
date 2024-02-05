@@ -71,6 +71,7 @@
 code {
   font-size:1em !important;
   color: orange !important;
+  font-weight: 400 !important;
 }
 
 .card .card-title {
