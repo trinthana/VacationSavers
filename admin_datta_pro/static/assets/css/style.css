@@ -20204,13 +20204,20 @@ Help Desk Application css start
     width: 700px !important; 
 }
 
+.header-badge {
+    margin-left: -400px;
+}
+
 @media only screen and (max-width: 767px) {
     .tooltip-inner {
         max-width: 350px !important;
         /* If max-width does not work, try using width instead */
         width: 350px !important; 
     }
-    
+    .header-badge {
+        margin-left: -200px;
+    }
+      
 }
 /**====== overide bootstrap end ======**/
 
