@@ -48,6 +48,7 @@
 .img-wrapper i {
   font-size: 50px !important;
 }
+
 .grid .card .img-wrapper {
   height: 10em !important;
   display: flex !important;
@@ -96,4 +97,3 @@ p {
   margin-top: 10px !important;
 }
 
-.deal > .photo {height:150px;background-position:50%;background-size:cover;overflow:hidden;}
