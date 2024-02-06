@@ -20211,10 +20211,6 @@ Help Desk Application css start
     color: #111;
 }
 
-.header-badge {
-    margin-left: -400px;
-}
-
 @media only screen and (max-width: 767px) {
     .tooltip-inner {
         max-width: 350px !important;
@@ -20224,10 +20220,6 @@ Help Desk Application css start
         color: #111;
     
     }
-    .header-badge {
-        margin-left: -200px;
-    }
-      
 }
 /**====== overide bootstrap end ======**/
 
