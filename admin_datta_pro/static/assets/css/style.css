@@ -20220,6 +20220,9 @@ Help Desk Application css start
         max-width: 350px !important;
         /* If max-width does not work, try using width instead */
         width: 350px !important; 
+        background-color: #0C73AD;
+        color: #111;
+    
     }
     .header-badge {
         margin-left: -200px;
