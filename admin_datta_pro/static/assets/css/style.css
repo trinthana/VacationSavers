@@ -48,6 +48,11 @@ File: style.css
             List of color for sidebar menu items icon colors
 */
 /**  =====================
+     Harabara Font Family
+==========================  **/
+@import url('https://fonts.cdnfonts.com/css/harabara-mais-demo');
+
+/**  =====================
      Google Font
 ==========================  **/
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600");
@@ -20202,6 +20207,8 @@ Help Desk Application css start
     max-width: 700px !important;
     /* If max-width does not work, try using width instead */
     width: 700px !important; 
+    background-color: #0C73AD;
+    color: #111;
 }
 
 .header-badge {

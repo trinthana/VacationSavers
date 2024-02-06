@@ -16,6 +16,8 @@
 .card-body {
   padding: 0 0.5em !important;
   text-align: center !important;
+  font-family: 'Harabara Mais Demo', "Open Sans", sans-serif;
+  font-weight: 100;
 }
 
 .carousel-control-prev,
@@ -94,3 +96,4 @@ p {
   margin-top: 10px !important;
 }
 
+.deal > .photo {height:150px;background-position:50%;background-size:cover;overflow:hidden;}

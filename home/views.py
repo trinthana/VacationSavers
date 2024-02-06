@@ -391,3 +391,11 @@ def gtn(request):
     # Page from the theme 
     return render(request, 'pages/vacation-rentals-gtn.html')
 
+@login_required(login_url="/accounts/login/")
+def specialdeals(request):
+    context = {
+    'url': 'https://www.dunhilltraveldeals.com/api/v1/iframe/5952',
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/iframe-page.html', context)
