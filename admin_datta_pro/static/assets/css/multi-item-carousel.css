@@ -80,17 +80,17 @@ code {
 .card .card-title {
   height: 7em !important;
   text-align: center !important;
-  vertical-align: middle !important;
   display: table-cell !important;
   color: black !important;
+  padding-top: 5px;
 }
 
 .grid .card .card-title {
   text-align: center !important;
-  vertical-align: middle !important;
   height: 10em !important;
   display: table-cell !important;
   color: black !important;
+  padding-top: 5px;
 }
 
 p {
