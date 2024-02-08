@@ -14,6 +14,18 @@ from app.forms import *
 from app.models import *
 from rest_framework_multitoken.models import MultiToken
 
+#---------------
+# For Worldia
+import base64
+import hashlib
+from datetime import datetime
+import json
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad
+from Crypto.Random import get_random_bytes
+from urllib.parse import urlencode
+#---------------
+
 # Create your views here.
 #@login_required(login_url="/accounts/login/")
 def index(request):
@@ -262,6 +274,7 @@ def change_plan(request):
     # Page from the theme 
     return render(request, 'pages/change-plan.html', context)
 
+#------------------------------------------------------------------------------------------------------------------------<<< timefortickets >>>
 @login_required(login_url="/accounts/login/")
 def timefortickets(request):
     context = {
@@ -271,7 +284,7 @@ def timefortickets(request):
     # Page from the theme 
     return render(request, 'pages/iframe-page.html', context)
 
-
+#------------------------------------------------------------------------------------------------------------------------<<< tourradar >>>
 @login_required(login_url="/accounts/login/")
 def tourradar(request):
     context = {
@@ -281,6 +294,7 @@ def tourradar(request):
     # Page from the theme 
     return render(request, 'pages/iframe-page.html', context)
 
+#------------------------------------------------------------------------------------------------------------------------<<< flight_vs >>>
 @login_required(login_url="/accounts/login/")
 def flight_vs(request):
     context = {
@@ -290,6 +304,7 @@ def flight_vs(request):
     # Page from the theme 
     return render(request, 'pages/iframe-page.html', context)
 
+#------------------------------------------------------------------------------------------------------------------------<<< cruise_arrivia >>>
 @login_required(login_url="/accounts/login/")
 def cruise_arrivia(request):
     context = {
@@ -299,15 +314,55 @@ def cruise_arrivia(request):
     # Page from the theme 
     return render(request, 'pages/iframe-page.html', context)
 
+#------------------------------------------------------------------------------------------------------------------------<<< tour_worldia >>>
 @login_required(login_url="/accounts/login/")
 def tour_worldia(request):
+
+    # Configuration and initialization
+    private_key = b'635f61eee45b202f7c270636f4a5301a06cd26ec6fb60e65f727988e54870921'  # 32 bytes
+    cipher_method = 'AES-256-CBC'
+    nonce_length = AES.block_size  # Typically 16 bytes for AES
+
+    # User and agency data
+    current_user = request.user
+    try:
+        user_profile = request.user.userprofile
+    except UserProfile.DoesNotExist:
+        user_profile = UserProfile(user=request.user)
+
+    email = current_user.email
+    created = datetime.utcnow().strftime('%s')  # UNIX timestamp
+    nonce = get_random_bytes(nonce_length)
+
+    user_data = json.dumps({
+        'type': 'customer',  # or "agent"
+        'email': current_user.email,
+        'first_name': current_user.first_name,
+        'last_name': current_user.last_name,
+        'phone': user_profile.phone
+    })
+
+    # Encryption
+    cipher = AES.new(private_key[:32], AES.MODE_CBC, nonce)  # Key must be 32 bytes for AES-256
+    encrypted_data = cipher.encrypt(pad(user_data.encode(), AES.block_size))
+
+    # Creating the query
+    digest = hashlib.md5((nonce + email.encode() + created.encode() + private_key))
+    query = urlencode({
+        'created': created,
+        'nonce': base64.b64encode(nonce).decode(),
+        'digest': digest,
+        'data': base64.b64encode(encrypted_data).decode()
+    })
+
     context = {
-    'url': 'https://vacationsavers.worldia.com',
+        'url': 'https://vacationsavers.worldia.com/login?' + query,
     }
 
     # Page from the theme 
     return render(request, 'pages/tour-worldia.html', context)
 
+#------------------------------------------------------------------------------------------------------------------------<<< car_access >>>
 @login_required(login_url="/accounts/login/")
 def car_access(request):
     # Query the ApplicationToken model to get the token for application 'ACCESS' and the current user
@@ -325,6 +380,7 @@ def car_access(request):
     # Page from the theme 
     return render(request, 'pages/car-access.html', context)
 
+#------------------------------------------------------------------------------------------------------------------------<<< hotels_booking >>>
 @login_required(login_url="/accounts/login/")
 def hotels_booking(request):
 
@@ -335,6 +391,7 @@ def hotels_booking(request):
     # Page from the theme 
     return render(request, 'pages/hotels-booking.html', context)
 
+#------------------------------------------------------------------------------------------------------------------------<<< hotels_access >>>
 @login_required(login_url="/accounts/login/")
 def hotels_access(request):
     # Query the ApplicationToken model to get the token for application 'ACCESS' and the current user
@@ -352,6 +409,7 @@ def hotels_access(request):
     # Page from the theme 
     return render(request, 'pages/hotels-access.html', context)
 
+#------------------------------------------------------------------------------------------------------------------------<<< access_travel >>>
 @login_required(login_url="/accounts/login/")
 def access_travel(request):
     # Query the ApplicationToken model to get the token for application 'ACCESS' and the current user
@@ -369,6 +427,7 @@ def access_travel(request):
     # Page from the theme 
     return render(request, 'pages/access-travel.html', context)
 
+#------------------------------------------------------------------------------------------------------------------------<<< access_deals >>>
 @login_required(login_url="/accounts/login/")
 def access_deals(request):
     # Query the ApplicationToken model to get the token for application 'ACCESSDEAL' and the current user
@@ -386,11 +445,14 @@ def access_deals(request):
     # Page from the theme 
     return render(request, 'pages/access-deals.html', context)
 
+#------------------------------------------------------------------------------------------------------------------------<<< gtn >>>
+@login_required(login_url="/accounts/login/")
 def gtn(request):
 
     # Page from the theme 
     return render(request, 'pages/vacation-rentals-gtn.html')
 
+#------------------------------------------------------------------------------------------------------------------------<<< specialdeals >>>
 @login_required(login_url="/accounts/login/")
 def specialdeals(request):
     context = {
