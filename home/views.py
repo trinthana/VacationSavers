@@ -347,7 +347,7 @@ def tour_worldia(request):
     encrypted_data = cipher.encrypt(pad(user_data.encode(), AES.block_size))
 
     # Creating the query
-    digest = hashlib.md5((nonce + email.encode() + created.encode() + private_key))
+    digest = hashlib.md5((nonce + email.encode() + created.encode() + private_key)).hexdigest()
     query = urlencode({
         'created': created,
         'nonce': base64.b64encode(nonce).decode(),
