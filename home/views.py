@@ -16,6 +16,7 @@ from rest_framework_multitoken.models import MultiToken
 
 #---------------
 # For Worldia
+import os
 import base64
 import hashlib
 from datetime import datetime
@@ -308,7 +309,7 @@ def flight_vs(request):
 @login_required(login_url="/accounts/login/")
 def cruise_arrivia(request):
     context = {
-    'url': 'https://www.arrivia.com',
+    'url': 'https://bookings.vacationsavers.com',
     }
 
     # Page from the theme 
@@ -319,7 +320,7 @@ def cruise_arrivia(request):
 def tour_worldia(request):
 
     # Configuration and initialization
-    private_key = b'635f61eee45b202f7c270636f4a5301a06cd26ec6fb60e65f727988e54870921'  # 32 bytes
+    private_key = b'f31eb18475d6ff854b7b5e64698d42fb'  # 32 bytes
     cipher_method = 'AES-256-CBC'
     nonce_length = AES.block_size  # Typically 16 bytes for AES
 
@@ -332,29 +333,38 @@ def tour_worldia(request):
 
     email = current_user.email
     created = datetime.utcnow().strftime('%s')  # UNIX timestamp
-    nonce = get_random_bytes(nonce_length)
+    
+    nonce_bytes = os.urandom(nonce_length)
+    nonce_hex = nonce_bytes.hex()
+    nonce = nonce_hex[:nonce_length]
+    print(nonce_bytes)
 
+    print(nonce_hex)
+    print(nonce)
+    
     user_data = json.dumps({
         'type': 'customer',  # or "agent"
-        'email': current_user.email,
+        'email': email,
         'first_name': current_user.first_name,
         'last_name': current_user.last_name,
         'phone': user_profile.phone
     })
 
-    # Encryption
+
+    # Creating "digest" for the the query
+    data = f"{nonce}{email}{created}{private_key}".encode()
+    digest = hashlib.md5(data).hexdigest()
+
+     # Creating "data" for teh query
     cipher = AES.new(private_key[:32], AES.MODE_CBC, nonce)  # Key must be 32 bytes for AES-256
     encrypted_data = cipher.encrypt(pad(user_data.encode(), AES.block_size))
-
-    # Creating the query
-    digest = hashlib.md5((nonce + email.encode() + created.encode() + private_key)).hexdigest()
+   
     query = urlencode({
         'created': created,
-        'nonce': base64.b64encode(nonce).decode(),
-        'digest': digest,
-        'data': base64.b64encode(encrypted_data).decode()
+        'nonce': nonce,
+        'digest':  digest,
+        'data': base64.b64encode(encrypted_data)
     })
-
     context = {
         'url': 'https://vacationsavers.worldia.com/login?' + query,
     }
