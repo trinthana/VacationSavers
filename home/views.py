@@ -21,10 +21,28 @@ import base64
 import hashlib
 from datetime import datetime
 import json
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad
-from Crypto.Random import get_random_bytes
 from urllib.parse import urlencode
+import secrets
+
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives import padding
+from cryptography.hazmat.backends import default_backend
+
+def openssl_encrypt(data, method, key, iv):
+    # Ensure key and IV lengths match the expected sizes for AES-256-CBC
+    if method == 'AES-256-CBC':
+        key = key[:32]  # Use the first 32 bytes of the key for AES-256
+        iv = iv[:16]  # Use the first 16 bytes of the IV for AES-256 in CBC mode
+        backend = default_backend()
+        cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
+        encryptor = cipher.encryptor()
+        padder = padding.PKCS7(128).padder()  # AES block size is 128 bits
+        padded_data = padder.update(data.encode()) + padder.finalize()
+        encrypted = encryptor.update(padded_data) + encryptor.finalize()
+        return base64.b64encode(encrypted).decode()
+    else:
+        raise ValueError("Unsupported encryption method")
+    
 #---------------
 
 # Create your views here.
@@ -299,7 +317,7 @@ def tourradar(request):
 @login_required(login_url="/accounts/login/")
 def flight_vs(request):
     context = {
-    'url': 'https://flights.vacationsavers.com/?cmp=3c26aff8553c068f8857990d2fb95ed447893b85',
+    'url': 'https://flights.vacationsavers.com/?cmp=3c26aff8553c068f8857990d2fb95ed447893b85&cmp='+request.user.username,
     }
 
     # Page from the theme 
@@ -322,7 +340,6 @@ def tour_worldia(request):
     # Configuration and initialization
     private_key = b'f31eb18475d6ff854b7b5e64698d42fb'  # 32 bytes
     cipher_method = 'AES-256-CBC'
-    nonce_length = AES.block_size  # Typically 16 bytes for AES
 
     # User and agency data
     current_user = request.user
@@ -331,40 +348,54 @@ def tour_worldia(request):
     except UserProfile.DoesNotExist:
         user_profile = UserProfile(user=request.user)
 
-    email = current_user.email
+    # Creating "created" for the the query
     created = datetime.utcnow().strftime('%s')  # UNIX timestamp
+    print("created = ", created)
     
-    nonce_bytes = os.urandom(nonce_length)
+    # Creating "nonce" for the the query
+    
+    nonce_length = algorithms.AES.block_size  # Typically 16 bytes for AES
+    nonce_bytes = secrets.token_bytes(nonce_length)
     nonce_hex = nonce_bytes.hex()
-    nonce = nonce_hex[:nonce_length]
-    print(nonce_bytes)
-
-    print(nonce_hex)
-    print(nonce)
-    
-    user_data = json.dumps({
-        'type': 'customer',  # or "agent"
-        'email': email,
-        'first_name': current_user.first_name,
-        'last_name': current_user.last_name,
-        'phone': user_profile.phone
-    })
-
-
+    nonce = nonce_hex[:16]
+    print("nonce_length = ", nonce_length)
+    print("nonce_bytes = ", nonce_bytes)
+    print("nonce_hex = ", nonce_hex)
+    print("nonce = ", nonce)
+  
     # Creating "digest" for the the query
-    data = f"{nonce}{email}{created}{private_key}".encode()
-    digest = hashlib.md5(data).hexdigest()
+    email = current_user.email
+    data = f"{nonce}{email}{created}{private_key.decode('utf-8')}"
+    print("data = ", data)
+
+    digest = hashlib.md5(data.encode()).hexdigest()
+    print("digest = ", digest)
 
      # Creating "data" for teh query
-    cipher = AES.new(private_key[:32], AES.MODE_CBC, nonce)  # Key must be 32 bytes for AES-256
-    encrypted_data = cipher.encrypt(pad(user_data.encode(), AES.block_size))
-   
+    user_data = json.dumps({
+        'type':'customer',  # or "agent"
+        'email':email,
+        'first_name':current_user.first_name,
+        'last_name':current_user.last_name,
+        'phone':user_profile.phone
+    })
+    print("user_data = ", user_data)
+
+
+  
+    # Pad the data before encryption
+    encrypted_data = openssl_encrypt(user_data, cipher_method, private_key, nonce.encode())
+    print("encrypted_data = ", encrypted_data)
+
     query = urlencode({
         'created': created,
         'nonce': nonce,
         'digest':  digest,
-        'data': base64.b64encode(encrypted_data)
+        'data': base64.b64encode(encrypted_data.encode())
     })
+
+    print("query = ", 'https://vacationsavers.worldia.com/login?' + query)
+
     context = {
         'url': 'https://vacationsavers.worldia.com/login?' + query,
     }
