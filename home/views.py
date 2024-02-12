@@ -42,6 +42,19 @@ def openssl_encrypt(data, method, key, iv):
         return base64.b64encode(encrypted).decode()
     else:
         raise ValueError("Unsupported encryption method")
+
+def openssl_random_pseudo_bytes(length, crypto_strong=True):
+    """
+    Generate cryptographically strong pseudo-random bytes.
+
+    :param length: Number of random bytes to generate.
+    :param crypto_strong: If True, ensures the random bytes are cryptographically strong.
+    :return: A bytes object containing random bytes.
+    """
+    # In Python's os.urandom, the bytes are always cryptographically strong,
+    # so the crypto_strong parameter does not change the behavior as it would in PHP.
+    return os.urandom(length)
+
     
 #---------------
 
@@ -350,26 +363,17 @@ def tour_worldia(request):
 
     # Creating "created" for the the query
     created = datetime.utcnow().strftime('%s')  # UNIX timestamp
-    print("created = ", created)
-    
+   
     # Creating "nonce" for the the query
-    
-    nonce_length = algorithms.AES.block_size  # Typically 16 bytes for AES
-    nonce_bytes = secrets.token_bytes(nonce_length)
+    nonce_bytes = openssl_random_pseudo_bytes(16)
     nonce_hex = nonce_bytes.hex()
     nonce = nonce_hex[:16]
-    print("nonce_length = ", nonce_length)
-    print("nonce_bytes = ", nonce_bytes)
-    print("nonce_hex = ", nonce_hex)
-    print("nonce = ", nonce)
-  
-    # Creating "digest" for the the query
+    
+     # Creating "digest" for the the query
     email = current_user.email
     data = f"{nonce}{email}{created}{private_key.decode('utf-8')}"
-    print("data = ", data)
 
     digest = hashlib.md5(data.encode()).hexdigest()
-    print("digest = ", digest)
 
      # Creating "data" for teh query
     user_data = json.dumps({
@@ -379,13 +383,9 @@ def tour_worldia(request):
         'last_name':current_user.last_name,
         'phone':user_profile.phone
     })
-    print("user_data = ", user_data)
 
-
-  
     # Pad the data before encryption
     encrypted_data = openssl_encrypt(user_data, cipher_method, private_key, nonce.encode())
-    print("encrypted_data = ", encrypted_data)
 
     query = urlencode({
         'created': created,
@@ -393,12 +393,19 @@ def tour_worldia(request):
         'digest':  digest,
         'data': base64.b64encode(encrypted_data.encode())
     })
-
-    print("query = ", 'https://vacationsavers.worldia.com/login?' + query)
-
     context = {
         'url': 'https://vacationsavers.worldia.com/login?' + query,
     }
+
+    print('created = ', created)
+    print('nonce_bytes = ', nonce_bytes)
+    print('nonce_hex = ', nonce_hex)
+    print('nonce = ', nonce)
+    print('data = ', data)
+    print('digest = ', digest)
+    print('user_data = ', user_data)
+    print('query = ', query)
+    print('url = ', 'https://vacationsavers.worldia.com/login?' + query,)
 
     # Page from the theme 
     return render(request, 'pages/tour-worldia.html', context)
