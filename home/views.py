@@ -393,19 +393,10 @@ def tour_worldia(request):
         'digest':  digest,
         'data': base64.b64encode(encrypted_data.encode())
     })
+
     context = {
         'url': 'https://vacationsavers.worldia.com/login?' + query,
     }
-
-    print('created = ', created)
-    print('nonce_bytes = ', nonce_bytes)
-    print('nonce_hex = ', nonce_hex)
-    print('nonce = ', nonce)
-    print('data = ', data)
-    print('digest = ', digest)
-    print('user_data = ', user_data)
-    print('query = ', query)
-    print('url = ', 'https://vacationsavers.worldia.com/login?' + query,)
 
     # Page from the theme 
     return render(request, 'pages/tour-worldia.html', context)
