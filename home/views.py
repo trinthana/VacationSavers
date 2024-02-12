@@ -397,7 +397,7 @@ def tour_worldia(request):
     context = {
         'url': 'https://vacationsavers.worldia.com/login?' + query,
     }
-
+    print('https://vacationsavers.worldia.com/login?' + query)
     # Page from the theme 
     return render(request, 'pages/tour-worldia.html', context)
 
