@@ -15,12 +15,13 @@ from app.models import *
 from rest_framework_multitoken.models import MultiToken
 
 #---------------
-# For Worldia
+# For Worldia, Arrivia
 import os
 import base64
-import hashlib
+import requests, json, hashlib
+from requests.structures import CaseInsensitiveDict
+
 from datetime import datetime
-import json
 from urllib.parse import urlencode
 import secrets
 
@@ -55,9 +56,36 @@ def openssl_random_pseudo_bytes(length, crypto_strong=True):
     # so the crypto_strong parameter does not change the behavior as it would in PHP.
     return os.urandom(length)
 
-    
+# End Worldia
 #---------------
 
+#---------------
+# For General Purposes
+def get_credential(user, app):
+    if user and app:
+        try:
+            application_token = ApplicationToken.objects.get(user=user, application=ApplicationChoices.ACCESSDEAL)
+            cvt = application_token.token
+        except ApplicationToken.DoesNotExist:
+            return None
+
+        match app:
+            case ApplicationChoices.ARRIVIA:
+                return application_token.custom1, application_token.custom2
+            case _:
+                return application_token.token
+                
+# End General Purposes
+#---------------
+
+#---------------
+# For Arrivia
+#def openssl_encrypt(data, method, key, iv):
+
+# End Arrivia
+#---------------
+
+#---------------
 # Create your views here.
 #@login_required(login_url="/accounts/login/")
 def index(request):
@@ -95,6 +123,9 @@ def profile(request, **kwargs):
                 'last_name': current_user.last_name,
                 'email': current_user.email,
                 'address': user_profile.address,
+                'city': user_profile.city,
+                'state_code': user_profile.state_code,
+                'country_code': user_profile.country_code,
                 'postal_code': user_profile.postal_code,
                 'phone': user_profile.phone,
                 'image_file': user_profile.image_file,
@@ -118,14 +149,14 @@ def profile(request, **kwargs):
         if profile_form.is_valid():
             if 'image_file' in request.FILES:
                 profile_form.image_file = request.FILES['image_file']
-                print('Image = ', request.FILES['image_file'])
+                #print('Image = ', request.FILES['image_file'])
             profile_form.save()
             
             return redirect('user_profile')
             # All good        
 
         else:
-            print(profile_form.errors)
+            #print(profile_form.errors)
             current_user = request.user
             try:
                 user_profile = request.user.userprofile
@@ -144,6 +175,9 @@ def profile(request, **kwargs):
                 'last_name': current_user.last_name,
                 'email': current_user.email,
                 'address': user_profile.address,
+                'city': user_profile.city,
+                'state_code': user_profile.state_code,
+                'country_code': user_profile.country_code,
                 'postal_code': user_profile.postal_code,
                 'phone': user_profile.phone,
                 'image_file': user_profile.image_file,
@@ -339,8 +373,89 @@ def flight_vs(request):
 #------------------------------------------------------------------------------------------------------------------------<<< cruise_arrivia >>>
 @login_required(login_url="/accounts/login/")
 def cruise_arrivia(request):
+    cred_array = get_credential(request.user, ApplicationChoices.ARRIVIA)
+    if cred_array[0] != '':
+        usr = cred_array[0]
+        pwd = cred_array[1]
+
+    else:
+        usr = request.user.email
+        pwd = openssl_random_pseudo_bytes(16).hex()
+
+        #Create Arrivia Default Account
+        current_user = request.user
+        try:
+            user_profile = request.user.userprofile
+        except UserProfile.DoesNotExist:
+            user_profile = UserProfile(user=request.user)
+
+        user_data = json.dumps(
+        {
+            'Email':usr,
+            'Password':pwd,
+            'FirstName':current_user.first_name,
+            'LastName':current_user.last_name,
+            'Address':user_profile.phone,
+            'City':user_profile.city,
+            'TwoLetterCountryCode':user_profile.country_code,
+            'Phone':user_profile.phone,
+            'ContractNumber':request.user.username,
+            'UserAccountTypeID':5,
+            'ReferringUserId':''
+        }
+        )
+        print('user_data = ', user_data)
+
+        url = "https://api.saveonresorts.com/v2/clubmembership/createdefault"
+        api_usr = "Vacationsavers24"
+        api_pwd = "iawdygcvqmndcqjt"
+
+        headers = CaseInsensitiveDict()
+        headers["Content-Type"] = "application/json"
+        headers["x-saveon-username"] = api_usr
+        headers["x-saveon-secret"] = api_pwd
+
+        # Make the POST request with headers and JSON data
+        try:
+            resp = requests.post(url, headers=headers, data=user_data)
+        except requests.exceptions.ConnectionError: 
+            print("Connection refused")
+
+        if resp['ResultType'] == 'success':
+             # Create a new ApplicationToken instance for the current user
+            application_token = ApplicationToken.objects.create(
+                user=request.user,
+                application=ApplicationChoices.ARRIVIA,
+                token='',
+                custom1=usr,
+                custom2=pwd,
+                custom3=resp['UserId']
+            )
+        else:
+            context = {
+                'url': 'https://bookings.vacationsavers.com',
+                'error': resp['Message']
+            }
+        
+    #Login and GetToken        
+    url = "https://api.saveonresorts.com/clubmembership/getlogintokennovalidation"
+    api_usr = "Vacationsavers24"
+    api_pwd = "iawdygcvqmndcqjt"
+
+    headers = CaseInsensitiveDict()
+    headers["Content-Type"] = "application/json"
+    user_data = json.dumps({
+        'APIUsername':api_usr,
+        'APIPassword':api_pwd,
+        'Email':usr,
+        'ContractNumber':''
+    })
+    resp = requests.post(url, headers=headers, data=user_data)
+    
+    #print('https://bookings.vacationsavers.com/vacationclub/logincheck.aspx?Token=' + resp['LoginToken'])
+    
     context = {
-    'url': 'https://bookings.vacationsavers.com',
+    'url': 'https://bookings.vacationsavers.com/vacationclub/logincheck.aspx?Token=' + resp['LoginToken'],
     }
 
     # Page from the theme 

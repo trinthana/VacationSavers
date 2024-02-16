@@ -41,6 +41,9 @@ class UserProfile(models.Model):
 
     user                = models.OneToOneField(User, on_delete=models.CASCADE)
     address             = models.TextField(default='', blank=True)
+    city                = models.TextField(default='', blank=True)
+    state_code          = models.CharField(max_length=2, default='', blank=True)
+    country_code        = models.CharField(max_length=2, default='', blank=True)
     postal_code         = models.CharField(max_length=10, default='', blank=True)
     phone               = models.CharField(max_length=20, default='', blank=True)
     image_file          = models.ImageField(upload_to='profile_photos/', null=True, blank=True)

@@ -4,7 +4,16 @@
 {% block title %} User Profile {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}    
+{% block extrastyle %}
+style {
+    .modal-content {
+        width: 650px !important;
+    }
+}
+
+{% endblock extrastyle %}
+{% endblock stylesheets %}
 
 {% block content %}	
 
@@ -29,7 +38,7 @@
                         <p class="mb-0 text-muted">
                             {{ user.fullname }}
                         </p>
-                        <i class="feather icon-edit text-black" data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer;"></i>
+                        <i class="feather icon-edit text-black" data-bs-toggle="modal" data-bs-target="#profileModal" style="cursor: pointer;"></i>
                     </div>
                 </div>
             </div>
@@ -43,6 +52,18 @@
                 <li class="list-group-item">
                     <span class="f-w-500"><i class="feather icon-home m-r-10"></i>Address</span>
                         <span class="float-end">{{ user.address }}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="f-w-500"><i class="feather icon-home m-r-10"></i>City</span>
+                        <span class="float-end">{{ user.city }}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="f-w-500"><i class="feather icon-globe m-r-10"></i>State</span>
+                    <span class="float-end">{{ user.state_code }}</span>
+                </li>
+                <li class="list-group-item">
+                    <span class="f-w-500"><i class="feather icon-globe m-r-10"></i>Country Code</span>
+                    <span class="float-end">{{ user.country_code }}</span>
                 </li>
                 <li class="list-group-item">
                     <span class="f-w-500"><i class="feather icon-globe m-r-10"></i>Postal Code</span>
@@ -220,11 +241,11 @@
 <!-- [ Main Content ] end -->
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit profile</h5>
+        <h5 class="modal-title" id="profileModalLabel">Edit profile</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
         <form class="form" method="POST" enctype="multipart/form-data">
@@ -253,17 +274,29 @@
                         <label for="email">Email</label>
                         <input  class="form-control" id="email" name="email"  value="{{ user.email }}" />
                     </div>
-                    <div>
-                        <label for="phone">Phone</label>
-                        <input type="text" class="form-control mob_no" data-mask="999-9999-999" id="phone" name="phone"  value="{{ user.phone }}" />
+                    <div class="flex-grow-1">
+                        <label for="address">Address</label>
+                        <input  class="form-control" id="address" name="address"  value="{{ user.address }}" />
+                    </div>
+                    <div class="flex-grow-1">
+                        <label for="address">City</label>
+                        <input  class="form-control" id="city" name="city"  value="{{ user.city }}" />
+                    </div>
+                    <div class="flex-grow-1">
+                        <label for="postal_code">State Code (2 Letters)</label>
+                        <input  class="form-control" id="state_code" name="state_code"  value="{{ user.state_code }}" />
+                    </div>
+                    <div class="flex-grow-1">
+                        <label for="postal_code">Country Code (2 Letters)</label>
+                        <input  class="form-control" id="country_code" name="country_code"  value="{{ user.country_code }}" />
                     </div>
                     <div class="flex-grow-1">
                         <label for="postal_code">Postal Code</label>
                         <input  class="form-control" id="postal_code" name="postal_code"  value="{{ user.postal_code }}" />
                     </div>
-                    <div class="flex-grow-1">
-                        <label for="address">Address</label>
-                        <input  class="form-control" id="address" name="address"  value="{{ user.address }}" />
+                    <div>
+                        <label for="phone">Phone</label>
+                        <input type="text" class="form-control mob_no" data-mask="999-9999-999" id="phone" name="phone"  value="{{ user.phone }}" />
                     </div>
                 </div>
             </div>
