@@ -420,6 +420,7 @@ def cruise_arrivia(request):
             resp = requests.post(url, headers=headers, data=user_data)
         except requests.exceptions.ConnectionError: 
             print("Connection refused")
+            resp = {"ResultType":"Error", "Message":"Connection refused"}
 
         if resp['ResultType'] == 'success':
              # Create a new ApplicationToken instance for the current user
@@ -429,7 +430,7 @@ def cruise_arrivia(request):
                 token='',
                 custom1=usr,
                 custom2=pwd,
-                custom3=resp['UserId']
+                custom3=resp.UserId
             )
         else:
             context = {
@@ -450,7 +451,13 @@ def cruise_arrivia(request):
         'Email':usr,
         'ContractNumber':''
     })
-    resp = requests.post(url, headers=headers, data=user_data)
+ 
+    try:
+        resp = requests.post(url, headers=headers, data=user_data)
+    except requests.exceptions.ConnectionError: 
+        print("Connection refused")
+        resp = {"LoginToken":""}
+
     
     #print('https://bookings.vacationsavers.com/vacationclub/logincheck.aspx?Token=' + resp['LoginToken'])
     
