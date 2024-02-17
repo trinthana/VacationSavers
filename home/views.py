@@ -16,6 +16,7 @@ from rest_framework_multitoken.models import MultiToken
 
 #---------------
 # For Worldia, Arrivia
+from . import arrivia
 import os
 import base64
 import requests, json, hashlib
@@ -65,26 +66,14 @@ def get_credential(user, app):
     if user and app:
         try:
             application_token = ApplicationToken.objects.get(user=user, application=ApplicationChoices.ACCESSDEAL)
-            cvt = application_token.token
+            return application_token.token, application_token.custom1, application_token.custom2, application_token.custom3
         except ApplicationToken.DoesNotExist:
-            return None
-
-        match app:
-            case ApplicationChoices.ARRIVIA:
-                return application_token.custom1, application_token.custom2
-            case _:
-                return application_token.token
+            return "", "", "", ""
                 
 # End General Purposes
 #---------------
 
-#---------------
-# For Arrivia
-#def openssl_encrypt(data, method, key, iv):
-
-# End Arrivia
-#---------------
-
+##############################################################################################################################
 #---------------
 # Create your views here.
 #@login_required(login_url="/accounts/login/")
@@ -340,6 +329,7 @@ def change_plan(request):
     # Page from the theme 
     return render(request, 'pages/change-plan.html', context)
 
+#########################################################################################################################
 #------------------------------------------------------------------------------------------------------------------------<<< timefortickets >>>
 @login_required(login_url="/accounts/login/")
 def timefortickets(request):
@@ -373,96 +363,23 @@ def flight_vs(request):
 #------------------------------------------------------------------------------------------------------------------------<<< cruise_arrivia >>>
 @login_required(login_url="/accounts/login/")
 def cruise_arrivia(request):
-    cred_array = get_credential(request.user, ApplicationChoices.ARRIVIA)
-    if cred_array[0] != '':
-        usr = cred_array[0]
-        pwd = cred_array[1]
+    Arrivia = arrivia.Arrivia()
 
-    else:
+    # Get credential from DB
+    token, usr, pwd, id = get_credential(request.user, ApplicationChoices.ARRIVIA)
+   
+    if usr == '':
+        #Create Arrivia Default Account
         usr = request.user.email
         pwd = openssl_random_pseudo_bytes(16).hex()
 
-        #Create Arrivia Default Account
-        current_user = request.user
-        try:
-            user_profile = request.user.userprofile
-        except UserProfile.DoesNotExist:
-            user_profile = UserProfile(user=request.user)
-
-        user_data = json.dumps(
-        {
-            'Email':usr,
-            'Password':pwd,
-            'FirstName':current_user.first_name,
-            'LastName':current_user.last_name,
-            'Address':user_profile.phone,
-            'City':user_profile.city,
-            'TwoLetterCountryCode':user_profile.country_code,
-            'Phone':user_profile.phone,
-            'ContractNumber':request.user.username,
-            'UserAccountTypeID':5,
-            'ReferringUserId':''
-        }
-        )
-        print('user_data = ', user_data)
-
-        url = "https://api.saveonresorts.com/v2/clubmembership/createdefault"
-        api_usr = "Vacationsavers24"
-        api_pwd = "iawdygcvqmndcqjt"
-
-        headers = CaseInsensitiveDict()
-        headers["Content-Type"] = "application/json"
-        headers["x-saveon-username"] = api_usr
-        headers["x-saveon-secret"] = api_pwd
-
-        # Make the POST request with headers and JSON data
-        try:
-            resp = requests.post(url, headers=headers, data=user_data)
-        except requests.exceptions.ConnectionError: 
-            print("Connection refused")
-            resp = {"ResultType":"Error", "Message":"Connection refused"}
-
-        if resp['ResultType'] == 'success':
-             # Create a new ApplicationToken instance for the current user
-            application_token = ApplicationToken.objects.create(
-                user=request.user,
-                application=ApplicationChoices.ARRIVIA,
-                token='',
-                custom1=usr,
-                custom2=pwd,
-                custom3=resp.UserId
-            )
-        else:
-            context = {
-                'url': 'https://bookings.vacationsavers.com',
-                'error': resp['Message']
-            }
-        
-    #Login and GetToken        
-    url = "https://api.saveonresorts.com/clubmembership/getlogintokennovalidation"
-    api_usr = "Vacationsavers24"
-    api_pwd = "iawdygcvqmndcqjt"
-
-    headers = CaseInsensitiveDict()
-    headers["Content-Type"] = "application/json"
-    user_data = json.dumps({
-        'APIUsername':api_usr,
-        'APIPassword':api_pwd,
-        'Email':usr,
-        'ContractNumber':''
-    })
- 
-    try:
-        resp = requests.post(url, headers=headers, data=user_data)
-    except requests.exceptions.ConnectionError: 
-        print("Connection refused")
-        resp = {"LoginToken":""}
-
-    
-    #print('https://bookings.vacationsavers.com/vacationclub/logincheck.aspx?Token=' + resp['LoginToken'])
+        status, message, token, custom1, custom2, custom3 = Arrivia.create_account( user=request.user, username=request.user.username, email=usr, password=pwd )
+      
+    #Login and GetToken
+    status, message, token = Arrivia.get_token( username=request.user.username, email=usr, password=pwd )
     
     context = {
-    'url': 'https://bookings.vacationsavers.com/vacationclub/logincheck.aspx?Token=' + resp['LoginToken'],
+        'url': "https://bookings.vacationsavers.com/vacationclub/logincheck.aspx?RedirectURL=%2Fcruises%2F&Token=" + token,
     }
 
     # Page from the theme 
@@ -526,13 +443,8 @@ def tour_worldia(request):
 #------------------------------------------------------------------------------------------------------------------------<<< car_access >>>
 @login_required(login_url="/accounts/login/")
 def car_access(request):
-    # Query the ApplicationToken model to get the token for application 'ACCESS' and the current user
-    try:
-        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESSIFRAME)
-        cvt = application_token.token
-    except ApplicationToken.DoesNotExist:
-        # Handle the case where no token is found for the specified application and user
-        cvt = None
+    # Get credential from DB
+    cvt, usr, pwd, id = get_credential(request.user, ApplicationChoices.ACCESSIFRAME)
 
     context = {
     'cvt': cvt
@@ -555,13 +467,9 @@ def hotels_booking(request):
 #------------------------------------------------------------------------------------------------------------------------<<< hotels_access >>>
 @login_required(login_url="/accounts/login/")
 def hotels_access(request):
-    # Query the ApplicationToken model to get the token for application 'ACCESS' and the current user
-    try:
-        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESSIFRAME)
-        cvt = application_token.token
-    except ApplicationToken.DoesNotExist:
-        # Handle the case where no token is found for the specified application and user
-        cvt = None
+
+    # Get credential from DB
+    cvt, usr, pwd, id = get_credential(request.user, ApplicationChoices.ACCESSIFRAME)
 
     context = {
     'cvt': cvt
@@ -573,13 +481,9 @@ def hotels_access(request):
 #------------------------------------------------------------------------------------------------------------------------<<< access_travel >>>
 @login_required(login_url="/accounts/login/")
 def access_travel(request):
-    # Query the ApplicationToken model to get the token for application 'ACCESS' and the current user
-    try:
-        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESSIFRAME)
-        cvt = application_token.token
-    except ApplicationToken.DoesNotExist:
-        # Handle the case where no token is found for the specified application and user
-        cvt = None
+
+    # Get credential from DB
+    cvt, usr, pwd, id = get_credential(request.user, ApplicationChoices.ACCESSIFRAME)
 
     context = {
     'cvt': cvt
@@ -591,13 +495,9 @@ def access_travel(request):
 #------------------------------------------------------------------------------------------------------------------------<<< access_deals >>>
 @login_required(login_url="/accounts/login/")
 def access_deals(request):
-    # Query the ApplicationToken model to get the token for application 'ACCESSDEAL' and the current user
-    try:
-        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESSDEAL)
-        cvt = application_token.token
-    except ApplicationToken.DoesNotExist:
-        # Handle the case where no token is found for the specified application and user
-        cvt = None
+
+    # Get credential from DB
+    cvt, usr, pwd, id = get_credential(request.user, ApplicationChoices.ACCESSDEAL)
 
     context = {
     'cvt': cvt
