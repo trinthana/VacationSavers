@@ -52,10 +52,10 @@ class Arrivia:
 
         # Make the POST request with headers and JSON data
         #try:
-            conn = http.client.HTTPSConnection(cls.base_url)
-            conn.request("POST", url, user_data, headers)
-            resp = conn.getresponse()
-            data = json.loads(resp.read())
+        conn = http.client.HTTPSConnection(cls.base_url)
+        conn.request("POST", url, user_data, headers)
+        resp = conn.getresponse()
+        data = json.loads(resp.read())
         #except HTTPError as err:
         #    return "Error", "", "", "", "", ""
 
