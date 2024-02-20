@@ -60,6 +60,7 @@ class Arrivia:
             raise Exception(HTTPError) 
             return "Error", "", "", "", "", ""
 
+        raise Exception(data) 
         if data['ResultType'] == 'success':
              # Create a new ApplicationToken instance for the current user
             application_token = ApplicationToken.objects.create(
