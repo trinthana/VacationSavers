@@ -96,7 +96,7 @@ class Arrivia:
             "Password":kwargs.get('password'),
             "ContractNumber":kwargs.get('username')
         })
-        raise Exception(user_data)
+
         try:
             conn = http.client.HTTPSConnection(cls.base_url)
             conn.request("POST", url, user_data, headers)
