@@ -51,13 +51,13 @@ class Arrivia:
         headers["x-saveon-secret"] = api_pwd
 
         # Make the POST request with headers and JSON data
-        try:
+        #try:
             conn = http.client.HTTPSConnection(cls.base_url)
             conn.request("POST", url, user_data, headers)
             resp = conn.getresponse()
             data = json.loads(resp.read())
-        except HTTPError as err:
-            return "Error", "", "", "", "", ""
+        #except HTTPError as err:
+        #    return "Error", "", "", "", "", ""
 
         if data['ResultType'] == 'success':
              # Create a new ApplicationToken instance for the current user
