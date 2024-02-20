@@ -13,6 +13,7 @@ from . import helpers
 from app.forms import *
 from app.models import *
 from rest_framework_multitoken.models import MultiToken
+from django.core.exceptions import *
 
 #---------------
 # For Worldia, Arrivia
@@ -65,8 +66,11 @@ def openssl_random_pseudo_bytes(length, crypto_strong=True):
 def get_credential(user, app):
     if user and app:
         try:
-            application_token = ApplicationToken.objects.get(user=user, application=ApplicationChoices.ACCESSDEAL)
+            application_token = ApplicationToken.objects.get(user__username=user, application=app)
             return application_token.token, application_token.custom1, application_token.custom2, application_token.custom3
+        except MultipleObjectsReturned:
+            return application_token.token, application_token.custom1, application_token.custom2, application_token.custom3
+
         except ApplicationToken.DoesNotExist:
             return "", "", "", ""
                 
@@ -138,14 +142,12 @@ def profile(request, **kwargs):
         if profile_form.is_valid():
             if 'image_file' in request.FILES:
                 profile_form.image_file = request.FILES['image_file']
-                #print('Image = ', request.FILES['image_file'])
             profile_form.save()
             
             return redirect('user_profile')
             # All good        
 
         else:
-            #print(profile_form.errors)
             current_user = request.user
             try:
                 user_profile = request.user.userprofile
@@ -371,15 +373,15 @@ def cruise_arrivia(request):
     if usr == '':
         #Create Arrivia Default Account
         usr = request.user.email
-        pwd = openssl_random_pseudo_bytes(16).hex()
+        pwd = openssl_random_pseudo_bytes(4).hex() + "!A"
 
         status, message, token, custom1, custom2, custom3 = Arrivia.create_account( user=request.user, username=request.user.username, email=usr, password=pwd )
       
     #Login and GetToken
     status, message, token = Arrivia.get_token( username=request.user.username, email=usr, password=pwd )
-    
+     
     context = {
-        'url': "https://bookings.vacationsavers.com/vacationclub/logincheck.aspx?RedirectURL=%2Fcruises%2F&Token=" + token,
+        'url': "https://bookings.vacationsavers.com/vacationclub/logincheck.aspx?RedirectURL=%2Fcruises%2F&Token=" + token
     }
 
     # Page from the theme 
@@ -436,7 +438,7 @@ def tour_worldia(request):
     context = {
         'url': 'https://vacationsavers.worldia.com/login?' + query,
     }
-    print('https://vacationsavers.worldia.com/login?' + query)
+
     # Page from the theme 
     return render(request, 'pages/tour-worldia.html', context)
 

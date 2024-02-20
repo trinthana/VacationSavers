@@ -71,3 +71,28 @@ class ApplicationToken(models.Model):
     custom3             = models.TextField(default='', blank=True)
     updated_datetime    = models.DateTimeField(default=timezone.now)
 
+class ClickDetails(models.Model):
+
+    user                = models.ForeignKey(User, on_delete=models.CASCADE)
+    application         = models.CharField(max_length=20, default='', blank=True, choices=ApplicationChoices.choices)
+    tx_date              = models.DateField(default=timezone.now().date)
+    tx_time              = models.TimeField(default=timezone.now().time)
+    tx_url              = models.TimeField(default='')
+    remote_host         = models.TextField(default='', blank=True)
+    remote_address      = models.CharField(max_length=15, default='', blank=True)
+    remote_host         = models.TextField(default='', blank=True)
+    http_headers        = models.TextField(default='', blank=True)
+    updated_datetime    = models.DateTimeField(default=timezone.now)
+
+class ClickSummary(models.Model):
+
+    user                = models.ForeignKey(User, on_delete=models.CASCADE)
+    application         = models.CharField(max_length=20, default='', blank=True, choices=ApplicationChoices.choices)
+    tx_date              = models.DateField(default=timezone.now().date)
+    tx_time              = models.TimeField(default=timezone.now().time)
+    tx_url              = models.TimeField(default='')
+    remote_host         = models.TextField(default='', blank=True)
+    remote_address      = models.CharField(max_length=15, default='', blank=True)
+    remote_host         = models.TextField(default='', blank=True)
+    http_headers        = models.TextField(default='', blank=True)
+    updated_datetime    = models.DateTimeField(default=timezone.now)
