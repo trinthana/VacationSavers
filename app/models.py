@@ -88,10 +88,10 @@ class ClickDetails(models.Model):
     application         = models.CharField(max_length=20, default='', blank=True, choices=ApplicationChoices.choices)
     tx_date              = models.DateField(default=default_tx_date())
     tx_time              = models.TimeField(default=default_tx_time())
-    tx_url              = models.TextField(default='')
-    remote_host         = models.TextField(default='', blank=True)
-    remote_addr         = models.CharField(max_length=15, default='', blank=True)
-    http_headers        = models.TextField(default='', blank=True)
+    tx_url              = models.TextField(default='', blank=True, null=True)
+    remote_host         = models.TextField(default='', blank=True, null=True)
+    remote_addr         = models.CharField(max_length=15, default='', blank=True, null=True)
+    http_headers        = models.TextField(default='', blank=True, null=True)
     updated_datetime    = models.DateTimeField(default=timezone.now)
 
     class Meta:
@@ -130,7 +130,7 @@ class ClickDetails(models.Model):
    
 class ClickSummary(models.Model):
 
-    application         = models.CharField(max_length=20, default='', blank=True, choices=ApplicationChoices.choices)
+    application         = models.CharField(max_length=20, default='', blank=True, null=True, choices=ApplicationChoices.choices)
     tx_date             = models.DateField(default=default_tx_date())
     tx_counted          = models.BigIntegerField(default=0)
 
