@@ -1,7 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.models import User
 from django.utils import timezone
+import json
 
+
+def default_tx_date():
+    return timezone.now().date()
+
+def default_tx_time():
+    return timezone.now().time()
 
 class PackageChoices(models.TextChoices):     
     PREMIER = 'PREMIER', 'Premier Savings Plan'
@@ -12,12 +19,12 @@ class ApplicationChoices(models.TextChoices):
     ACCESS = "ACCESS", "Access Development"
     ACCESSIFRAME = "ACCESSIFRAME", "Access Development Iframe"
     ACCESSDEAL = "ACCESSDEAL", "Access Development Deals"
-    ARRIVIA = "ARRIVIA", "Arrivia"
+    ARRIVIA = "ARRIVIA", "Arrivia Cruise"
     EXPEDIA = "EXPEDIA", "Expedia"
     BOOKING = "BOOKING", "Booking.com"
     BEDSOPIA = "BEDSOPIA", "Bedsopia"
     YALAGO = "YALAGO", "Yalago"
-    WORLDIA = "WORLDIA", "Worldia"
+    WORLDIA = "WORLDIA", "Worldia Car"
     CRUISEWAFCH = "CRUISEWATCH", "Cruisewatch"
     CRUISEDIRECT = "CRUISEDIRECT", "CruiseDirect"
     DREAMLINES = "DREAMLINES", "Dreamlines"
@@ -25,6 +32,7 @@ class ApplicationChoices(models.TextChoices):
     TOURRADAR = "TOURRADAR", "TourRadar"
     GETYOURGUIDE = "GETYOURGUIDE", "GetYourGuide"
     GADVENGER = "GADVENGER", "G Advengers"
+    TIMETOTICKET = "TIMETOTICKET", "Time To Ticket"
     TICKETNETWORK = "TICKETNETWORK", "Ticket Network"
     INTERLNKD = "INTERLNKD", "InterLNKD"
     GLOBATECH = "GLOBATECH", "GlobalTech"
@@ -34,6 +42,9 @@ class ApplicationChoices(models.TextChoices):
     HOLIBOB = "HOLIBOB", "Holibob"
     SERVANTRIP = "SERVANTRIP", "Servantrip"
     NEZASA = "NEZASA", "Nezasa"
+    GTN = "GTN", "GTN Vacation Rental"
+    VSFLIGHT = "VSFLIGHT", "VacationSavers Flight"
+    DUNHILL = "DUNHILL", "DUNHILL Special Deals"
 
 
 
@@ -75,24 +86,70 @@ class ClickDetails(models.Model):
 
     user                = models.ForeignKey(User, on_delete=models.CASCADE)
     application         = models.CharField(max_length=20, default='', blank=True, choices=ApplicationChoices.choices)
-    tx_date              = models.DateField(default=timezone.now().date)
-    tx_time              = models.TimeField(default=timezone.now().time)
-    tx_url              = models.TimeField(default='')
+    tx_date              = models.DateField(default=default_tx_date())
+    tx_time              = models.TimeField(default=default_tx_time())
+    tx_url              = models.TextField(default='')
     remote_host         = models.TextField(default='', blank=True)
-    remote_address      = models.CharField(max_length=15, default='', blank=True)
-    remote_host         = models.TextField(default='', blank=True)
+    remote_addr         = models.CharField(max_length=15, default='', blank=True)
     http_headers        = models.TextField(default='', blank=True)
     updated_datetime    = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        # Define unique_together constraint to prevent duplication
+        unique_together = [['user', 'application', 'tx_date', 'tx_time']]
+    
+    @classmethod
+    def add(self, request, application, tx_url):
+
+        """
+        Class method to increment tx_counted for a specific ClickSummary instance.
+        """
+        # Retrieve the ClickDetails instance based on application and tx_date
+        headers = request.META
+        remote_host = headers.get('REMOTE_HOST')
+        remote_addr = headers.get('REMOTE_ADDR')
+
+        print('default_tx_date = ', default_tx_date())
+        print('default_tx_time = ', default_tx_time())
+        click_details, created = self.objects.get_or_create(
+            user=request.user,
+            application=application,
+            tx_date=default_tx_date(),
+            tx_time=default_tx_time(),
+            defaults={
+                'tx_url': tx_url,
+                'remote_host': remote_host,
+                'remote_addr': remote_addr,
+                'http_headers': headers
+            }
+        )
+        print("created = ", created)
+        if created:
+            click_details.save()
+            ClickSummary.increase(application)
+   
 class ClickSummary(models.Model):
 
-    user                = models.ForeignKey(User, on_delete=models.CASCADE)
     application         = models.CharField(max_length=20, default='', blank=True, choices=ApplicationChoices.choices)
-    tx_date              = models.DateField(default=timezone.now().date)
-    tx_time              = models.TimeField(default=timezone.now().time)
-    tx_url              = models.TimeField(default='')
-    remote_host         = models.TextField(default='', blank=True)
-    remote_address      = models.CharField(max_length=15, default='', blank=True)
-    remote_host         = models.TextField(default='', blank=True)
-    http_headers        = models.TextField(default='', blank=True)
-    updated_datetime    = models.DateTimeField(default=timezone.now)
+    tx_date             = models.DateField(default=default_tx_date())
+    tx_counted          = models.BigIntegerField(default=0)
+
+    @classmethod
+    def increase(self, application, tx_date=default_tx_date(), increment_value=1):
+        """
+        Class method to increment tx_counted for a specific ClickSummary instance.
+        """
+        # Retrieve the ClickSummary instance based on application and tx_date
+        click_summary,created  = self.objects.get_or_create(application=application, tx_date=tx_date)
+        if created:
+            # Create new record with default = 1
+            click_summary.tx_counted = 1
+            click_summary.save()
+        else:
+            # Increment tx_counted by the specified increment_value
+            click_summary.tx_counted += increment_value
+            click_summary.save()
+
+
+
+        

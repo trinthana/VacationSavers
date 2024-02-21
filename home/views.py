@@ -321,7 +321,8 @@ def retail(request):
     'cvt': cvt
     }
 
-    # Page from the theme 
+    # Page from the theme
+    ClickDetails.add(request=request, application=ApplicationChoices.ACCESSDEAL, tx_url="https://vacationsavers.enjoymydeals.com/director?cvt="+cvt) 
     return render(request, 'pages/products/product-retails.html', context)
 
 @login_required(login_url="/accounts/login/")
@@ -356,6 +357,7 @@ def timefortickets(request):
     }
 
     # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.TIMETOTICKET, tx_url="https://vacationsavers.timefortickets.com/") 
     return render(request, 'pages/iframe-page.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< tourradar >>>
@@ -366,6 +368,7 @@ def tourradar(request):
     }
 
     # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.TOURRADAR, tx_url="https://vacationsavers.travel.tourradar.com/") 
     return render(request, 'pages/iframe-page.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< flight_vs >>>
@@ -376,6 +379,7 @@ def flight_vs(request):
     }
 
     # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.VSFLIGHT, tx_url="https://flights.vacationsavers.com/?cmp=3c26aff8553c068f8857990d2fb95ed447893b85&cmp="+request.user.username) 
     return render(request, 'pages/iframe-page.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< cruise_arrivia >>>
@@ -401,6 +405,7 @@ def cruise_arrivia(request):
     }
 
     # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.ARRIVIA, tx_url="https://bookings.vacationsavers.com/vacationclub/logincheck.aspx?RedirectURL=%2Fcruises%2F&Token=" + token) 
     return render(request, 'pages/iframe-page.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< tour_worldia >>>
@@ -456,6 +461,7 @@ def tour_worldia(request):
     }
 
     # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.WORLDIA, tx_url="https://vacationsavers.worldia.com/login?" + query) 
     return render(request, 'pages/tour-worldia.html', context)
 
 
@@ -468,6 +474,7 @@ def hotels_booking(request):
     }
 
     # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.BOOKING, tx_url="https://sp.booking.com/gating/authkey?key=ARflaYL1q5&aid=1926534;label=" + request.user.username) 
     return render(request, 'pages/hotels-booking.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< car_access >>>
@@ -484,6 +491,7 @@ def car_access(request):
     }
 
     # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.ACCESSIFRAME, tx_url="https://booking.accessdevelopment.com/scripts/integration.js?target=divAccess&view=cars&cvt="+cvt) 
     return render(request, 'pages/car-access.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< hotels_access >>>
@@ -501,6 +509,7 @@ def hotels_access(request):
     }
 
     # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.ACCESSIFRAME, tx_url="https://booking.accessdevelopment.com/scripts/integration.js?target=divAccess&view=hotels&cvt="+cvt) 
     return render(request, 'pages/hotels-access.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< access_travel >>>
@@ -518,6 +527,7 @@ def access_travel(request):
     }
 
     # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.ACCESSIFRAME, tx_url="https://booking.accessdevelopment.com/scripts/integration.js?target=divAccess&view=activities&cvt="+cvt) 
     return render(request, 'pages/access-travel.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< access_deals >>>
@@ -535,6 +545,7 @@ def access_deals(request):
     }
 
     # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.ACCESSDEAL, tx_url="https://vacationsavers.enjoymydeals.com/director?cvt="+cvt) 
     return render(request, 'pages/access-deals.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< gtn >>>
@@ -542,6 +553,7 @@ def access_deals(request):
 def gtn(request):
 
     # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.GTN, tx_url="") 
     return render(request, 'pages/vacation-rentals-gtn.html')
 
 #------------------------------------------------------------------------------------------------------------------------<<< specialdeals >>>
@@ -552,4 +564,5 @@ def specialdeals(request):
     }
 
     # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.DUNHILL, tx_url="https://www.dunhilltraveldeals.com/api/v1/iframe/5952") 
     return render(request, 'pages/iframe-page.html', context)
