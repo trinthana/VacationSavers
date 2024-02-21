@@ -1,0 +1,33 @@
+POST https://api.saveonresorts.com/v2/clubmembership/createdefault
+Content-Type: application/json
+Accept-Type: application/json
+x-saveon-username: Vacationsavers24
+x-saveon-secret: iawdygcvqmndcqjt
+
+{
+    "Email":"trinthana@hotmail.com",
+    "Password":"Ultraman80",
+    "FirstName":"Trin",
+    "LastName":"Thana",
+    "Address":"394/44",
+    "City":"Bangkok",
+    "TwoLetterCountryCode":"TH",
+    "Phone":"9999999999",
+    "ContractNumber":"TrinThana",
+    "UserAccountTypeID":5,
+    "ReferringUserId":""
+}
+
+
+###
+POST https://api.saveonresorts.com/clubmembership/getlogintokennovalidation
+Content-Type: application/json
+Accept-Type: application/json
+
+{
+    "APIUsername": "Vacationsavers24", 
+    "APIPassword": "iawdygcvqmndcqjt", 
+    "Email": "john@doe.com", 
+    "Password": "13c9f2c5!A", 
+    "ContractNumber": "John"
+}

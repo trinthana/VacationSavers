@@ -17,7 +17,8 @@ from django.core.exceptions import *
 
 #---------------
 # For Worldia, Arrivia
-from . import arrivia
+from home import arrivia
+from home import accessdev
 import os
 import base64
 import requests, json, hashlib
@@ -25,7 +26,6 @@ from requests.structures import CaseInsensitiveDict
 
 from datetime import datetime
 from urllib.parse import urlencode
-import secrets
 
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
@@ -73,6 +73,17 @@ def get_credential(user, app):
 
         except ApplicationToken.DoesNotExist:
             return "", "", "", ""
+        
+def get_or_create_user_profile(username):
+    # Get or create the UserProfile record based on the provided username
+    user_profile, created = UserProfile.objects.get_or_create(user__username=username)
+
+    # If the record is created, it means it was not found and a new record was created
+    if created:
+        user_profile.save()
+
+    return user_profile
+
                 
 # End General Purposes
 #---------------
@@ -89,7 +100,14 @@ def index(request):
 
     # Page from the theme 
     if request.user.is_authenticated:
-        return render(request, 'pages/index.html', context)
+        if not request.user.is_superuser:
+            user_profile = get_or_create_user_profile(request.user.username)
+            if len(user_profile.address) == 0 or len(user_profile.city) == 0 or len(user_profile.country_code) == 0 or len(user_profile.phone) == 0 or len(request.user.first_name) == 0 or len(request.user.last_name) == 0:
+                return redirect('user_profile')
+            else:
+                return render(request, 'pages/index.html', context)
+        else:
+            return render(request, 'pages/index.html', context)
     else:
         return render(request, 'pages/landing.html')
 
@@ -294,12 +312,10 @@ def activities(request):
 @login_required(login_url="/accounts/login/")
 def retail(request):
     # Query the ApplicationToken model to get the token for application 'ACCESSDEAL' and the current user
-    try:
-        application_token = ApplicationToken.objects.get(user=request.user, application=ApplicationChoices.ACCESSDEAL)
-        cvt = application_token.token
-    except ApplicationToken.DoesNotExist:
-        # Handle the case where no token is found for the specified application and user
-        cvt = None
+    cvt, usr, pwd, id = get_credential(request.user, ApplicationChoices.ACCESSDEAL)
+    if len(cvt) == 0:
+        AccessDev = accessdev.AccessDev()
+        cvt = AccessDev.create_member(request.user, ApplicationChoices.ACCESSDEAL)
 
     context = {
     'cvt': cvt
@@ -416,7 +432,7 @@ def tour_worldia(request):
 
     digest = hashlib.md5(data.encode()).hexdigest()
 
-     # Creating "data" for teh query
+     # Creating "data" for the query
     user_data = json.dumps({
         'type':'customer',  # or "agent"
         'email':email,
@@ -442,18 +458,6 @@ def tour_worldia(request):
     # Page from the theme 
     return render(request, 'pages/tour-worldia.html', context)
 
-#------------------------------------------------------------------------------------------------------------------------<<< car_access >>>
-@login_required(login_url="/accounts/login/")
-def car_access(request):
-    # Get credential from DB
-    cvt, usr, pwd, id = get_credential(request.user, ApplicationChoices.ACCESSIFRAME)
-
-    context = {
-    'cvt': cvt
-    }
-
-    # Page from the theme 
-    return render(request, 'pages/car-access.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< hotels_booking >>>
 @login_required(login_url="/accounts/login/")
@@ -466,12 +470,31 @@ def hotels_booking(request):
     # Page from the theme 
     return render(request, 'pages/hotels-booking.html', context)
 
+#------------------------------------------------------------------------------------------------------------------------<<< car_access >>>
+@login_required(login_url="/accounts/login/")
+def car_access(request):
+    # Get credential from DB
+    cvt, usr, pwd, id = get_credential(request.user, ApplicationChoices.ACCESSIFRAME)
+    if len(cvt) == 0:
+        AccessDev = accessdev.AccessDev()
+        cvt = AccessDev.create_member(request.user, ApplicationChoices.ACCESSIFRAME)
+
+    context = {
+    'cvt': cvt
+    }
+
+    # Page from the theme 
+    return render(request, 'pages/car-access.html', context)
+
 #------------------------------------------------------------------------------------------------------------------------<<< hotels_access >>>
 @login_required(login_url="/accounts/login/")
 def hotels_access(request):
 
     # Get credential from DB
     cvt, usr, pwd, id = get_credential(request.user, ApplicationChoices.ACCESSIFRAME)
+    if len(cvt) == 0:
+        AccessDev = accessdev.AccessDev()
+        cvt = AccessDev.create_member(request.user, ApplicationChoices.ACCESSIFRAME)
 
     context = {
     'cvt': cvt
@@ -486,6 +509,9 @@ def access_travel(request):
 
     # Get credential from DB
     cvt, usr, pwd, id = get_credential(request.user, ApplicationChoices.ACCESSIFRAME)
+    if len(cvt) == 0:
+        AccessDev = accessdev.AccessDev()
+        cvt = AccessDev.create_member(request.user, ApplicationChoices.ACCESSIFRAME)
 
     context = {
     'cvt': cvt
@@ -500,6 +526,9 @@ def access_deals(request):
 
     # Get credential from DB
     cvt, usr, pwd, id = get_credential(request.user, ApplicationChoices.ACCESSDEAL)
+    if len(cvt) == 0:
+        AccessDev = accessdev.AccessDev()
+        cvt = AccessDev.create_member(request.user, ApplicationChoices.ACCESSDEAL)
 
     context = {
     'cvt': cvt
