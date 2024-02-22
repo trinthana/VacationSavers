@@ -34,7 +34,7 @@ class Arrivia:
             "City":user_profile.city,
             "TwoLetterCountryCode":user_profile.country_code,
             "Phone":user_profile.phone,
-            "ContractNumber":kwargs.get('username'),
+            "ContractNumber":'VS'+kwargs.get('username'),
             "UserAccountTypeID":5,
             "ReferringUserId":""
         }
@@ -81,7 +81,7 @@ class Arrivia:
         import http.client
         from urllib.error import HTTPError
 
-        url = "/clubmembership/getlogintoken"
+        url = "/clubmembership/getlogintokennovalidation"
         api_usr = cls.api_usr
         api_pwd = cls.api_pwd
 
@@ -94,7 +94,7 @@ class Arrivia:
             "APIPassword":api_pwd,
             "Email":kwargs.get('email'),
             "Password":kwargs.get('password'),
-            "ContractNumber":kwargs.get('username')
+            "ContractNumber":'VS'+kwargs.get('username')
         })
 
         try:
@@ -102,7 +102,13 @@ class Arrivia:
             conn.request("POST", url, user_data, headers)
             resp = conn.getresponse()
             data = resp.read().decode('utf-8').replace('"', '')
-            return "Success", "Success", data
+            # Split the string by colon (":")
+            parts = data.split(':')
+            
+            # Extract the token which is the second part after the colon
+            token = parts[1].strip()
+
+            return "Success", "Success", token
 
         except HTTPError as err: 
             return "Error", "Connection Refused", HTTPError

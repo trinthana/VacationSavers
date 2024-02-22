@@ -109,8 +109,6 @@ class ClickDetails(models.Model):
         remote_host = headers.get('REMOTE_HOST')
         remote_addr = headers.get('REMOTE_ADDR')
 
-        print('default_tx_date = ', default_tx_date())
-        print('default_tx_time = ', default_tx_time())
         click_details, created = self.objects.get_or_create(
             user=request.user,
             application=application,
@@ -123,7 +121,6 @@ class ClickDetails(models.Model):
                 'http_headers': headers
             }
         )
-        print("created = ", created)
         if created:
             click_details.save()
             ClickSummary.increase(application)

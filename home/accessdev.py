@@ -75,7 +75,7 @@ class AccessDev:
             if response.status_code // 100 == 2:
                 #if success then put token back
                 for user in user_list:
-                    hash = org_key + "-" + prg_key + "-" + user.username.upper()
+                    hash = org_key + "-" + prg_key + "-VSID" + str(user.id).upper()
                     sha_text = cls.calculate_sha256(hash)
 
                     # Create a new ApplicationToken instance for the current user

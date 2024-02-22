@@ -31,3 +31,16 @@ Accept-Type: application/json
     "Password": "13c9f2c5!A", 
     "ContractNumber": "John"
 }
+
+###
+POST https://api.saveonresorts.com/clubmembership/deactivatemember
+Content-Type: application/json
+Accept-Type: application/json
+
+{
+    "APIUsername": "Vacationsavers24", 
+    "APIPassword": "iawdygcvqmndcqjt", 
+    "Email": "john@doe.com", 
+    "ContractNumber": "John"
+}
+
