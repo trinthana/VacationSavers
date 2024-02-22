@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django_user_agents.utils import get_user_agent
 import json
 
 
@@ -86,8 +87,8 @@ class ClickDetails(models.Model):
 
     user                = models.ForeignKey(User, on_delete=models.CASCADE)
     application         = models.CharField(max_length=20, default='', blank=True, choices=ApplicationChoices.choices)
-    tx_date              = models.DateField(default=default_tx_date())
-    tx_time              = models.TimeField(default=default_tx_time())
+    tx_date              = models.DateField()
+    tx_time              = models.TimeField()
     tx_url              = models.TextField(default='', blank=True, null=True)
     remote_host         = models.TextField(default='', blank=True, null=True)
     remote_addr         = models.CharField(max_length=15, default='', blank=True, null=True)
@@ -102,7 +103,7 @@ class ClickDetails(models.Model):
     def add(self, request, application, tx_url):
 
         """
-        Class method to increment tx_counted for a specific ClickSummary instance.
+        Class method to store user click details.
         """
         # Retrieve the ClickDetails instance based on application and tx_date
         headers = request.META
@@ -128,7 +129,7 @@ class ClickDetails(models.Model):
 class ClickSummary(models.Model):
 
     application         = models.CharField(max_length=20, default='', blank=True, null=True, choices=ApplicationChoices.choices)
-    tx_date             = models.DateField(default=default_tx_date())
+    tx_date             = models.DateField()
     tx_counted          = models.BigIntegerField(default=0)
 
     @classmethod
@@ -147,6 +148,66 @@ class ClickSummary(models.Model):
             click_summary.tx_counted += increment_value
             click_summary.save()
 
+class Sessions(models.Model):
 
+    session_key                 = models.CharField(max_length=40, null=False)
+    user                        = models.TextField(max_length=40, null=False)
+    tx_date                     = models.DateField()
+    tx_time                     = models.TimeField()
+    browser_family              = models.TextField(default='', blank=True, null=True)
+    browser_version_string      = models.TextField(default='', blank=True, null=True)
+    os_family                   = models.TextField(default='', blank=True, null=True)
+    os_version_string           = models.TextField(default='', blank=True, null=True)
+    is_bot                      = models.BooleanField(default=False)
+    is_pc                       = models.BooleanField(default=False)
+    is_mobile                   = models.BooleanField(default=False)
+    is_tablet                   = models.BooleanField(default=False)
+    is_touch_capable            = models.BooleanField(default=False)
+    is_ios                      = models.BooleanField(default=False)
+    is_android                  = models.BooleanField(default=False)
+    is_linux                    = models.BooleanField(default=False)
+    is_windows                  = models.BooleanField(default=False)
+    is_mac                      = models.BooleanField(default=False)
+    login_datetime              = models.DateTimeField(null=True)
+    logout_datetime             = models.DateTimeField(null=True)
 
+    @classmethod
+    def add(self, request, session_key):
+
+        """
+        Class method to store session data.
+        """
+        user_agent = get_user_agent(request)
+
+        sessions = self.objects.create(
+            session_key                 = session_key,
+            user                        = request.user.username,
+            tx_date                     = default_tx_date(),
+            tx_time                     = default_tx_time(),
+            browser_family              = user_agent.browser.family,
+            browser_version_string      = user_agent.browser.version_string,
+            os_family                   = user_agent.os.family,
+            os_version_string           = user_agent.os.version_string,
+            is_bot                      = user_agent.is_bot,
+            is_pc                       = user_agent.is_pc,
+            is_mobile                   = user_agent.is_mobile,
+            is_tablet                   = user_agent.is_tablet,
+            is_touch_capable            = user_agent.is_touch_capable,
+            is_ios                      = user_agent.os.family == 'iOS',
+            is_android                  = user_agent.os.family == 'Android',
+            is_linux                    = user_agent.os.family == 'Linux',
+            is_windows                  = user_agent.os.family == 'Windows',
+            is_mac                      = user_agent.os.family == 'Mac OS X',
+            login_datetime              = timezone.now(),
+            logout_datetime             = None
+        )
+   
+    @classmethod
+    def logout(self, request, session_key):
+        sessions = self.objects.filter(session_key=session_key)
+        print("session_key = ", session_key)
+        print("sessions.count = ", sessions.count())
+        if sessions.count() > 0:
+            sessions.logout_datetime = timezone.now()
+            sessions.update()
         

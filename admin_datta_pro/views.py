@@ -5,9 +5,8 @@ from django.contrib.auth import logout
 from django.views.generic import CreateView
 from django.contrib.sessions.models import Session
 from django.utils import timezone
-
 from django.contrib.auth.decorators import login_required
-
+from app.models import Sessions
 
 # Dashboard
 def default(request):
@@ -1131,6 +1130,22 @@ class LoginViewV2(LoginView):
   template_name = 'accounts/auth-signin-v2.html'
   form_class = LoginForm
 
+  def form_valid(self, form):
+
+    # Get the session ID
+    session_id = self.request.session.session_key
+
+    # If the session key does not exist (i.e., session has not been created yet),
+    # create a new session
+    if not session_id:
+        self.request.session.save()
+        session_id = self.request.session.session_key
+
+    # Create statistic record
+    Sessions.add(self.request, session_id)
+    
+    return super().form_valid(form)
+
 class LoginViewV3(LoginView):
   template_name = 'accounts/auth-signin-v3.html'
   form_class = LoginForm
@@ -1177,7 +1192,6 @@ class UserChangePasswordView(PasswordChangeView):
 def logout_view(request):
   logout(request)
   return redirect('/accounts/login/')
-
 
 # Authentication -> Profile
 @login_required(login_url='/accounts/login/')

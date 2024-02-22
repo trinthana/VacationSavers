@@ -107,7 +107,7 @@ def index(request):
             else:
                 return render(request, 'pages/index.html', context)
         else:
-            return render(request, 'pages/index.html', context)
+            return render(request, 'pages/dashboard-analytics.html', context)
     else:
         return render(request, 'pages/landing.html')
 
@@ -566,3 +566,4 @@ def specialdeals(request):
     # Page from the theme 
     ClickDetails.add(request=request, application=ApplicationChoices.DUNHILL, tx_url="https://www.dunhilltraveldeals.com/api/v1/iframe/5952") 
     return render(request, 'pages/iframe-page.html', context)
+
