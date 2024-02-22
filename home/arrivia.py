@@ -103,10 +103,12 @@ class Arrivia:
             resp = conn.getresponse()
             data = resp.read().decode('utf-8').replace('"', '')
             # Split the string by colon (":")
-            parts = data.split(':')
-            
-            # Extract the token which is the second part after the colon
-            token = parts[1].strip()
+            if ':' in data:
+                # Extract the token which is the second part after the colon
+                parts = data.split(':')
+                token = parts[1].strip()
+            else:
+                token = data
 
             return "Success", "Success", token
 
