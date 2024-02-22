@@ -47,7 +47,7 @@ class AccessDev:
                     "first_name": user.first_name,
                     "last_name": user.last_name,
                     "email_address": user.email,
-                    "member_customer_identifier": "-VSID" + str(user.id).upper(),  
+                    "member_customer_identifier": "VSID" + str(user.id).upper(),  
                     "member_status": "OPEN",  
                 }
                 members.append(member_data)
@@ -58,7 +58,6 @@ class AccessDev:
                     "members": members
                 }
             }
-
             # Convert Python data to JSON text with indentation
             json_text = json.dumps(data, indent=2)
 
