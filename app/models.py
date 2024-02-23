@@ -154,6 +154,7 @@ class Sessions(models.Model):
     user                        = models.TextField(max_length=40, null=False)
     tx_date                     = models.DateField()
     tx_time                     = models.TimeField()
+    remote_addr                 = models.CharField(max_length=15, default='', blank=True, null=True)
     browser_family              = models.TextField(default='', blank=True, null=True)
     browser_version_string      = models.TextField(default='', blank=True, null=True)
     os_family                   = models.TextField(default='', blank=True, null=True)
@@ -178,12 +179,14 @@ class Sessions(models.Model):
         Class method to store session data.
         """
         user_agent = get_user_agent(request)
-
+        client_ip = request.META.get('REMOTE_ADDR')
+        tx_date                     = default_tx_date(),
         sessions = self.objects.create(
             session_key                 = session_key,
             user                        = request.user.username,
             tx_date                     = default_tx_date(),
             tx_time                     = default_tx_time(),
+            remote_addr                 = client_ip,
             browser_family              = user_agent.browser.family,
             browser_version_string      = user_agent.browser.version_string,
             os_family                   = user_agent.os.family,
@@ -201,7 +204,54 @@ class Sessions(models.Model):
             login_datetime              = timezone.now(),
             logout_datetime             = None
         )
-   
+
+        # Create/Update device summary
+        device_summary,created  = SummaryDevices.objects.get_or_create(tx_date=default_tx_date())
+        if created:
+            # Create new record with default = 1
+            device_summary.tx_date = default_tx_date()
+            device_summary.desktop = (1 if user_agent.is_pc else 0)
+            device_summary.mobile = (1 if user_agent.is_mobile else 0)
+            device_summary.tablet = (1 if user_agent.is_tablet else 0)
+            device_summary.save()
+        else:
+            # Increment count by the specified increment_value
+            device_summary.desktop += (1 if user_agent.is_pc else 0)
+            device_summary.mobile += (1 if user_agent.is_mobile else 0)
+            device_summary.tablet += (1 if user_agent.is_tablet else 0)
+            device_summary.save()
+
+        # Create/Update OS summary
+        os_summary,created  = SummaryOS.objects.get_or_create(tx_date=default_tx_date())
+        if created:
+            # Create new record with default = 1
+            os_summary.tx_date = default_tx_date()
+            os_summary.ios = (1 if user_agent.os.family == 'iOS' else 0)
+            os_summary.android = (1 if user_agent.os.family == 'Android' else 0)
+            os_summary.linux = (1 if user_agent.os.family == 'Linux' else 0)
+            os_summary.windows = (1 if user_agent.os.family == 'Windows' else 0)
+            os_summary.mac = (1 if user_agent.os.family == 'Mac OS X' else 0)
+            os_summary.save()
+        else:
+            # Increment count by the specified increment_value
+            os_summary.ios += (1 if user_agent.os.family == 'iOS' else 0)
+            os_summary.android += (1 if user_agent.os.family == 'Android' else 0)
+            os_summary.linux += (1 if user_agent.os.family == 'Linux' else 0)
+            os_summary.windows += (1 if user_agent.os.family == 'Windows' else 0)
+            os_summary.mac += (1 if user_agent.os.family == 'Mac OS X' else 0)
+            os_summary.save()
+
+        # Create/Update browser family
+        browser_summary,created  = SummaryBrowsers.objects.get_or_create(tx_date=default_tx_date(), browser_family=user_agent.browser.family)
+        if created:
+            browser_summary.tx_date = default_tx_date()
+            browser_summary.browser_summary = user_agent.browser.family
+            browser_summary.count = 1
+            browser_summary.save()
+        else:
+            browser_summary.count += 1
+            browser_summary.save()
+
     @classmethod
     def logout(self, request, session_key):
         sessions = self.objects.filter(session_key=session_key)
@@ -211,3 +261,22 @@ class Sessions(models.Model):
             sessions.logout_datetime = timezone.now()
             sessions.update()
         
+
+class SummaryDevices(models.Model):
+    tx_date             = models.DateField()
+    desktop             = models.IntegerField(default=0)
+    mobile              = models.IntegerField(default=0)
+    tablet              = models.IntegerField(default=0)
+
+class SummaryOS(models.Model):
+    tx_date             = models.DateField()
+    ios                 = models.IntegerField(default=0)
+    android             = models.IntegerField(default=0)
+    linux               = models.IntegerField(default=0)
+    windows             = models.IntegerField(default=0)
+    mac                 = models.IntegerField(default=0)
+
+class SummaryBrowsers(models.Model):
+    tx_date             = models.DateField()
+    browser_family      = models.TextField(default='', blank=True, null=True)
+    count               = models.IntegerField(default=0)
