@@ -421,7 +421,7 @@
     var options = {
         chart: {
             type: 'bar',
-            height: 75,
+            height: 100,
             sparkline: {
                 enabled: true
             }
@@ -432,7 +432,7 @@
         colors: ["#1dc4e9"],
         plotOptions: {
             bar: {
-                columnWidth: '40%'
+                columnWidth: '60%'
             }
         },
         series: [{

@@ -4,33 +4,38 @@ from django.contrib.auth import logout, update_session_auth_hash, authenticate, 
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.template import loader
 from django.urls import reverse
+from django.utils import timezone
+from django.db.models.functions import TruncMonth, ExtractYear, ExtractMonth
+from django.db.models import Min, Max, Count, Sum
+from django.core.exceptions import *
+
 from auditlog.models import LogEntry
-from . import helpers
 from app.forms import *
 from app.models import *
 from rest_framework_multitoken.models import MultiToken
-from django.core.exceptions import *
 
+from home import helpers
 #---------------
 # For Worldia, Arrivia
 from home import arrivia
 from home import accessdev
-import os
-import base64
-import requests, json, hashlib
 from requests.structures import CaseInsensitiveDict
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from urllib.parse import urlencode
 
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
 
+import os
+import base64
+import requests, json, hashlib
+
+#----------------
 def openssl_encrypt(data, method, key, iv):
     # Ensure key and IV lengths match the expected sizes for AES-256-CBC
     if method == 'AES-256-CBC':
@@ -107,6 +112,68 @@ def index(request):
             else:
                 return render(request, 'pages/index.html', context)
         else:
+            # Get the current date
+            now = timezone.now()
+            today = timezone.now().date()
+            start_of_week = today - timedelta(days=today.weekday())  # Monday is considered the start
+
+            #--- Register User Statistic
+            total_users = User.objects.count()
+            users_joined_this_month = User.objects.annotate(month=TruncMonth('date_joined')).filter(month=timezone.datetime(now.year, now.month, 1)).count()
+            users_joined_this_week = User.objects.filter(date_joined__date__gte=start_of_week).count()
+            users_joined_today = User.objects.filter(date_joined__date=today).count()
+            user_dates = User.objects.aggregate(first_joined=Min('date_joined'), latest_joined=Max('date_joined'))
+            first_joined = user_dates['first_joined']
+            latest_joined = user_dates['latest_joined']
+            # Annotate the queryset with the year and month
+            user_counts = User.objects.annotate(
+                date=TruncMonth('date_joined')
+            ).values('date').annotate(count=Count('id')).order_by('date')
+
+            #--- device type statistic
+            device_today = SummaryDevices.objects.filter(tx_date=today).first()
+            if device_today:
+                device_today_total = device_today.desktop + device_today.mobile + device_today.tablet
+                device_today_desktop = device_today.desktop
+                device_today_mobile = device_today.mobile
+                device_today_tablet = device_today.tablet
+            else:
+                device_today_total = 0
+                device_today_desktop = 0
+                device_today_mobile = 0
+                device_today_tablet = 0
+
+            #--- Click Summary
+            today_tx_sum = ClickSummary.objects.filter(tx_date=today).aggregate(Sum('tx_counted'))
+            today_tx_total = today_tx_sum['tx_counted__sum'] or 0
+            yesterday = today - timedelta(days=1)  # Get yesterday's date
+            yesterday_tx_summary = ClickSummary.objects.filter(tx_date=yesterday).aggregate(Sum('tx_counted'))
+            yesterday_tx_total = yesterday_tx_summary['tx_counted__sum'] or 0  # Use 'or 0' to handle case where there are no records for yesterday
+            today_delta = yesterday_tx_total - today_tx_total
+
+            samedaylastweek = today - timedelta(days=7)  # Get yesterday's date
+            samedaylastweek_tx_summary = ClickSummary.objects.filter(tx_date=samedaylastweek).aggregate(Sum('tx_counted'))
+            samedaylastweek_tx_total = samedaylastweek_tx_summary['tx_counted__sum'] or 0  # Use 'or 0' to handle case where there are no records for yesterday
+
+            context = {
+                'first_joined': first_joined,
+                'latest_joined': latest_joined,
+                'total_users': total_users,
+                'users_joined_this_month': users_joined_this_month,
+                'users_joined_this_week': users_joined_this_week,
+                'users_joined_today': users_joined_today,
+                'user_counts': user_counts,
+                'device_today_total': device_today_total,
+                'device_today_desktop': device_today_desktop,
+                'device_today_mobile': device_today_mobile,
+                'device_today_tablet': device_today_tablet,
+                'today_tx_total': today_tx_total,
+                'yesterday_tx_total': yesterday_tx_total,
+                'today_delta': today_delta,
+                'samedaylastweek_tx_total': samedaylastweek_tx_total,
+            }
+            
+
             return render(request, 'pages/dashboard-analytics.html', context)
     else:
         return render(request, 'pages/landing.html')
