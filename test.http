@@ -1,3 +1,4 @@
+#### - Created Default Account
 POST https://api.saveonresorts.com/v2/clubmembership/createdefault
 Content-Type: application/json
 Accept-Type: application/json
@@ -19,7 +20,7 @@ x-saveon-secret: iawdygcvqmndcqjt
 }
 
 
-###
+### Get Login Token
 POST https://api.saveonresorts.com/clubmembership/getlogintokennovalidation
 Content-Type: application/json
 Accept-Type: application/json
@@ -32,7 +33,7 @@ Accept-Type: application/json
     "ContractNumber": "VSTrin"
 }
 
-###
+### Deactivate
 POST https://api.saveonresorts.com/clubmembership/deactivatemember
 Content-Type: application/json
 Accept-Type: application/json
@@ -40,7 +41,31 @@ Accept-Type: application/json
 {
     "APIUsername": "Vacationsavers24", 
     "APIPassword": "iawdygcvqmndcqjt", 
-    "Email": "john@doe.com", 
-    "ContractNumber": "John"
+    "Email": "trin@lbftravel.com", 
+    "Password": "184922b1!A", 
+    "ContractNumber": "VSTrin"
+}
+
+### Reactivate
+POST https://api.saveonresorts.com/clubmembership/activatemember
+Content-Type: application/json
+Accept-Type: application/json
+
+{
+    "APIUsername": "Vacationsavers24", 
+    "APIPassword": "iawdygcvqmndcqjt", 
+    "Email": "trinthana@hotmail.com", 
+    "Password": "184922b1!A", 
+    "ContractNumber": "VSTrin"
+}
+
+### Reactivate
+POST https://api.saveonresorts.com/clubmembership/getmembers
+Content-Type: application/json
+Accept-Type: application/json
+
+{
+    "APIUsername": "Vacationsavers24", 
+    "APIPassword": "iawdygcvqmndcqjt", 
 }
 

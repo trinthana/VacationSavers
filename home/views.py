@@ -463,12 +463,12 @@ def cruise_arrivia(request):
         pwd = openssl_random_pseudo_bytes(4).hex() + "!A"
 
         status, message, token, custom1, custom2, custom3 = Arrivia.create_account( user=request.user, username=request.user.username, email=usr, password=pwd )
+
       
     #Login and GetToken
     status, message, token = Arrivia.get_token( username=request.user.username, email=usr, password=pwd )
-     
     context = {
-        'url': "https://bookings.vacationsavers.com/vacationclub/logincheck.aspx?RedirectURL=%2Fcruises%2F&Token=" + token
+        'url': "https://members.vacationsavers.com/vacationclub/logincheck.aspx?RedirectURL=%2Fcruises%2F&Token=" + token
     }
 
     # Page from the theme 
