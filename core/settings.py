@@ -50,6 +50,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 # Application definition
 
 INSTALLED_APPS = [
+    "admin_datta_pro.apps.AdminDattaProConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -64,7 +65,6 @@ INSTALLED_APPS = [
     'rest_framework_multitoken',
     
     # Local Apps
-    "admin_datta_pro.apps.AdminDattaProConfig",
     "app",
     "home",
     "api",
