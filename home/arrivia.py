@@ -57,7 +57,8 @@ class Arrivia:
             resp = conn.getresponse()
             data = json.loads(resp.read())
         except HTTPError as err:
-            return "Error", "", "", "", "", ""
+            raise Exception(data)
+            #return "Error", "", "", "", "", ""
 
         if data['ResultType'] == 'success':
              # Create a new ApplicationToken instance for the current user
