@@ -59,7 +59,7 @@ Accept-Type: application/json
     "ContractNumber": "VSTrin"
 }
 
-### Reactivate
+### Retreive all members
 POST https://api.saveonresorts.com/clubmembership/getmembers
 Content-Type: application/json
 Accept-Type: application/json

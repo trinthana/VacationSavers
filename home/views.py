@@ -472,7 +472,7 @@ def cruise_arrivia(request):
     }
 
     # Page from the theme 
-    ClickDetails.add(request=request, application=ApplicationChoices.ARRIVIA, tx_url="https://bookings.vacationsavers.com/vacationclub/logincheck.aspx?RedirectURL=%2Fcruises%2F&Token=" + token) 
+    ClickDetails.add(request=request, application=ApplicationChoices.ARRIVIA, tx_url="https://members.vacationsavers.com/vacationclub/logincheck.aspx?RedirectURL=%2Fcruises%2F&Token=" + token) 
     return render(request, 'pages/iframe-page.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< tour_worldia >>>
