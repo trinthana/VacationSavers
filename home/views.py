@@ -176,7 +176,10 @@ def index(request):
 
             return render(request, 'pages/dashboard-analytics.html', context)
     else:
-        return render(request, 'pages/landing.html')
+        return render(request, 'pages/home.html')
+
+def home(request):
+    return render(request, 'pages/home.html')
 
 @login_required(login_url="/accounts/login/")
 def profile(request, **kwargs):

@@ -1,0 +1,32 @@
+{% extends 'layouts/base_home.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="auth-wrapper aut-bg-img-side cotainer-fiuid align-items-stretch">
+        <div class="row align-items-center w-100 align-items-stretch bg-white">
+            <div class="d-lg-flex col-lg-12 home-bg-img align-items-center d-flex justify-content-center cotainer-fiuid align-items-stretch">
+                <div class="circle">
+                    <div class="d-flex  font-weight-bold .text-white">
+                        <h2 class="big-inner-text">VacationSavers</h2>
+                    </div>
+                    <h4 class="inner-text align-items-start"> Unveiling a world of travel and adventure with exclusive, members-only travel deals that redefine affordability.</h4>
+                    <div class="d-flex font-weight-bold .text-white">
+                        <a href="/accounts/login/">
+                            <button type="button" class="inner-text btn btn-rounded btn-warning btn-medium">Login</button>
+                        </a>
+                    </div>
+                    <div class="d-flex font-weight-bold .text-white">
+                        <span>&nbsp;</span>
+                    </div>
+                    <div class="d-flex font-weight-bold .text-white">
+                        <a href="/verify-code/">
+                        <button type="button" class="inner-text btn btn-rounded btn-warning btn-medium">I <span style="color: rgb(66, 160, 66);">have</span> an <br> invitation code</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
