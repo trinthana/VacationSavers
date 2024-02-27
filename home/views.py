@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.template import loader
 from django.urls import reverse
 from django.utils import timezone
-from django.db.models.functions import TruncMonth, ExtractYear, ExtractMonth
+from django.db.models.functions import TruncMonth, TruncDay, ExtractYear, ExtractMonth
 from django.db.models import Min, Max, Count, Sum
 from django.core.exceptions import *
 
@@ -24,8 +24,9 @@ from home import arrivia
 from home import accessdev
 from requests.structures import CaseInsensitiveDict
 
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from urllib.parse import urlencode
+from collections import defaultdict
 
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
@@ -155,6 +156,37 @@ def index(request):
             samedaylastweek_tx_summary = ClickSummary.objects.filter(tx_date=samedaylastweek).aggregate(Sum('tx_counted'))
             samedaylastweek_tx_total = samedaylastweek_tx_summary['tx_counted__sum'] or 0  # Use 'or 0' to handle case where there are no records for yesterday
 
+            #Click Statistic
+            # Calculate date range for the last 15 days
+            end_date = date.today()
+            start_date = end_date - timedelta(days=14)  # 15 days including today
+
+            # Preparing the default structure for each application
+            applications_data = defaultdict(lambda: {'name': '', 'data': [0] * 16})
+
+            # Aggregate the data
+            aggregated_data = (
+                ClickSummary.objects.filter(tx_date__range=(start_date, end_date))
+                .annotate(day=TruncDay('tx_date'))
+                .values('application', 'tx_date')
+                .annotate(day_count=Sum('tx_counted'))
+                .order_by('application', 'tx_date')
+            )
+
+            # Populate the data structure
+            for entry in aggregated_data:
+                app_name = entry['application']
+                day_count = entry['day_count']
+                day_index = (entry['tx_date'] - start_date).days  # Calculate index based on the day difference
+                
+                if applications_data[app_name]['name'] == '':
+                    applications_data[app_name]['name'] = app_name
+                applications_data[app_name]['data'][day_index] = day_count
+
+            # Convert defaultdict to the desired list format
+            formatted_results = list(applications_data.values())
+
+            #Construct data
             context = {
                 'first_joined': first_joined,
                 'latest_joined': latest_joined,
@@ -171,8 +203,10 @@ def index(request):
                 'yesterday_tx_total': yesterday_tx_total,
                 'today_delta': today_delta,
                 'samedaylastweek_tx_total': samedaylastweek_tx_total,
+                'start_date': start_date,
+                'end_date': end_date,
+                'click_data': formatted_results,
             }
-            
 
             return render(request, 'pages/dashboard-analytics.html', context)
     else:
