@@ -90,6 +90,15 @@ def get_or_create_user_profile(username):
 
     return user_profile
 
+def get_eventparticipated(user, event):
+    if user and event:
+            event_participation, created = EventParticipations.objects.get_or_create(user=user, event=event)
+            if created:
+                return None
+            else :
+                return event_participation.updated_datetime
+    else:
+        return None
                 
 # End General Purposes
 #---------------
@@ -99,18 +108,23 @@ def get_or_create_user_profile(username):
 # Create your views here.
 #@login_required(login_url="/accounts/login/")
 def index(request):
-    context = {
-    'parent': 'Navigation',
-    'segment': 'Dashboard'
-    }
 
     # Page from the theme 
     if request.user.is_authenticated:
         if not request.user.is_superuser:
             user_profile = get_or_create_user_profile(request.user.username)
             if len(user_profile.address) == 0 or len(user_profile.city) == 0 or len(user_profile.country_code) == 0 or len(user_profile.phone) == 0 or len(request.user.first_name) == 0 or len(request.user.last_name) == 0:
-                return redirect('user_profile')
+                return redirect('user_profile', context)
             else:
+                if get_eventparticipated(request.user, EventChoices.FIRSTLOGIN) is None :
+                    context = {
+                        'showModal': True,
+                    }
+                else :
+                    context = {
+                        'showModal': False,
+                    }
+                
                 return render(request, 'pages/index.html', context)
         else:
             # Get the current date

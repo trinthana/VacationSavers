@@ -11,6 +11,12 @@ def default_tx_date():
 def default_tx_time():
     return timezone.now().time()
 
+class EventChoices (models.TextChoices):     
+    FIRSTLOGIN = 'FIRSTLOGIN', 'First Login'
+    WINTERSALE = 'WINTERSALE', 'Winter Sales'
+    SUMMERSALE = 'SUMMERSALE', 'Summer Sales'
+    HALLOWEEN = 'HALLOWEEN', 'Halloween Sales'
+
 class PackageChoices(models.TextChoices):     
     PREMIER = 'PREMIER', 'Premier Savings Plan'
     ELITE = 'ELITE', 'Elite Savings Plan'
@@ -280,3 +286,9 @@ class SummaryBrowsers(models.Model):
     tx_date             = models.DateField()
     browser_family      = models.TextField(default='', blank=True, null=True)
     count               = models.IntegerField(default=0)
+
+class EventParticipations(models.Model):
+
+    user                = models.OneToOneField(User, on_delete=models.CASCADE)
+    event               = models.CharField(max_length=10, default='', blank=True, choices=EventChoices.choices)
+    updated_datetime    = models.DateTimeField(default=timezone.now)

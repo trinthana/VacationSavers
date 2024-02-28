@@ -108,6 +108,28 @@
 		</div>
 	</div>
 </div>
+<!-- [ Scrolling-modal ] start -->
+{% if showModal %}
+<div id="startModal" class="modal fade" tabindex="-1" role="dialog"
+	aria-labelledby="startModalTitle" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdg7qPcKNlLxeKrMrYNoxJjWro9U2t9gYb_KC80yYRPywe9YA/viewform?embedded=true" width="450" height="3718" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn  btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+<!-- [ Scrolling-modal ] end -->
+
 <!-- [ Main Content ] end -->
 {% endblock content %}
 
@@ -175,5 +197,14 @@
 		});
 	})();
 </script>
-
+{% if showModal %}
+<script>
+	document.addEventListener('DOMContentLoaded', (event) => {
+	  var myModal = new bootstrap.Modal(document.getElementById('startModal'), {
+		keyboard: false
+	  });
+	  myModal.show();
+	});
+	</script>
+{% endif %}	
 {% endblock extra_js %}
