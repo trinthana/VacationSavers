@@ -30,6 +30,7 @@ urlpatterns = [
     path('access-travel/', views.access_travel, name='access_travel'),
     path('access-deals/', views.access_deals, name='access_deals'),
     path('cruise-arrivia/', views.cruise_arrivia, name='cruise_arrivia'),
+    path('cruise-direct/', views.cruise_direct, name='cruise_direct'),
     path('tour-worldia/', views.tour_worldia, name='tour_worldia'),
     path('car-access/', views.car_access, name='car_access'),
     path('hotels-access/', views.hotels_access, name='hotels_access'),

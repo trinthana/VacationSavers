@@ -5,26 +5,145 @@
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
+{% block extrastyle %}
+	<link rel="stylesheet" href="{% static 'assets/css/multi-item-carousel.css' %}">
+{% endblock extrastyle %}
 
 {% block content %}	
-<div class="auth-wrapper  bg-img-cr">
-<!-- [ Main Content ] start -->
-    <div class="col-xl-4 col-md-6">
-        <div class="card lazy-dog">
-            <div class="card-header">
-                <h4>Cruises</h4>
-                <p>Set sail on a dream cruise at unbeatable prices. Discover a world of luxury and excitement across the seas, with rates that make opulence surprisingly affordable.</p>
+    <!-- [ Main Content ] start -->
+    <div class="row">
+        <!-- [ form-element ] start -->
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Cruises</h5>
+                    <p>Set sail on a dream cruise at unbeatable prices. Discover a world of luxury and excitement across the seas, with rates that make opulence surprisingly affordable.</p>
+                    </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <div class="col-lg-4">
+                            <a href="{% url 'cruise_arrivia' %}" target="_blank">
+                                <img class="ratio ratio-3x3" src="{% static 'assets/icons/cruise_arrivia.png' %}" />
+                            </a>
+                        </div>
+                        <div class="col-lg-2">
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <h1 class="alert-info file-btn"><i class="fas fa-ship"></i></h1>
+                            <p class="alert-info">Special Cruise Deals Available!</p>
+                            <a href="{% url 'cruise_arrivia' %}" target="_blank">
+                                <button type="button" class="btn shadow-1 btn-primary">Get Cruise Deals</button>
+                            </a>
+                        </div>
+                        <div class="col-lg-2">
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <p class="alert-info"><code>Cruises</code> into Incredible Discounts During Wave Season!</p>
+                            <a href="{% url 'cruise_direct' %}" target="_blank">
+                                <img src="{% static 'assets/icons/cruise_direct.png' %}" width="468" height="60" alt="Generic (468x60)" border="0"/></a>                       </div>
+                        <div class="col-lg-4">
+                            <a href="{% url 'cruise_direct' %}" target="_blank">
+                                <img class="ratio ratio-21x9" src="{% static 'assets/icons/cruise_direct.jpg' %}" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-block">
-
+            <div class="card">
+                <div class="card-header">
+                    <h5>Top Cruise Offers</h5>
+                </div>
+                <div class="card-body">
+                    <div id="carouselControls" class="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item">
+                                <a href="https://www.dpbolvw.net/click-101115353-15533853" target="_top">
+                                    <img src="https://www.ftjcfx.com/image-101115353-15533853" width="300" height="250" alt="" border="0"/></a>
+                            </div>
+                            <div class="carousel-item active">
+                                <a href="https://www.jdoqocy.com/click-101115353-15533810" target="_top">
+                                    <img src="https://www.tqlkg.com/image-101115353-15533810" width="300" height="250" alt="" border="0"/></a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="https://www.anrdoezrs.net/click-101115353-15533876" target="_top">
+                                    <img src="https://www.awltovhc.com/image-101115353-15533876" width="300" height="250" alt="" border="0"/></a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="https://www.dpbolvw.net/click-101115353-15533835" target="_top">
+                                    <img src="https://www.lduhtrp.net/image-101115353-15533835" width="300" height="250" alt="" border="0"/></a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="https://www.tkqlhce.com/click-101115353-15533820" target="_top">
+                                    <img src="https://www.awltovhc.com/image-101115353-15533820" width="300" height="250" alt="" border="0"/></a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="https://www.tkqlhce.com/click-101115353-15533809" target="_top">
+                                    <img src="https://www.tqlkg.com/image-101115353-15533809" width="300" height="250" alt="" border="0"/></a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="https://www.kqzyfj.com/click-101115353-15533866" target="_top">
+                                    <img src="https://www.awltovhc.com/image-101115353-15533866" width="300" height="250" alt="" border="0"/></a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="https://www.anrdoezrs.net/click-101115353-15533831" target="_top">
+                                    <img src="https://www.lduhtrp.net/image-101115353-15533831" width="300" height="250" alt="" border="0"/></a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="https://www.dpbolvw.net/click-101115353-15533823" target="_top">
+                                    <img src="https://www.lduhtrp.net/image-101115353-15533823" width="300" height="250" alt="" border="0"/></a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="https://www.jdoqocy.com/click-101115353-15533807" target="_top">
+                                    <img src="https://www.ftjcfx.com/image-101115353-15533807" width="300" height="250" alt="" border="0"/></a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="https://www.anrdoezrs.net/click-101115353-15533817" target="_top">
+                                    <img src="https://www.ftjcfx.com/image-101115353-15533817" width="300" height="250" alt="" border="0"/></a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="https://www.tkqlhce.com/click-101115353-15533805" target="_top">
+                                    <img src="https://www.tqlkg.com/image-101115353-15533805" width="300" height="250" alt="" border="0"/></a>
+                            </div>
+                            <div class="carousel-item">
+                                <a href="https://www.kqzyfj.com/click-101115353-15533824" target="_top">
+                                    <img src="https://www.ftjcfx.com/image-101115353-15533824" width="300" height="250" alt="" border="0"/></a>                            
+                            </div>
+                            <div class="carousel-item">
+                                <a href="https://www.kqzyfj.com/click-101115353-15533826" target="_top">
+                                    <img src="https://www.awltovhc.com/image-101115353-15533826" width="300" height="250" alt="" border="0"/></a>
+                            </div>
+                        </div>
+                        <!-- [ LEFT + RIGHT buttons ] -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                        <!-- [ LEFT + RIGHT buttons ] end-->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-<!-- [ Main Content ] end -->
-</div>
-
+    <!-- [ Main Content ] end -->
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}
- 
+{% block extra_js %}
+<script
+	src="https://code.jquery.com/jquery-3.7.1.min.js"
+	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+	crossorigin="anonymous"></script>
+<script 
+	src="{% static 'assets/js/multi-item-carousel.js' %}"></script>
+{% endblock extra_js %}

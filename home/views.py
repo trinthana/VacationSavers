@@ -1,5 +1,6 @@
 from django import template
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.shortcuts import redirect
 from django.contrib.auth import logout, update_session_auth_hash, authenticate, login
 from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from django.contrib.auth.decorators import login_required
@@ -414,6 +415,7 @@ def cars(request):
 
 @login_required(login_url="/accounts/login/")
 def cruises(request):
+
     # Page from the theme 
     return render(request, 'pages/products/product-cruises.html')
 
@@ -500,6 +502,18 @@ def flight_vs(request):
     ClickDetails.add(request=request, application=ApplicationChoices.VSFLIGHT, tx_url="https://flights.vacationsavers.com/?cmp=3c26aff8553c068f8857990d2fb95ed447893b85&cmp="+request.user.username) 
     return render(request, 'pages/iframe-page.html', context)
 
+#------------------------------------------------------------------------------------------------------------------------<<< flight_vs >>>
+@login_required(login_url="/accounts/login/")
+def cruise_direct(request):
+    url = 'https://www.jdoqocy.com/click-101115353-11926423'
+    context = {
+    'url': url,
+    }
+
+    # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.CRUISEDIRECT, tx_url=url) 
+    return redirect(url)
+
 #------------------------------------------------------------------------------------------------------------------------<<< cruise_arrivia >>>
 @login_required(login_url="/accounts/login/")
 def cruise_arrivia(request):
@@ -518,13 +532,14 @@ def cruise_arrivia(request):
       
     #Login and GetToken
     status, message, token = Arrivia.get_token( username=request.user.username, email=usr, password=pwd )
+    url = "https://members.vacationsavers.com/vacationclub/logincheck.aspx?RedirectURL=%2Fcruises%2F&Token=" + token
     context = {
-        'url': "https://members.vacationsavers.com/vacationclub/logincheck.aspx?RedirectURL=%2Fcruises%2F&Token=" + token
+        'url': url
     }
 
     # Page from the theme 
-    ClickDetails.add(request=request, application=ApplicationChoices.ARRIVIA, tx_url="https://members.vacationsavers.com/vacationclub/logincheck.aspx?RedirectURL=%2Fcruises%2F&Token=" + token) 
-    return render(request, 'pages/iframe-page.html', context)
+    ClickDetails.add(request=request, application=ApplicationChoices.ARRIVIA, tx_url=url) 
+    return redirect(url)
 
 #------------------------------------------------------------------------------------------------------------------------<<< tour_worldia >>>
 @login_required(login_url="/accounts/login/")
