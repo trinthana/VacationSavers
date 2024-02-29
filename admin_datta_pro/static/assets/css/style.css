@@ -20223,3 +20223,14 @@ Help Desk Application css start
 }
 /**====== overide bootstrap end ======**/
 
+/**====== overide highchart start ======**/
+.highcharts-text {
+    text-align: center;
+}
+.highcharts-number {
+    text-align: center;
+}
+#highcharts-data-table-0 {
+    width: 100%
+}
+/**====== overide highchart end ======**/

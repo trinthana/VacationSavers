@@ -247,7 +247,13 @@
                     }
                 }
             }]
-        }
+		},
+		exporting: {
+			showTable: true,
+			csv: {
+				dateFormat: '%Y-%m-%d' // Attempt to format exported date for CSV and potentially for 'View Data Table'
+			}
+    	}
     });
     // [ line-basic-chart ] end
 
