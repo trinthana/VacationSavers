@@ -26,7 +26,7 @@ from home import accessdev
 from requests.structures import CaseInsensitiveDict
 
 from datetime import date, datetime, timedelta
-from urllib.parse import urlencode
+from urllib.parse import urlencode, unquote
 from collections import defaultdict
 
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
@@ -502,7 +502,7 @@ def flight_vs(request):
     ClickDetails.add(request=request, application=ApplicationChoices.VSFLIGHT, tx_url="https://flights.vacationsavers.com/?cmp=3c26aff8553c068f8857990d2fb95ed447893b85&cmp="+request.user.username) 
     return render(request, 'pages/iframe-page.html', context)
 
-#------------------------------------------------------------------------------------------------------------------------<<< flight_vs >>>
+#------------------------------------------------------------------------------------------------------------------------<<< cruise_direct/redirect >>>
 @login_required(login_url="/accounts/login/")
 def cruise_direct(request):
     url = 'https://www.jdoqocy.com/click-101115353-11926423'
@@ -513,6 +513,14 @@ def cruise_direct(request):
     # Page from the theme 
     ClickDetails.add(request=request, application=ApplicationChoices.CRUISEDIRECT, tx_url=url) 
     return redirect(url)
+
+@login_required(login_url="/accounts/login/")
+def cruise_redirect(request):
+    url = request.GET.get('next', '/')
+
+    # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.CRUISEDIRECT, tx_url=url) 
+    return HttpResponseRedirect(url)
 
 #------------------------------------------------------------------------------------------------------------------------<<< cruise_arrivia >>>
 @login_required(login_url="/accounts/login/")
