@@ -9,6 +9,7 @@ urlpatterns = [
     path('gen_access1/', views.GenAccess1.as_view(), name='gen_access1'),
     path('gen_access2/', views.GenAccess2.as_view(), name='gen_access2'),
     path('gen_access3/', views.GenAccess3.as_view(), name='gen_access3'),
+    path('gen_token/', views.GenToken.as_view(), name='gen_token'),
 
 ]
 

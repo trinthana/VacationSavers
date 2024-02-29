@@ -3346,7 +3346,7 @@ table.dataTable > thead .sorting_desc_disabled:after {
 
 .pcoded-navbar.theme-horizontal ~ .pcoded-main-container {
     margin-top: 130px;
-    margin-left: 5px;
+    margin-left: 0px;
 }
 
 /* menu [ horizontal ] css end */

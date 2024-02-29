@@ -34,7 +34,7 @@
                             <h1 class="alert-info file-btn"><i class="fas fa-ship"></i></h1>
                             <p class="alert-info">Special Cruise Deals Available!</p>
                             <a href="{% url 'cruise_arrivia' %}" target="_blank">
-                                <button type="button" class="btn shadow-1 btn-primary">Get Cruise Deals</button>
+                                <button type="button" class="btn shadow-1 btn-primary">See Special Deals</button>
                             </a>
                         </div>
                         <div class="col-lg-2">
@@ -45,8 +45,10 @@
                             <br>
                             <br>
                             <p class="alert-info"><code>Cruises</code> into Incredible Discounts During Wave Season!</p>
-                            <a href="{% url 'cruise_direct' %}" target="_blank">
-                                <img src="{% static 'assets/icons/cruise_direct.png' %}" width="468" height="60" alt="Generic (468x60)" border="0"/></a>                       </div>
+                            <a href="{% url 'cruise_arrivia' %}" target="_blank">
+                                <button type="button" class="btn shadow-1 btn-primary">Search Cruises</button>
+                            </a>
+                        </div>
                         <div class="col-lg-4">
                             <a href="{% url 'cruise_direct' %}" target="_blank">
                                 <img class="ratio ratio-21x9" src="{% static 'assets/icons/cruise_direct.jpg' %}" />
