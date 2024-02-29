@@ -20230,6 +20230,9 @@ Help Desk Application css start
 .highcharts-number {
     text-align: center;
 }
+.highcharts-credits {
+    display: none;
+}
 #highcharts-data-table-0 {
     width: 100%
 }
