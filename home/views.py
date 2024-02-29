@@ -109,13 +109,16 @@ def get_eventparticipated(user, event):
 # Create your views here.
 #@login_required(login_url="/accounts/login/")
 def index(request):
+    context = {
+        'showModal': True,
+    }
 
     # Page from the theme 
     if request.user.is_authenticated:
         if not request.user.is_superuser:
             user_profile = get_or_create_user_profile(request.user.username)
             if len(user_profile.address) == 0 or len(user_profile.city) == 0 or len(user_profile.country_code) == 0 or len(user_profile.phone) == 0 or len(request.user.first_name) == 0 or len(request.user.last_name) == 0:
-                return redirect('user_profile', context)
+                return redirect('user/profile/', context)
             else:
                 if get_eventparticipated(request.user, EventChoices.FIRSTLOGIN) is None :
                     context = {
