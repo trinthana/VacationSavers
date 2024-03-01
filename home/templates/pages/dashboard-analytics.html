@@ -206,7 +206,7 @@
             text: 'Clicks Statistic for Each Supplier'
         },
         subtitle: {
-            text: '15 Days ({{ start_date }} - {{ end_date }})'
+            text: '16 Days ({{ start_date }} - {{ end_date }})'
         },
         xAxis: {
 			type: 'datetime',
@@ -224,7 +224,7 @@
                 label: {
                     connectorAllowed: false
                 },
-                pointStart: new Date('{{ start_date }}').getTime(),
+                pointStart: new Date('{{ start_date|date:"Y-m-d" }}T12:00:00Z').getTime(),
 				pointIntervalUnit: "day",
 				pointInterval: 1,
 				tooltip: {

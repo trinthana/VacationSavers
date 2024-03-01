@@ -177,7 +177,7 @@ def index(request):
             #Click Statistic
             # Calculate date range for the last 15 days
             end_date = date.today()
-            start_date = end_date - timedelta(days=14)  # 15 days including today
+            start_date = end_date - timedelta(days=15)  # 15 days including today
 
             # Preparing the default structure for each application
             applications_data = defaultdict(lambda: {'name': '', 'data': [0] * 16})
