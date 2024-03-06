@@ -89,6 +89,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "auditlog.middleware.AuditlogMiddleware",
     "admin_datta_pro.middleware.RequestMiddleware",
+    "home.middleware.TokenAuthMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
