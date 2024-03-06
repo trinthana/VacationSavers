@@ -79,7 +79,7 @@ class GenTokens(APIView):
             return Response({"error": "Invalid 'number' parameter"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Ensure the number is within a reasonable limit to prevent abuse
-        if number <= 0 or number > 100:
+        if number <= 0 or number > 1000:
             return Response({"error": "Number of tokens must be between 1 and 100"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Generate and save the specified number of tokens
@@ -107,7 +107,7 @@ class GenTokens(APIView):
             return Response({"error": "Invalid 'number' parameter"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Ensure the number is within a reasonable limit to prevent abuse
-        if number <= 0 or number > 100:
+        if number <= 0 or number > 1000:
             return Response({"error": "Number of tokens must be between 1 and 100"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Generate and save the specified number of tokens
