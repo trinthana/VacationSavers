@@ -1,0 +1,60 @@
+#### - Created Default Account
+POST http://127.0.0.1:8000/api/CreateUser/
+Content-Type: application/json
+Accept-Type: application/json
+Authorization: Token 856c39fd3c72a0ef5e5ccc782b8bd2386a9e7028
+
+{
+    "username":"TinTin",
+    "email":"trinthana@gmail.com",
+    "first_name":"Trin",
+    "last_name":"Thana",
+    "address":"394",
+    "city":"Bangkok",
+    "state_code":"",
+    "country_code":"TH",
+    "postal_code":"92123",
+    "phone":"9999999999"
+}
+
+###################
+POST http://127.0.0.1:8000/api/GetAuthToken/
+Content-Type: application/json
+Accept-Type: application/json
+Authorization: Token 856c39fd3c72a0ef5e5ccc782b8bd2386a9e7028
+
+{
+    "username":"TinTin"
+}
+
+###################
+POST http://127.0.0.1:8000/api/DeactivateUser/
+Content-Type: application/json
+Accept-Type: application/json
+Authorization: Token 856c39fd3c72a0ef5e5ccc782b8bd2386a9e7028
+
+{
+    "username":"TinTin"
+}
+
+###################
+POST http://127.0.0.1:8000/api/ReActivateUser/
+Content-Type: application/json
+Accept-Type: application/json
+Authorization: Token 856c39fd3c72a0ef5e5ccc782b8bd2386a9e7028
+
+{
+    "username":"TinTin"
+}
+
+###################
+POST http://127.0.0.1:8000/api/GetUserList/
+Content-Type: application/json
+Accept-Type: application/json
+Authorization: Token 856c39fd3c72a0ef5e5ccc782b8bd2386a9e7028
+
+###################
+POST http://127.0.0.1:8000/api/GenTokens/
+Content-Type: application/json
+Accept-Type: application/json
+Authorization: Token 856c39fd3c72a0ef5e5ccc782b8bd2386a9e7028

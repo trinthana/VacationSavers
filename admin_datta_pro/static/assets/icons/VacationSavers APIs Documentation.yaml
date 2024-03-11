@@ -1,0 +1,110 @@
+openapi: 3.0.3
+info:
+  title: VacationSavers APIs Documentation
+  version: 1.0.0
+  description: This document will help you try VacationSavers API. Please authorize
+    your token before trying. The format is "Token X(20)"
+paths:
+  /api/CreateUser/:
+    get:
+      operationId: CreateUser_retrieve
+      tags:
+      - CreateUser
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: CreateUser_create
+      tags:
+      - CreateUser
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/DeactivateUser/:
+    post:
+      operationId: DeactivateUser_create
+      tags:
+      - DeactivateUser
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/GenTokens/:
+    get:
+      operationId: GenTokens_retrieve
+      tags:
+      - GenTokens
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: GenTokens_create
+      tags:
+      - GenTokens
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/GetAuthToken/:
+    get:
+      operationId: GetAuthToken_retrieve
+      tags:
+      - GetAuthToken
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: GetAuthToken_create
+      tags:
+      - GetAuthToken
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/GetUserList/:
+    get:
+      operationId: GetUserList_retrieve
+      tags:
+      - GetUserList
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: GetUserList_create
+      tags:
+      - GetUserList
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/ReActivateUser/:
+    post:
+      operationId: ReActivateUser_create
+      tags:
+      - ReActivateUser
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+components:
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"

@@ -39,6 +39,8 @@ urlpatterns = [
     path('vacation-rentals-gtn/', views.gtn, name='gtn'),
     path('specialdeals/', views.specialdeals, name='specialdeals'),
 
+
+
     
     # Matches any html file
     #re_path(r'^.*\.*', views.pages, name='pages'),

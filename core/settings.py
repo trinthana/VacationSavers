@@ -9,10 +9,10 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
 import os, random, string
 from pathlib import Path
 from dotenv import load_dotenv
+from django.conf import settings
 
 load_dotenv()  # take environment variables from .env.
 
@@ -20,6 +20,15 @@ load_dotenv()  # take environment variables from .env.
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.1/howto/static-files/
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+#if not DEBUG:
+#    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -63,6 +72,7 @@ INSTALLED_APPS = [
     "rest_framework",
     'rest_framework.authtoken',
     'rest_framework_multitoken',
+    'drf_spectacular',
     
     # Local Apps
     "app",
@@ -76,6 +86,16 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_multitoken.authentication.MultiTokenAuthentication',  
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'VacationSavers APIs Documentation',
+    'DESCRIPTION': 'This document will help you try VacationSavers API. Please authorize your token before trying. The format is "Token X(20)"',
+    'VERSION': '1.0.0',
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SERVE_INCLUDE_SCHEMA': False,
+    "SWAGGER_UI_FAVICON_HREF": "/static/assets/images/favicon.ico", # default is swagger favicon
 }
 
 MIDDLEWARE = [
@@ -174,16 +194,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-#if not DEBUG:
-#    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

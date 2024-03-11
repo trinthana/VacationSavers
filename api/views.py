@@ -1,7 +1,9 @@
+from django.db import IntegrityError
 from django.shortcuts import render
 from django.contrib.auth.models import User
 
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -9,15 +11,17 @@ from rest_framework import status
 
 from rest_framework_multitoken.models import MultiToken
 
-
-
 from api.authentication import IsValidUserToken
 from app.access_api import import_access_iframe, import_access_deals, import_access_travel, gen_access_iframe
 from app.models import UserProfile, SubscriptionHistory, PackageChoices
+from app.serializers import UserSerializer, UserTokenSerializer
 
 from datetime import datetime, timedelta
 
 # Create your views here.
+def home(request):
+    return render(request, 'pages/doc.html')
+
 class DefaultView(APIView):
    
     def get(self, request):
@@ -28,36 +32,111 @@ class CreateUser(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsValidUserToken]
 
-    def post(self, request, format=None):
+    def post(self, request, *args, **kwargs):
         # At this point, the token is already validated
         # You can now proceed to create the user or perform other actions
-        session_token = request.META.get('HTTP_AUTHORIZATION')
+        session_token = request.auth.key
+        current_user = request.user
         
         # Create UserProfile data with PREMIER subscription plan
-        user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-        user_profile.subscribed_package = PackageChoices.PREMIER
-        user_profile.subscribed_date = datetime.now()
-        user_profile.expired_date = datetime.now() + timedelta(days=365)
-        user_profile.token = session_token
-        user_profile.save()
+        serializer = UserSerializer(data=request.data, context={'token': session_token})
+        if serializer.is_valid():
+            try:
+                user = serializer.save()
+                # Optionally return the generated password or remove this line to keep it secret
+                token, created = Token.objects.get_or_create(user=user)
+                response_data = serializer.data
+                response_data['password'] = user.password  # Note: This will be the hashed password, not the plain text
+                response_data['token'] = token.key
+                return Response(response_data, status=status.HTTP_201_CREATED)
+            except IntegrityError as e:
+                # Handle the IntegrityError
+                if 'username' in str(e):
+                    return Response({'error': 'A user with that username already exists.'}, status=status.HTTP_400_BAD_REQUEST)
+                elif 'email' in str(e):
+                    return Response({'error': 'A user with that email already exists.'}, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    # Handle other IntegrityError cases
+                    return Response({'error': 'An error occurred during user creation.'}, status=status.HTTP_400_BAD_REQUEST)
+                 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        # Dummy implementation of user creation
-        username = request.user.username
+class GetAuthToken(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsValidUserToken]
+
+    def post(self, request, *args, **kwargs):
+        username = request.data['username']
+        session_token = request.auth.key
+
         if not username:
-            return Response({"error": "Username is required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Username is required to get inqure token.'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            try:
+                # Attempt to fetch the existing User
+                user = User.objects.get(username=username)
+                user_profile = UserProfile.objects.get(user=user)
+                if user_profile.token != session_token:
+                    return Response({'error': 'Either authorization token or username is invalid'}, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    token, created = Token.objects.get_or_create(user=user)
+                    return Response({'token': token.key}, status=status.HTTP_202_ACCEPTED)                
+            except User.DoesNotExist:
+                return Response({'error': 'Username does not exist in VacationSavers syystem.'}, status=status.HTTP_400_BAD_REQUEST)
+            except Exception as e:
+                print(f"Error creating/updating UserProfile: {e}")
+                return Response({'error': e}, status=status.HTTP_400_BAD_REQUEST)
 
-        #user = User.objects.create(username=username)
-        return Response({"message": "User created successfully", "user_id": username}, status=status.HTTP_201_CREATED)
+class GetUserList(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsValidUserToken]
 
-    def get(self, request):
-        username = request.user.username
-        
-        if not username:
-            return Response({"error": "Username is required"}, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, *args, **kwargs):
+        session_token = request.auth.key
+        try:
+            user_profile = UserProfile.objects.get(token=session_token)
+            serializer = UserTokenSerializer(user_profile.user)
+            return Response(serializer.data)
+        except UserProfile.DoesNotExist:
+            return Response({'error': 'Invalid session token.'}, status=status.HTTP_404_NOT_FOUND)
 
-        #user = User.objects.create(username=username)
-        return Response({"message": "User created successfully", "user_id": username}, status=status.HTTP_201_CREATED)
+class DeactivateUser(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsValidUserToken]
 
+    def post(self, request, *args, **kwargs):
+        session_token = request.auth.key
+        username = request.data.get('username')
+        try:
+            user = User.objects.get(username=username)
+            user_profile = UserProfile.objects.get(user=user)
+            if user_profile.token != session_token:
+                return Response({'error': 'Either authorization token or username is invalid'}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                user.is_active = False
+                user.save()
+                return Response({'status': 'User ' + username + ' deactivated'})
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+class ReactivateUser(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsValidUserToken]
+
+    def post(self, request, *args, **kwargs):
+        session_token = request.auth.key
+        username = request.data.get('username')
+        try:
+            user = User.objects.get(username=username)
+            user_profile = UserProfile.objects.get(user=user)
+            if user_profile.token != session_token:
+                return Response({'error': 'Either authorization token or username is invalid'}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                user.is_active = True
+                user.save()
+                return Response({'status': 'User ' + username + ' Reactivated'})
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class GenTokens(APIView):
@@ -119,9 +198,6 @@ class GenTokens(APIView):
 
         # Return the generated tokens
         return Response({"tokens": tokens}, status=status.HTTP_201_CREATED)
-
-
-
 
 #---------- Playground : can be deleted ------------------
 class HelloView(APIView):
