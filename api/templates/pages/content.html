@@ -1,0 +1,91 @@
+{% load static %}
+
+<html lang="en">
+
+<head>
+  <title>VacationSavers - {% block title %}Unveiling a world of travel and adventure with exclusive, members-only travel deals that redefine affordability.{% endblock title %}</title>
+  <link rel="stylesheet" href="{% static 'assets/landing/Home.css' %}?v=0.0006">
+  <!-- Favicon icon -->
+    <link rel="icon" href="{% static 'assets/images/favicon.ico' %}" type="image/x-icon">
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}?v=0.0006">
+    <!-- -->
+</head>
+<html class="{% block body %}{% endblock body %} ">
+
+<body>
+<!-- [ Main Content ] start -->
+    <!-- [ working-page ] start -->
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h3>VacationSavers APIs Documentation (1.0.0)</h3>
+            </div>
+            <div class="card-header">
+                <h5 class="card-title">First of All</h5>
+            </div>
+            <div class="card-body row">
+                <p class="card-text">Every process of VacationSavers API, <code>TokenAuth</code> is required. Please contact VacationSavers to obtain organization account and <code>TokenAuth</code>.</p>
+            </div>
+            <div class="card-header">
+                <h5 class="card-title">Single Signon Process</h5>
+            </div>
+            <div class="card-body row">
+                <p class="card-text">
+                    First time customer need to submit their information to create customer account under organization entity. <br>
+                    To create account, <code>CreateUser</code> process is needed, you can see the technical detail for required fields and response from the link at the bottom.<br>
+                    You can also try to submit and see the response from Try It Out link too.
+                    <div>
+                        Here are the basic data required to create account.
+                        <ul>
+                            <li>"username": "string" - user name will be key for other processes and must be unique, so we highly recommend to put organization entity as profix. VACATIONSAVERS_user1, for example.</li>
+                            <li>"email": "string"</li>
+                            <li>"first_name": "string"</li>
+                            <li>"last_name": "string"</li>
+                            <li>"address": "string"</li>
+                            <li>"city": "string"</li>
+                            <li>"state_code": "string"</li>
+                            <li>"country_code": "string"</li>
+                            <li>"postal_code": "string"</li>
+                            <li>"phone": "string"</li>
+                        </ul>
+                    </div>
+
+                </p>
+                <p class="card-text">
+                    If the process is done successfully, 20 digits token <code>TokenUsr</code> will be returned. 
+                    Then you can use <code>TokenUsr</code> to access VacationSavers using the below format.<br>
+                    <code>https://www.vacationsavers.com?auth_token=TokenUsr</code> 
+                </p>
+                <span>
+                    <a href="/api/doc/" class="card-link">Techical Document</a>
+                    <a href="/api/swagger/" class="card-link">Try It Out</a>
+                </span>
+            </div>
+            <div class="card-header">
+                <h5 class="card-title">Supplemental Processes</h5>
+            </div>
+            <div class="card-body row">
+                <p class="card-text">
+                    The additional processes those may help
+                    <div>
+                        <ul>
+                            <li>GetAuthToken : Get <code>TokenUsr</code> for the submitted username.</li>
+                            <li>DeactivateUser : Pause or temporaly disable the submitted username.</li>
+                            <li>ReActivateUser : Resume the submitted username.</li>
+                            <li>GetUserList : Get all customer accounts under the organization account.</li>
+                        </ul>
+                    </div>
+                </p>
+                <span>
+                    <a href="/api/doc/" class="card-link">Techical Document</a>
+                    <a href="/api/swagger/" class="card-link">Try It Out</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- [ working-page ] end -->
+<!-- [ Main Content ] end -->
+</body>
+</html>
+

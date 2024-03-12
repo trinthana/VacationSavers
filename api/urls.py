@@ -11,6 +11,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('', views.home, name='default'),
+    path('api_content', views.api_content, name='api_content'),
     path('CreateUser/', views.CreateUser.as_view(), name='CreateUser'),
     path('GetAuthToken/', views.GetAuthToken.as_view(), name='GetAuthToken'),
     path('DeactivateUser/', views.DeactivateUser.as_view(), name='DeactivateUser'),

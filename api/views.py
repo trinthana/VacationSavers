@@ -11,16 +11,24 @@ from rest_framework import status
 
 from rest_framework_multitoken.models import MultiToken
 
+from drf_spectacular.utils import extend_schema
 from api.authentication import IsValidUserToken
-from app.access_api import import_access_iframe, import_access_deals, import_access_travel, gen_access_iframe
 from app.models import UserProfile, SubscriptionHistory, PackageChoices
-from app.serializers import UserSerializer, UserTokenSerializer
+from app.serializers import UserSerializer, UserTokenSerializer, CreateUserSerializer, ResponseUserSerializer, RequestSerializer, ResponseSerializer, StatusSerializer
+
+
+from django.views.decorators.clickjacking import xframe_options_exempt, xframe_options_sameorigin
 
 from datetime import datetime, timedelta
 
 # Create your views here.
+@xframe_options_sameorigin
 def home(request):
     return render(request, 'pages/doc.html')
+
+@xframe_options_sameorigin
+def api_content(request):
+    return render(request, 'pages/content.html')
 
 class DefaultView(APIView):
    
@@ -32,6 +40,7 @@ class CreateUser(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsValidUserToken]
 
+    @extend_schema(request=CreateUserSerializer, responses=ResponseUserSerializer)
     def post(self, request, *args, **kwargs):
         # At this point, the token is already validated
         # You can now proceed to create the user or perform other actions
@@ -65,6 +74,7 @@ class GetAuthToken(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsValidUserToken]
 
+    @extend_schema(request= RequestSerializer, responses=ResponseSerializer)
     def post(self, request, *args, **kwargs):
         username = request.data['username']
         session_token = request.auth.key
@@ -91,7 +101,9 @@ class GetUserList(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsValidUserToken]
 
+    @extend_schema(request="", responses=ResponseUserSerializer)
     def post(self, request, *args, **kwargs):
+        
         session_token = request.auth.key
         try:
             user_profile = UserProfile.objects.get(token=session_token)
@@ -104,6 +116,7 @@ class DeactivateUser(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsValidUserToken]
 
+    @extend_schema(request= RequestSerializer, responses=StatusSerializer)
     def post(self, request, *args, **kwargs):
         session_token = request.auth.key
         username = request.data.get('username')
@@ -123,6 +136,7 @@ class ReactivateUser(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsValidUserToken]
 
+    @extend_schema(request= RequestSerializer, responses=StatusSerializer)
     def post(self, request, *args, **kwargs):
         session_token = request.auth.key
         username = request.data.get('username')
@@ -143,6 +157,7 @@ class GenTokens(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsValidUserToken]
 
+    @extend_schema(request= RequestSerializer, responses=ResponseUserSerializer)
     def post(self, request, format=None):
         # At this point, the token is already validated
         # You can now proceed to create the user or perform other actions
@@ -171,6 +186,7 @@ class GenTokens(APIView):
         # Return the generated tokens
         return Response({"tokens": tokens}, status=status.HTTP_201_CREATED)
 
+    @extend_schema(request= RequestSerializer, responses=ResponseUserSerializer)
     def get(self, request):
         # At this point, the token is already validated
         # You can now proceed to create the user or perform other actions
@@ -206,28 +222,4 @@ class HelloView(APIView):
     def get(self, request):
         content = {'message': 'Hello, World!'}
         return Response(content)
-
-class GenAccess(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request):
-        return Response(gen_access_iframe(''))
-
-class GenAccess1(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request):
-        return Response(import_access_iframe(''))
-    
-class GenAccess2(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request):
-        return Response(import_access_travel(''))
-
-class GenAccess3(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request):
-        return Response(import_access_deals(''))
 

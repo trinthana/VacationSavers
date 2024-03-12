@@ -3,6 +3,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.middleware import get_user
+from django.utils.deprecation import MiddlewareMixin
+
 
 
 User = get_user_model()
@@ -43,4 +45,8 @@ class TokenAuthMiddleware:
                 except Token.DoesNotExist:
                     # Token is invalid, but proceed with the request
                     pass
-    
+
+class XFrameOptionsMiddleware(MiddlewareMixin):
+    def process_response(self, request, response):
+        response['X-Frame-Options'] = 'SAMEORIGIN'
+        return response

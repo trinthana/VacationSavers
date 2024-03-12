@@ -8,6 +8,8 @@ import string
 
 class UserSerializer(serializers.ModelSerializer):
     # Add additional fields for UserProfile
+    first_name          = serializers.CharField(write_only=True, allow_blank=True, required=False)
+    last_name           = serializers.CharField(write_only=True, allow_blank=True, required=False)
     address             = serializers.CharField(write_only=True, allow_blank=True, required=False)
     city                = serializers.CharField(write_only=True, allow_blank=True, required=False)
     state_code          = serializers.CharField(write_only=True, allow_blank=True, required=False)
@@ -22,7 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'address', 'city', 'state_code', 'country_code', 'postal_code', 'phone', 'subscribed_package', 'token', 'subscribed_date', 'expired_date', 'updated_datetime']
+        fields = ['username', 'email', 'first_name', 'last_name', 'address', 'city', 'state_code', 'country_code', 'postal_code', 'phone', 'subscribed_package', 'token', 'subscribed_date', 'expired_date', 'updated_datetime']
    
     def create(self, validated_data):
         # Generate a random password
@@ -34,6 +36,8 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
             password=password
         )
 
@@ -68,4 +72,38 @@ class UserTokenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'token')
+        fields = ('username', 'email', 'token')
+
+class CreateUserSerializer(serializers.ModelSerializer):
+    # Add additional fields for UserProfile
+    username            = serializers.CharField(required=True, help_text="Username must be unique. Using your organization entity as prefix (ENTITY_abcdefg) is recommended.")
+    first_name          = serializers.CharField(required=True)
+    last_name           = serializers.CharField(required=True)
+    email               = serializers.CharField(required=True)
+    address             = serializers.CharField(required=True)
+    city                = serializers.CharField(required=True)
+    state_code          = serializers.CharField(allow_blank=True, required=False, help_text="2 digits state code")
+    country_code        = serializers.CharField(required=True, help_text="2 digits country code")
+    postal_code         = serializers.CharField(allow_blank=True, required=False)
+    phone               = serializers.CharField(allow_blank=True, required=False)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name', 'address', 'city', 'state_code', 'country_code', 'postal_code', 'phone']
+
+class ResponseUserSerializer(serializers.Serializer):
+    username = serializers.CharField(allow_blank=True, required=False)
+    email = serializers.CharField(allow_blank=True, required=False)
+    token = serializers.CharField(allow_blank=True, required=False, help_text="Token will be returned")
+
+
+class RequestSerializer(serializers.Serializer):
+    username = serializers.CharField(required=True, help_text="Username must be unique. Using your organization entity as prefix (ENTITY_abcdefg) is recommended.")
+
+
+class ResponseSerializer(serializers.Serializer):
+    token = serializers.CharField(allow_blank=True, required=False, help_text="Token will be returned")
+
+class StatusSerializer(serializers.Serializer):
+    status = serializers.CharField(allow_blank=True, required=False, help_text="Status will be returned")
+

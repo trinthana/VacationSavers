@@ -91,7 +91,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'VacationSavers APIs Documentation',
-    'DESCRIPTION': 'This document will help you try VacationSavers API. Please authorize your token before trying. The format is "Token X(20)"',
+    'DESCRIPTION': 'TokenAuth will be provided by VacationSavers, every API call TokenAuth in header.',
     'VERSION': '1.0.0',
     'COMPONENT_SPLIT_REQUEST': True,
     'SERVE_INCLUDE_SCHEMA': False,
@@ -110,6 +110,7 @@ MIDDLEWARE = [
     "auditlog.middleware.AuditlogMiddleware",
     "admin_datta_pro.middleware.RequestMiddleware",
     "home.middleware.TokenAuthMiddleware",
+    "home.middleware.XFrameOptionsMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
