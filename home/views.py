@@ -506,14 +506,15 @@ def tourradar(request):
 #------------------------------------------------------------------------------------------------------------------------<<< tourradar >>>
 @login_required(login_url="/accounts/login/")
 def tour_getyourguide(request):
+    url = 'https://www.getyourguide.com/?partner_id=CZCQQER'
     context = {
-    'url': 'https://www.getyourguide.com/?partner_id=CZCQQER',
+    'url': url,
     }
 
     # Page from the theme 
-    ClickDetails.add(request=request, application=ApplicationChoices.GETYOURGUIDE, tx_url="https://www.getyourguide.com/?partner_id=CZCQQER") 
-    return render(request, 'pages/iframe-page.html', context)
-
+    ClickDetails.add(request=request, application=ApplicationChoices.GETYOURGUIDE, tx_url=url) 
+    return redirect(url)
+    #return render(request, 'pages/iframe-page.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< flight_vs >>>
 @login_required(login_url="/accounts/login/")
