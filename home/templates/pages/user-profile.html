@@ -40,22 +40,24 @@ style {
                         </p>
                         <i class="feather icon-edit text-black" data-bs-toggle="modal" data-bs-target="#profileModal" style="cursor: pointer;"></i>
                     </div>
-                    <div class="toast text-white bg-secondary fade show" role="alert" aria-live="assertive" aria-atomic="true">
+                    {% if showArrivia  %}
+                    <div class="toast text-white bg-info fade show" role="alert" aria-live="assertive" aria-atomic="true">
                         <div class="d-flex">
                             <div class="toast-body">
-                                First Name, Last Name, Address, City, Country Code, and Phone Number are required to setup account.
-                                Click <i class="feather icon-edit text-white" data-bs-toggle="modal" data-bs-target="#profileModal" style="cursor: pointer;"></i> on the left hand side.
+                                A complete profile is required to access these special cruise deals. 
+                                Click <i class="feather icon-edit text-white" data-bs-toggle="modal" data-bs-target="#profileModal" style="cursor: pointer;"></i> on the left hand side to add your name, address, and phone number to unlock!.
                             </div>
                             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     <span class="f-w-500"><i class="feather icon-mail m-r-10"></i>Email</span>
                     <a href="mailto:{{ user.email }}" class="float-end text-body">
-                        {{ user.email }}
+                        {{ user.email }} 
                     </a>
                 </li>
                 <li class="list-group-item">

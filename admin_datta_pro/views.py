@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView, PasswordResetConfirmView
-from admin_datta_pro.forms import RegistrationForm, LoginForm, UserPasswordResetForm, UserSetPasswordForm, UserPasswordChangeForm, RegistrationWithCodeForm
+from django.contrib import messages
 from django.contrib.auth import logout
 from django.views.generic import CreateView
 from django.contrib.sessions.models import Session
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from app.models import Sessions
+from admin_datta_pro.forms import RegistrationForm, LoginForm, UserPasswordResetForm, UserSetPasswordForm, UserPasswordChangeForm, RegistrationWithCodeForm
 
 # Dashboard
 def default(request):
@@ -1106,7 +1108,8 @@ class RegistrationWithCodeView(CreateView):
   
   template_name = 'accounts/auth-signup-withcode.html'
   form_class = RegistrationWithCodeForm
-  success_url = '/accounts/login/'
+  #success_url = '/accounts/login/'
+  success_url = reverse_lazy('login') 
 
   def get(self, request, *args, **kwargs):
     template = self.template_name
@@ -1120,7 +1123,14 @@ class RegistrationWithCodeView(CreateView):
       }
     form = RegistrationWithCodeForm(initial=initial_data)
     return render(request, template, {'form': form})
-
+    
+  def form_valid(self, form):
+    # This method is called when valid form data has been POSTed.
+    # It should return an HttpResponse.
+    response = super(RegistrationWithCodeView, self).form_valid(form)
+    messages.success(self.request, 'Account created! Please log in to continue.')
+    return response
+  
 # Authentication -> Login
 class LoginViewV1(LoginView):
   template_name = 'accounts/auth-signin.html'
@@ -1220,15 +1230,6 @@ def coming_soon(request):
 def offline_ui(request):
   return render(request, 'pages/maint-offline-ui.html')
 
-
-# Social
-@login_required(login_url='/accounts/login/')
-def messages(request):
-  context = {
-    'parent': 'social',
-    'segment': 'message'
-  }
-  return render(request, 'pages/apps/message.html', context)
 
 # Task
 @login_required(login_url='/accounts/login/')

@@ -222,8 +222,6 @@ urlpatterns = [
   path('maint/coming-soon/', views.coming_soon, name="coming_soon"),
   path('maint/offile/', views.offline_ui, name="offline"),
 
-  # Social
-  path('social/message/', views.messages, name="messages"),
 
   # Task
   path('task/task-list/', views.task_list, name="task_list"),

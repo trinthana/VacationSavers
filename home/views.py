@@ -116,20 +116,16 @@ def index(request):
     # Page from the theme 
     if request.user.is_authenticated:
         if not request.user.is_superuser:
-            user_profile = get_or_create_user_profile(request.user.username)
-            if len(user_profile.address) == 0 or len(user_profile.city) == 0 or len(user_profile.country_code) == 0 or len(user_profile.phone) == 0 or len(request.user.first_name) == 0 or len(request.user.last_name) == 0:
-                return redirect('user/profile/', context)
-            else:
-                if get_eventparticipated(request.user, EventChoices.FIRSTLOGIN) is None :
-                    context = {
-                        'showModal': True,
-                    }
-                else :
-                    context = {
-                        'showModal': False,
-                    }
-                
-                return render(request, 'pages/index.html', context)
+            if get_eventparticipated(request.user, EventChoices.FIRSTLOGIN) is None :
+                context = {
+                    'showModal': True,
+                }
+            else :
+                context = {
+                    'showModal': False,
+                }
+            
+            return render(request, 'pages/index.html', context)
         else:
             # Get the current date
             now = timezone.now()
@@ -238,10 +234,16 @@ def profile(request, **kwargs):
 
     if request.method == 'GET':
         current_user = request.user
+
         try:
             user_profile = request.user.userprofile
         except UserProfile.DoesNotExist:
             user_profile = UserProfile(user=request.user)
+
+        if len(user_profile.address) == 0 or len(user_profile.city) == 0 or len(user_profile.country_code) == 0 or len(user_profile.phone) == 0 or len(request.user.first_name) == 0 or len(request.user.last_name) == 0:
+            showArrivia = True
+        else:
+            showArrivia = False
 
         log_entries = LogEntry.objects.filter(object_repr=current_user.username ).order_by('-timestamp')[:10]
         
@@ -249,6 +251,7 @@ def profile(request, **kwargs):
         return render(request, 'pages/user-profile.html', context={
             'parent': 'Account',
             'segment': 'Profile',
+            'showArrivia': showArrivia,
             'user': {
                 'username': current_user.username,
                 'fullname': current_user.first_name + " " + current_user.last_name,
@@ -278,6 +281,11 @@ def profile(request, **kwargs):
 
         profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
 
+        if len(user_profile.address) == 0 or len(user_profile.city) == 0 or len(user_profile.country_code) == 0 or len(user_profile.phone) == 0 or len(request.user.first_name) == 0 or len(request.user.last_name) == 0:
+            showArrivia = True
+        else:
+            showArrivia = False
+
         # Validate form
         if profile_form.is_valid():
             if 'image_file' in request.FILES:
@@ -299,6 +307,7 @@ def profile(request, **kwargs):
         return render(request, 'pages/user-profile.html', context={
             'parent': 'Account',
             'segment': 'Profile',
+            'showArrivia': showArrivia,
             'user': {
                 'username': current_user.username,
                 'fullname': current_user.first_name + " " + current_user.last_name,
@@ -540,29 +549,35 @@ def cruise_redirect(request):
 #------------------------------------------------------------------------------------------------------------------------<<< cruise_arrivia >>>
 @login_required(login_url="/accounts/login/")
 def cruise_arrivia(request):
-    Arrivia = arrivia.Arrivia()
 
-    # Get credential from DB
-    token, usr, pwd, id = get_credential(request.user, ApplicationChoices.ARRIVIA)
-   
-    if usr == '':
-        #Create Arrivia Default Account
-        usr = request.user.email
-        pwd = openssl_random_pseudo_bytes(4).hex() + "!A"
+    user_profile = get_or_create_user_profile(request.user.username)
+    if len(user_profile.address) == 0 or len(user_profile.city) == 0 or len(user_profile.country_code) == 0 or len(user_profile.phone) == 0 or len(request.user.first_name) == 0 or len(request.user.last_name) == 0:
+        return redirect('/user/profile/')
 
-        status, message, token, custom1, custom2, custom3 = Arrivia.create_account( user=request.user, username=request.user.username, email=usr, password=pwd )
+    else:
 
-      
-    #Login and GetToken
-    status, message, token = Arrivia.get_token( username=request.user.username, email=usr, password=pwd )
-    url = "https://members.vacationsavers.com/vacationclub/logincheck.aspx?RedirectURL=%2Fcruises%2F&Token=" + token
-    context = {
-        'url': url
-    }
+        Arrivia = arrivia.Arrivia()
+        # Get credential from DB
+        token, usr, pwd, id = get_credential(request.user, ApplicationChoices.ARRIVIA)
+    
+        if usr == '':
+            #Create Arrivia Default Account
+            usr = request.user.email
+            pwd = openssl_random_pseudo_bytes(4).hex() + "!A"
 
-    # Page from the theme 
-    ClickDetails.add(request=request, application=ApplicationChoices.ARRIVIA, tx_url=url) 
-    return redirect(url)
+            status, message, token, custom1, custom2, custom3 = Arrivia.create_account( user=request.user, username=request.user.username, email=usr, password=pwd )
+
+        
+        #Login and GetToken
+        status, message, token = Arrivia.get_token( username=request.user.username, email=usr, password=pwd )
+        url = "https://members.vacationsavers.com/vacationclub/logincheck.aspx?RedirectURL=%2Fcruises%2F&Token=" + token
+        context = {
+            'url': url
+        }
+
+        # Page from the theme 
+        ClickDetails.add(request=request, application=ApplicationChoices.ARRIVIA, tx_url=url) 
+        return redirect(url)
 
 #------------------------------------------------------------------------------------------------------------------------<<< tour_worldia >>>
 @login_required(login_url="/accounts/login/")
