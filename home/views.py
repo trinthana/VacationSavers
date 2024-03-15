@@ -494,6 +494,18 @@ def tourradar(request):
     ClickDetails.add(request=request, application=ApplicationChoices.TOURRADAR, tx_url="https://vacationsavers.travel.tourradar.com/") 
     return render(request, 'pages/iframe-page.html', context)
 
+#------------------------------------------------------------------------------------------------------------------------<<< tourradar >>>
+@login_required(login_url="/accounts/login/")
+def tour_getyourguide(request):
+    context = {
+    'url': 'https://www.getyourguide.com/?partner_id=CZCQQER',
+    }
+
+    # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.GETYOURGUIDE, tx_url="https://www.getyourguide.com/?partner_id=CZCQQER") 
+    return render(request, 'pages/iframe-page.html', context)
+
+
 #------------------------------------------------------------------------------------------------------------------------<<< flight_vs >>>
 @login_required(login_url="/accounts/login/")
 def flight_vs(request):
