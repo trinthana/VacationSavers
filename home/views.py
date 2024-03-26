@@ -739,3 +739,14 @@ def specialdeals(request):
     ClickDetails.add(request=request, application=ApplicationChoices.DUNHILL, tx_url="https://www.dunhilltraveldeals.com/api/v1/iframe/5952") 
     return render(request, 'pages/iframe-page.html', context)
 
+#------------------------------------------------------------------------------------------------------------------------<<< Talixo >>>
+@login_required(login_url="/accounts/login/")
+def transfer_talixo(request):
+    context = {
+    'url': 'https://talixo.com/vacationsavers/',
+    }
+
+    # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.TALIXO, tx_url="https://talixo.com/vacationsavers/") 
+    return render(request, 'pages/iframe-page.html', context)
+

@@ -39,6 +39,7 @@ urlpatterns = [
     path('hotels-booking/', views.hotels_booking, name='hotels_booking'),
     path('vacation-rentals-gtn/', views.gtn, name='gtn'),
     path('specialdeals/', views.specialdeals, name='specialdeals'),
+    path('transfer-talixo/', views.transfer_talixo, name='transfer_talixo'),
 
 
 

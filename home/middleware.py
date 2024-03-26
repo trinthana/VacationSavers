@@ -32,7 +32,6 @@ class TokenAuthMiddleware:
         return response
     
     def process_request(self, request):
-        print("I am in process_request")
         # Ensure request is not None and has the GET attribute
         if request and hasattr(request, 'GET'):
             # Get the token from the query string
