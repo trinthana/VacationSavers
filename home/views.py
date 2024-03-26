@@ -742,11 +742,12 @@ def specialdeals(request):
 #------------------------------------------------------------------------------------------------------------------------<<< Talixo >>>
 @login_required(login_url="/accounts/login/")
 def transfer_talixo(request):
+
+    url = 'https://talixo.com/vacationsavers/'
     context = {
-    'url': 'https://talixo.com/vacationsavers/',
+    'url': url,
     }
 
     # Page from the theme 
-    ClickDetails.add(request=request, application=ApplicationChoices.TALIXO, tx_url="https://talixo.com/vacationsavers/") 
-    return render(request, 'pages/iframe-page.html', context)
-
+    ClickDetails.add(request=request, application=ApplicationChoices.TALIXO, tx_url=url) 
+    return redirect(url)
