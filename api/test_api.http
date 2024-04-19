@@ -54,7 +54,7 @@ Accept-Type: application/json
 Authorization: Token 856c39fd3c72a0ef5e5ccc782b8bd2386a9e7028
 
 ###################
-POST http://127.0.0.1:8000/api/GenTokens/
+GET https://www.vacationsavers.com/api/GenTokens/?number=1000
 Content-Type: application/json
 Accept-Type: application/json
-Authorization: Token 856c39fd3c72a0ef5e5ccc782b8bd2386a9e7028
+Authorization: Token 8177f6634a6c3ccdd4d8319de1e264d58bf6d29d

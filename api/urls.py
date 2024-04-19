@@ -18,6 +18,7 @@ urlpatterns = [
     path('ReActivateUser/', views.ReactivateUser.as_view(), name='ReActivateUser'),
     path('GetUserList/', views.GetUserList.as_view(), name='GetUserList'),
     path('GenTokens/', views.GenTokens.as_view(), name='GemTokens'),
+    path('GenToken/', views.generate_token, name='generate_token'),
 
     path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('schema/', SpectacularAPIView.as_view(), name='schema'),

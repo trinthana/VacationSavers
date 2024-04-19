@@ -66,14 +66,27 @@
                             </a>
                         </div>
                         <ul class="pro-body">
-                            <li><a href="{% url 'user_profile' %} " class="dropdown-item"><i class="feather icon-user"></i>
-                                    Profile</a></li>
+                            <li>
+                                <a href="{% url 'user_profile' %} " class="dropdown-item">
+                                    <i class="feather icon-user"></i>
+                                    Profile
+                                </a>
+                            </li>
                             <!--
                                     <li><a href="{% url 'change_plan' %} " class="dropdown-item"><i class="feather icon-monitor"></i>
                                     Change Plan</a></li>
                             -->
-                                    <li><a href="{% url 'logout' %}" class="dropdown-item">
-                                    <i class="feather icon-log-out"></i>LOGOUT</a>
+                            <li>
+                                <a data-pc-animate="slip-from-top" data-bs-toggle="modal" data-bs-target="#animateModal" href="" class="dropdown-item">
+                                    <i class="feather icon-users"></i>
+                                    Invite a friend
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'logout' %}" class="dropdown-item">
+                                    <i class="feather icon-log-out"></i>
+                                    LOGOUT
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -83,4 +96,36 @@
     </div>
 
 </header>
+<!-- [ Modal ] start -->
+<div class="modal fade modal-animate" id="animateModal" tabindex="-1" aria-labelledby="animateModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title text-white"">Invite a friend</h5>
+                    <button type=" button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+            </div>
+            <div class="modal-body">
+                <h5>Share the adventure with your friend !</h5>
+                <p>You can do the following things with it:</p>
+                <p> <b>Generate:</b> Click at "Generate Link" button below.</p>
+                <p><b>Copy:</b> Copy the generated link.</p>
+                <p><b>Share:</b> Share the link with your friend and enjoy the adventure together (one link for one friend).</p>
+                <b>Link:</b> 
+                <div class="input-group">
+                    <input type="text" class="form-control" id="pc-clipboard-1" placeholder="Press Generate Link to create a link.">
+                    <a href="#" class="btn btn-primary" data-clipboard="true" data-clipboard-target="#pc-clipboard-1"><i class="fas fa-copy m-0"></i></a>
+                </div>
+                <small>Please press <code>Generate Link</code> to create a link, then copy to your clipboard and send to your friend.</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary shadow-2" id="btnGenerateToken">Generate Link</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [ Modal ] end -->
+
 <!-- [ Header ] end -->

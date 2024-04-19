@@ -1,6 +1,7 @@
 from django.db import IntegrityError
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
@@ -214,6 +215,17 @@ class GenTokens(APIView):
 
         # Return the generated tokens
         return Response({"tokens": tokens}, status=status.HTTP_201_CREATED)
+
+def generate_token(request):
+    user = request.user  # Assumes the user is already authenticated
+    if not user.is_authenticated:
+        return JsonResponse({'error': 'User is not authenticated'}, status=401)
+    
+    #token, created = Token.objects.get_or_create(user=user)
+    token = MultiToken(user=user)
+    token.save()  # The token key will be generated in the save method
+    return JsonResponse({'token': token.key})
+
 
 #---------- Playground : can be deleted ------------------
 class HelloView(APIView):

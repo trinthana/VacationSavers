@@ -59,7 +59,32 @@
   {% include 'includes/scripts.html' %}
  
   {% block extra_js %}{% endblock extra_js %}
+  <script src="{% static 'assets/js/plugins/clipboard.min.js' %}"></script>
+  <script>
 
+    // Generarate Link
+    $(document).ready(function(){
+      $("#btnGenerateToken").click(function(){
+        $.ajax({
+            url: '/api/GenToken/',
+            type: 'GET',
+            success: function(data) {
+                $('#pc-clipboard-1').val('https://www.vacationsavers.com/verify-code/?token=' + data.token);  // Populate the textbox with the token
+            },
+            error: function() {
+                alert('Error generating token');
+            }
+        });
+      });
+    });
+     
+    // Clipboard basic
+    new ClipboardJS('[data-clipboard=true]').on('success', function(e) {
+        e.clearSelection();
+        alert('Copied!');
+    });
+  </script>
+  
 
 </body>
 </html>
