@@ -1,0 +1,21 @@
+{% load static admin_datta %}
+
+
+<!-- [ navigation menu ] start -->
+<nav class="pcoded-navbar theme-horizontal menu-light icon-colored">
+    <div class="navbar-wrapper">
+        <div class="navbar-brand header-logo">
+            <a href="{% url 'index' %}" class="b-brand">
+                <div class="b-bg">
+					<img alt="VacationSavers.com" style="width: 90%; text-align: left important;" src="{% static 'assets/images/logo.png' %}"></img>
+                </div>
+                <span class="b-title">VacationSavers</span>
+            </a>
+            <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
+        </div>
+        <div class="navbar-content sidenav-horizontal" id="layout-sidenav">
+            {% include 'includes/menu-list-gtn.html' %}
+        </div>
+    </div>
+</nav>
+<!-- [ navigation menu ] end -->

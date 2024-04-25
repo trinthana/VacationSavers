@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <title>VacationSavers - {% block title %}Unveiling a world of travel and adventure with exclusive, members-only travel deals that redefine affordability.{% endblock title %}</title>
+  {% include 'includes/head.html' %}
+  {% block extraheader %}
+  {% endblock extraheader %}
+  {% block style %}
+    <!-- Favicon icon -->
+    <link rel="icon" href="{% static 'assets/images/favicon.ico' %}" type="image/x-icon">
+    <!-- fontawesome icon -->
+    <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome/css/fontawesome-all.min.css' %}">
+    <!-- animation css -->
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/perfect-scrollbar.css' %}">
+    {% block extrastyle %}{% endblock extrastyle %}
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/prism-coy.css' %}">
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}?v=0.0011">
+    <!-- -->
+  {% endblock style %}
+</head>
+<body class="{% block body %}{% endblock body %}">
+
+  {% block pre_loader %}
+    {% include 'includes/pre-loader.html' %}
+  {% endblock pre_loader %}
+
+  {% block sidebar %}
+    {% include 'includes/sidebar_gtn.html' %}
+  {% endblock sidebar %}
+
+  {% block header %}
+    {% include 'includes/navigation.html' %}
+  {% endblock header %}
+
+  	<!-- [ Main Content ] start -->
+	<div class="pcoded-main-container">
+		<div class="pcoded-wrapper">
+			<div class="pcoded-content">
+				<div class="pcoded-inner-content">
+
+          {% block breadcrumbs %}
+          {% endblock breadcrumbs %}
+
+          <div class="main-body">
+						<div class="page-wrapper">
+              {% block content %}{% endblock content %}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'includes/scripts.html' %}
+ 
+  {% block extra_js %}{% endblock extra_js %}
+  <script src="{% static 'assets/js/plugins/clipboard.min.js' %}"></script>
+  <script>
+
+    // Generarate Link
+    $(document).ready(function(){
+      $("#btnGenerateToken").click(function(){
+        $.ajax({
+            url: '/api/GenToken/',
+            type: 'GET',
+            success: function(data) {
+                $('#pc-clipboard-1').val('https://www.vacationsavers.com/verify-code/?token=' + data.token);  // Populate the textbox with the token
+            },
+            error: function() {
+                alert('Error generating token');
+            }
+        });
+      });
+    });
+     
+    // Clipboard basic
+    new ClipboardJS('[data-clipboard=true]').on('success', function(e) {
+        e.clearSelection();
+        alert('Copied!');
+    });
+  </script>
+  
+
+</body>
+</html>
