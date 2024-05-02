@@ -17,6 +17,7 @@ from auditlog.models import LogEntry
 from app.forms import *
 from app.models import *
 from rest_framework_multitoken.models import MultiToken
+from rest_framework.authtoken.models import Token
 
 from home import helpers
 #---------------
@@ -113,7 +114,21 @@ def index(request):
         'showModal': True,
     }
 
-    # Page from the theme 
+    # Extract the token from the query string and authenticate the user, then try form
+    token_key = request.GET.get('auth_token') if request.GET else None
+    if not token_key:
+        token_key = request.POST.get('auth_token') if request.POST else None
+
+    if token_key:
+        try:
+            token = Token.objects.get(key=token_key)
+            multitoken = MultiToken(user=token.user)
+            multitoken.save()  # The token key will be generated in the save method
+            return redirect(reverse('verify_code') + '?token=' + multitoken.key)
+        except :
+            return render(request, 'pages/home.html')
+
+
     if request.user.is_authenticated:
         if request.user.username == "TrialUser" or request.user.username == "Trin" :
             return render(request, 'pages/vacation-rentals-gtn-alone.html', context)
