@@ -130,7 +130,7 @@ class ClickDetails(models.Model):
         )
         if created:
             click_details.save()
-            ClickSummary.increase(application)
+            ClickSummary.increase(application, default_tx_date())
    
 class ClickSummary(models.Model):
 
