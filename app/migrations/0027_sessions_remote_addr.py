@@ -15,4 +15,4 @@ class Migration(migrations.Migration):
             name='remote_addr',
             field=models.CharField(blank=True, default='', max_length=15, null=True),
         ),
-    ]
+    ] 

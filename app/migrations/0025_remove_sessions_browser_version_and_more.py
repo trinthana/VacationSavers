@@ -18,4 +18,4 @@ class Migration(migrations.Migration):
             model_name='sessions',
             name='os_version',
         ),
-    ]
+    ] 

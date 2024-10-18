@@ -15,4 +15,4 @@ class Migration(migrations.Migration):
             name='user',
             field=models.TextField(max_length=40),
         ),
-    ]
+    ] 
