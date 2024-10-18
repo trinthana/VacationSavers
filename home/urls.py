@@ -1,6 +1,7 @@
 from django.urls import path, re_path
 
 from home import views
+from .views import token_login
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -41,8 +42,7 @@ urlpatterns = [
     path('specialdeals/', views.specialdeals, name='specialdeals'),
     path('transfer-talixo/', views.transfer_talixo, name='transfer_talixo'),
 
-
-
+    path('token-login/<uuid:token>/', token_login, name='token_login'),
     
     # Matches any html file
     #re_path(r'^.*\.*', views.pages, name='pages'),

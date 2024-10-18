@@ -9,6 +9,8 @@ from django.shortcuts import render, redirect
 from django.template import loader
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.conf import settings
 from django.db.models.functions import TruncMonth, TruncDay, ExtractYear, ExtractMonth
 from django.db.models import Min, Max, Count, Sum
 from django.core.exceptions import *
@@ -68,7 +70,29 @@ def openssl_random_pseudo_bytes(length, crypto_strong=True):
 
 # End Worldia
 #---------------
+def token_login(request, token):
+    redirect_to = request.GET.get('p', '')  # Get the redirect path from query string
+    default_redirect_url = '/'  # Default to home if no or invalid `p` is provided
 
+    try:
+        login_token = LoginToken.objects.get(token=token)
+        if login_token.is_valid():
+            user = login_token.user
+            login(request, user)
+            #login_token.delete()  # Optional: delete the token after use
+            # Ensure the redirect URL is safe to prevent open redirection vulnerabilities
+            if url_has_allowed_host_and_scheme(url=redirect_to, allowed_hosts=settings.ALLOWED_HOSTS):
+                return redirect(redirect_to)
+            else:
+                return redirect(default_redirect_url)
+        else:
+            # Handle expired or invalid token
+            print("login_token.is_valid() = FALSE")
+            return redirect('/accounts/login/')
+    except LoginToken.DoesNotExist:
+        print("LoginToken.objects.get ", LoginToken.objects.get(token=token))
+        return redirect('/accounts/login/')
+    
 #---------------
 # For General Purposes
 def get_credential(user, app):
@@ -130,7 +154,7 @@ def index(request):
 
 
     if request.user.is_authenticated:
-        if request.user.username == "TrialUser" or request.user.username == "Trin" :
+        if request.user.username == "TrialUser" :
             return render(request, 'pages/vacation-rentals-gtn-alone.html', context)
         else:
 

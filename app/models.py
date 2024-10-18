@@ -2,14 +2,24 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django_user_agents.utils import get_user_agent
+from datetime import timedelta
 import json
-
+import uuid
 
 def default_tx_date():
     return timezone.now().date()
 
 def default_tx_time():
     return timezone.now().time()
+
+class LoginToken(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    token = models.UUIDField(default=uuid.uuid4, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_valid(self):
+        # Check if the token is less than 24 hours old
+        return (timezone.now() - self.created_at) <= timedelta(hours=168)
 
 class EventChoices (models.TextChoices):     
     FIRSTLOGIN = 'FIRSTLOGIN', 'First Login'
