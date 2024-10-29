@@ -696,36 +696,33 @@ def hotels_booking(request):
 #------------------------------------------------------------------------------------------------------------------------<<< car_access >>>
 @login_required(login_url="/accounts/login/")
 def car_access(request):
-    # Get credential from DB
-    cvt, usr, pwd, id = get_credential(request.user, ApplicationChoices.ACCESSIFRAME)
-    if len(cvt) == 0:
-        AccessDev = accessdev.AccessDev()
-        cvt = AccessDev.create_member(request.user, ApplicationChoices.ACCESSIFRAME)
+
+    # Get session token on the fly
+    AccessTravel = accesstravel.AccessTravel()
+    session = AccessTravel.get_session_token(request.user, ApplicationChoices.ACCESSIFRAME)
 
     context = {
-    'cvt': cvt
+        'session': session
     }
 
     # Page from the theme 
-    ClickDetails.add(request=request, application=ApplicationChoices.ACCESSIFRAME, tx_url="https://booking.accessdevelopment.com/scripts/integration.js?target=divAccess&view=cars&cvt="+cvt) 
+    ClickDetails.add(request=request, application=ApplicationChoices.ACCESSIFRAME, tx_url="https://booking.accessdevelopment.com/scripts/integration.js?target=divAccess&view=cars&session="+session) 
     return render(request, 'pages/car-access.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< hotels_access >>>
 @login_required(login_url="/accounts/login/")
 def hotels_access(request):
 
-    # Get credential from DB
-    cvt, usr, pwd, id = get_credential(request.user, ApplicationChoices.ACCESSIFRAME)
-    if len(cvt) == 0:
-        AccessDev = accessdev.AccessDev()
-        cvt = AccessDev.create_member(request.user, ApplicationChoices.ACCESSIFRAME)
+    # Get session token on the fly
+    AccessTravel = accesstravel.AccessTravel()
+    session = AccessTravel.get_session_token(request.user, ApplicationChoices.ACCESSIFRAME)
 
     context = {
-    'cvt': cvt
+        'session': session
     }
 
     # Page from the theme 
-    ClickDetails.add(request=request, application=ApplicationChoices.ACCESSIFRAME, tx_url="https://booking.accessdevelopment.com/scripts/integration.js?target=divAccess&view=hotels&cvt="+cvt) 
+    ClickDetails.add(request=request, application=ApplicationChoices.ACCESSIFRAME, tx_url="https://booking.accessdevelopment.com/scripts/integration.js?target=divAccess&view=hotels&session="+session) 
     return render(request, 'pages/hotels-access.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< access_travel >>>

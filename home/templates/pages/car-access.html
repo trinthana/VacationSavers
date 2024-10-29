@@ -2,10 +2,12 @@
 
 {% block title %} Rental Cars {% endblock %} 
 {% block extraheader %}
-<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval'  *.accessdevelopment.com  *.adcrws.com *.mapbox.com translation.googleapis.com cdn.heapanalytics.com heapanalytics.com *.auryc.com *.visualwebsiteoptimizer.com app.vwo.com js.stripe.com core.spreedly.com qqc-api.worldnomads.com *.smartlook.com *.smartlook.cloud *.braintreegateway.com *.braintree-api.com " />
-<meta http-equiv="Content-Security-Policy" content="frame-src 'self' 'unsafe-inline' 'unsafe-eval' *.accessdevelopment.com  *.adcrws.com *.mapbox.com translation.googleapis.com cdn.heapanalytics.com heapanalytics.com *.auryc.com *.visualwebsiteoptimizer.com app.vwo.com js.stripe.com core.spreedly.com qqc-api.worldnomads.com *.smartlook.com *.smartlook.cloud *.braintreegateway.com *.braintree-api.com " />
-<meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' 'unsafe-inline' 'unsafe-eval' *.accessdevelopment.com  *.adcrws.com *.mapbox.com translation.googleapis.com cdn.heapanalytics.com heapanalytics.com *S.auryc.com *.visualwebsiteoptimizer.com app.vwo.com js.stripe.com core.spreedly.com qqc-api.worldnomads.com *.smartlook.com *.smartlook.cloud *.braintreegateway.com *.braintree-api.com " />
+<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval'  *.accessdevelopment.com  *.adcrws.com *.mapbox.com  *.googletagmanager.com translation.googleapis.com cdn.heapanalytics.com heapanalytics.com *.auryc.com *.visualwebsiteoptimizer.com app.vwo.com js.stripe.com core.spreedly.com qqc-api.worldnomads.com *.smartlook.com *.smartlook.cloud *.braintreegateway.com *.braintree-api.com " />
+<meta http-equiv="Content-Security-Policy" content="frame-src 'self' 'unsafe-inline' 'unsafe-eval' *.accessdevelopment.com  *.adcrws.com *.mapbox.com *.googletagmanager.com translation.googleapis.com cdn.heapanalytics.com heapanalytics.com *.auryc.com *.visualwebsiteoptimizer.com app.vwo.com js.stripe.com core.spreedly.com qqc-api.worldnomads.com *.smartlook.com *.smartlook.cloud *.braintreegateway.com *.braintree-api.com " />
+<meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' 'unsafe-inline' 'unsafe-eval' *.accessdevelopment.com  *.adcrws.com *.mapbox.com *.googletagmanager.com translation.googleapis.com cdn.heapanalytics.com heapanalytics.com *.auryc.com *.visualwebsiteoptimizer.com app.vwo.com js.stripe.com core.spreedly.com qqc-api.worldnomads.com *.smartlook.com *.smartlook.cloud *.braintreegateway.com *.braintree-api.com " />
+<script src="https://booking.accessdevelopment.com/scripts/travel.client.v2.js"></script>
 {% endblock extraheader %}
+
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -23,9 +25,18 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block extra_js %}
-<script
-  type="text/javascript"
-  src="https://booking.accessdevelopment.com/scripts/integration.js?target=divAccess&view=cars&cvt={{ cvt }}"
-></script>
+<script>
+  travelClient.start({
+    session_token: "{{ session }}",
+    container: "#divAccess",
+    width: "100%",
+    height: "fit",
+    languge: "en",
+    navigate_to: {
+      view: "cars",
+      start_tab: "cars",
+    },
+  });
+</script>
 {% endblock extra_js %}
  
