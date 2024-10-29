@@ -1,0 +1,29 @@
+#### - Access Request a Token
+POST https://auth.adcrws.com/api/v1/tokens
+Content-Type: application/json
+Accept-Type: application/json
+Authorization: Bearer fb07e2dd9ea727a5d841272af97dfbace9174523eae21581362b330462e4f6d3
+
+{
+    "member_key":"12345",
+    "email":"trinthana@hotmail.com",
+    "first_name":"Trin",
+    "last_name":"Thana",
+    "scope":"travel"    
+}
+
+
+#### - Access Request a Token
+POST  https://auth.adcrws-stage.com/api/v1/tokens
+Content-Type: application/json
+Accept-Type: application/json
+Authorization: Bearer a72968e3032dfe10e30a09b5cb70b28abbef06cb5404e2dbcfd9cc85511cea9e
+
+{
+    "member_key":"12345",
+    "email":"trinthana@hotmail.com",
+    "first_name":"Trin",
+    "last_name":"Thana",
+    "scope":"travel"    
+}
+

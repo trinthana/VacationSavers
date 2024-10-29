@@ -26,6 +26,7 @@ from home import helpers
 # For Worldia, Arrivia
 from home import arrivia
 from home import accessdev
+from home import accesstravel
 from requests.structures import CaseInsensitiveDict
 
 from datetime import date, datetime, timedelta
@@ -731,18 +732,16 @@ def hotels_access(request):
 @login_required(login_url="/accounts/login/")
 def access_travel(request):
 
-    # Get credential from DB
-    cvt, usr, pwd, id = get_credential(request.user, ApplicationChoices.ACCESSIFRAME)
-    if len(cvt) == 0:
-        AccessDev = accessdev.AccessDev()
-        cvt = AccessDev.create_member(request.user, ApplicationChoices.ACCESSIFRAME)
+    # Get session token on the fly
+    AccessTravel = accesstravel.AccessTravel()
+    session = AccessTravel.get_session_token(request.user, ApplicationChoices.ACCESSIFRAME)
 
     context = {
-    'cvt': cvt
+        'session': session
     }
 
     # Page from the theme 
-    ClickDetails.add(request=request, application=ApplicationChoices.ACCESSIFRAME, tx_url="https://booking.accessdevelopment.com/scripts/integration.js?target=divAccess&view=activities&cvt="+cvt) 
+    ClickDetails.add(request=request, application=ApplicationChoices.ACCESSIFRAME, tx_url="https://booking.accessdevelopment.com/scripts/integration.js?target=divAccess&view=activities&session="+session) 
     return render(request, 'pages/access-travel.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< access_deals >>>
