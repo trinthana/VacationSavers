@@ -57,7 +57,7 @@ class Arrivia:
             resp = conn.getresponse()
             data = json.loads(resp.read())
         except HTTPError as err:
-            raise Exception(HTTPError)
+            print(HTTPError)
             #return "Error", "", "", "", "", ""
 
         if data['ResultType'] == 'success':
@@ -72,7 +72,7 @@ class Arrivia:
             )
             return "Success", "User is created in DB and Arrovia.", "", kwargs.get('email'), kwargs.get('password'), data['Account']['UserId']
         else:
-            raise Exception(data)
+            print(data)
             return "Error", data['Message'], "", "", "", ""
    
     @classmethod

@@ -12,7 +12,7 @@ class AccessTravel:
         if len(member.username) > 0 :
             user_list = User.objects.filter(username=member.username)
         else :
-            raise Exception("User name is blank")
+            # print("User name is blank")
             return ""        
 
         # Extract user data and format it in the desired structure
@@ -44,11 +44,13 @@ class AccessTravel:
             if response.status_code // 100 == 2:
                 data = response.json()
                 session_token = data['session_token']
-                print('Session Token:', session_token)
                 return session_token
 
             else:
-                raise Exception("Error - " + response.text)
-                return response.text
+                print("Error - " + response.text)
+                return ""        
+
         else:
-            raise Exception("User name is not found")
+            print("User name is not found")
+            return ""        
+

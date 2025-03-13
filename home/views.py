@@ -701,9 +701,10 @@ def car_access(request):
     AccessTravel = accesstravel.AccessTravel()
     session = AccessTravel.get_session_token(request.user, ApplicationChoices.ACCESSIFRAME)
 
-    context = {
-        'session': session
-    }
+    if not session:  # Redirect to profile if session token is missing
+        return redirect('/user/profile/')
+
+    context = {'session': session}
 
     # Page from the theme 
     ClickDetails.add(request=request, application=ApplicationChoices.ACCESSIFRAME, tx_url="https://booking.accessdevelopment.com/scripts/integration.js?target=divAccess&view=cars&session="+session) 
@@ -717,9 +718,10 @@ def hotels_access(request):
     AccessTravel = accesstravel.AccessTravel()
     session = AccessTravel.get_session_token(request.user, ApplicationChoices.ACCESSIFRAME)
 
-    context = {
-        'session': session
-    }
+    if not session:  # Redirect to profile if session token is missing
+        return redirect('/user/profile/')
+
+    context = {'session': session}
 
     # Page from the theme 
     ClickDetails.add(request=request, application=ApplicationChoices.ACCESSIFRAME, tx_url="https://booking.accessdevelopment.com/scripts/integration.js?target=divAccess&view=hotels&session="+session) 
@@ -733,9 +735,10 @@ def access_travel(request):
     AccessTravel = accesstravel.AccessTravel()
     session = AccessTravel.get_session_token(request.user, ApplicationChoices.ACCESSIFRAME)
 
-    context = {
-        'session': session
-    }
+    if not session:  # Redirect to profile if session token is missing
+        return redirect('/user/profile/')
+
+    context = {'session': session}
 
     # Page from the theme 
     ClickDetails.add(request=request, application=ApplicationChoices.ACCESSIFRAME, tx_url="https://booking.accessdevelopment.com/scripts/integration.js?target=divAccess&view=activities&session="+session) 

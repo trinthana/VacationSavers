@@ -12,6 +12,6 @@ class MultiTokenAuthentication(TokenAuthentication):
         user, token = super().authenticate_credentials(key)
 
         if not token.is_active:
-            raise exceptions.AuthenticationFailed(_("Token inactive or deleted."))
+            prints.AuthenticationFailed(_("Token inactive or deleted."))
 
         return (user, token)

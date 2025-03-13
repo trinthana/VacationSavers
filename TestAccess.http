@@ -2,14 +2,14 @@
 POST https://auth.adcrws.com/api/v1/tokens
 Content-Type: application/json
 Accept-Type: application/json
-Authorization: Bearer fb07e2dd9ea727a5d841272af97dfbace9174523eae21581362b330462e4f6d3
+Authorization: Bearer ca3f3acbaa6714057023aee3f5f8960eed66cfa216c5ab75afec2d7cb1679d82
 
 {
-    "member_key":"12345",
-    "email":"trinthana@hotmail.com",
-    "first_name":"Trin",
-    "last_name":"Thana",
-    "scope":"travel"    
+  "first_name": "",
+  "last_name": "",
+  "email_address": "trin@ymail.com",
+  "member_key": "VSID2",
+  "scope": "travel"
 }
 
 

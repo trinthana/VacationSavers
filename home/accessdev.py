@@ -34,7 +34,7 @@ class AccessDev:
         if len(member.username) > 0 :
             user_list = User.objects.filter(username=member.username)
         else :
-            raise Exception("User name is blank")
+            print("User name is blank")
             return ""        
         
         # Extract user data and format it in the desired structure
@@ -87,10 +87,10 @@ class AccessDev:
                 return sha_text
 
             else:
-                raise Exception("Error - " + response.text)
+                print("Error - " + response.text)
                 return response.text
         else:
-            raise Exception("User name is not found")
+            print("User name is not found")
                
     def create_member(cls, member, app):
         from app.models import ApplicationChoices
