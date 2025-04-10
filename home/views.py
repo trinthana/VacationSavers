@@ -465,6 +465,11 @@ def hotels(request):
     return render(request, 'pages/products/product-hotels.html')
 
 @login_required(login_url="/accounts/login/")
+def resorts(request):
+    # Page from the theme 
+    return render(request, 'pages/products/product-resorts.html')
+
+@login_required(login_url="/accounts/login/")
 def cars(request):
     # Page from the theme 
     return render(request, 'pages/products/product-cars.html')
@@ -709,6 +714,17 @@ def car_access(request):
     # Page from the theme 
     ClickDetails.add(request=request, application=ApplicationChoices.ACCESSIFRAME, tx_url="https://booking.accessdevelopment.com/scripts/integration.js?target=divAccess&view=cars&session="+session) 
     return render(request, 'pages/car-access.html', context)
+
+#------------------------------------------------------------------------------------------------------------------------<<< flight_vs >>>
+@login_required(login_url="/accounts/login/")
+def resorts_webrez(request):
+    context = {
+    'url': 'https://mywebrez.com/vacationsavers',
+    }
+
+    # Page from the theme 
+    ClickDetails.add(request=request, application=ApplicationChoices.WEBBREZ, tx_url="https://mywebrez.com/vacationsavers") 
+    return render(request, 'pages/iframe-page.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< hotels_access >>>
 @login_required(login_url="/accounts/login/")

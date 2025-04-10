@@ -57,6 +57,16 @@
           <span class="pcoded-mtext">Hotels</span>
         </a>
       </li>
+      {% if request.user.is_staff %} 
+        <li data-username="Resorts WebBrez" class="nav-item">
+          <a href="/resorts-webrez/" class="nav-link">
+            <span class="pcoded-micon">
+              <i class="fas fa-dolly-flatbed"></i>
+            </span>
+            <span class="pcoded-mtext">Resorts</span>
+          </a>
+        </li>
+      {% endif %}
       <li data-username="Cars Rental" class="nav-item">
         <a href="/car-access/" class="nav-link">
           <span class="pcoded-micon">

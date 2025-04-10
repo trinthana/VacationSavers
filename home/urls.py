@@ -38,6 +38,7 @@ urlpatterns = [
     path('car-access/', views.car_access, name='car_access'),
     path('hotels-access/', views.hotels_access, name='hotels_access'),
     path('hotels-booking/', views.hotels_booking, name='hotels_booking'),
+    path('resorts-webrez/', views.resorts_webrez, name='resorts_webrez'),
     path('vacation-rentals-gtn/', views.gtn, name='gtn'),
     path('specialdeals/', views.specialdeals, name='specialdeals'),
     path('transfer-talixo/', views.transfer_talixo, name='transfer_talixo'),

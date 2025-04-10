@@ -61,6 +61,7 @@ class ApplicationChoices(models.TextChoices):
     NEZASA = "NEZASA", "Nezasa"
     GTN = "GTN", "GTN Vacation Rental"
     VSFLIGHT = "VSFLIGHT", "VacationSavers Flight"
+    WEBBREZ = "WEBBREZ", "Web Rez"
     DUNHILL = "DUNHILL", "DUNHILL Special Deals"
 
 
