@@ -719,11 +719,11 @@ def car_access(request):
 @login_required(login_url="/accounts/login/")
 def resorts_webrez(request):
     context = {
-    'url': 'https://mywebrez.com/vacationsavers',
+    'url': 'https://www.mywebrez.com/vacationsavers',
     }
 
     # Page from the theme 
-    ClickDetails.add(request=request, application=ApplicationChoices.WEBBREZ, tx_url="https://mywebrez.com/vacationsavers") 
+    ClickDetails.add(request=request, application=ApplicationChoices.WEBBREZ, tx_url="https://www.mywebrez.com/vacationsavers") 
     return render(request, 'pages/iframe-page.html', context)
 
 #------------------------------------------------------------------------------------------------------------------------<<< hotels_access >>>

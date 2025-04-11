@@ -1,76 +1,27 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block title %} Hotels {% endblock %} 
+{% block title %} Flights {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
-{% block extrastyle %}
-	<link rel="stylesheet" href="{% static 'assets/css/multi-item-carousel.css' %}">
-{% endblock extrastyle %}
-
 
 {% block content %}	
-<div class="row">
-    <!-- [ form-element ] start -->
-    <div class="col-lg-12">
-        <div class="card">
+<div class="auth-wrapper  bg-img-f">
+<!-- [ Main Content ] start -->
+    <div class="col-xl-4 col-md-6">
+        <div class="card lazy-dog">
             <div class="card-header">
-                <h5>Hotels</h5>
-                <p>Indulge in premium hotels without the premium price tag. Experience the perfect blend of luxury and value, with exclusive deals that place top-rated hotels within your budget.</p>
+                <h4>Resorts</h4>
+                <p>Soar to new heights with cost-effective flights. Experience the ease of travel with our competitively priced airfares, connecting you to your dream destinations without draining your budget. Discover the skies with affordability and convenience, taking you where you want to go at prices that keep your finances on solid ground.</p>
             </div>
-            
-            <div class="card-body">
-                <div class="form-group row">
-                    <div class="col-lg-6">
-                        <img class="ratio ratio-21x9" src="{% static 'assets/images/bg-images/bg-hotels-booking.jpg' %}" />
-                    </div>
-                    <div class="col-lg-4">
-                        <img style="width:300px;" src="{% static 'assets/icons/Booking_Com_Logotype_Aug2020_Blue.png' %}" />
-                        <h3 class="alert-info">Get 5% off your stay with <code>Booking.com</code></h3>
-                        <ul class="alert-info">
-                            <li>You’re only eligible when booking a property with an instant reward badge.</li>
-                            <li>Choose a payment option that's online or managed by Booking.com.</li>
-                            <li>Only eligible for VacationSavers members via this link.</li>
-                        </ul>
-                        <a href="/hotels-booking/" target="_self">
-                            <button type="button" class="btn shadow-1 btn-primary">Find Deals</button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header">
-                <h5>Top Offers</h5>
-            </div>
-            <div class="card-body">
-                <div class="form-group row">
-                    <div class="col-lg-12">
-                        <div class="carousel-inner">
-                            <div class="carousel-item">
-                                {% include 'pages/products/card-gtn.html' %}
-                            </div>
-                            <div class="carousel-item active">
-                                {% include 'pages/products/card-flights-vs.html' %}
-                            </div>
-                            <div class="carousel-item">
-                                {% include 'pages/products/card-hotels-access.html' %}
-                            </div>
-                            <div class="carousel-item">
-                                {% include 'pages/products/card-travel-access.html' %}
-                            </div>
-                            <div class="carousel-item">
-                                {% include 'pages/products/card-special-deals.html' %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="card-block">
+
             </div>
         </div>
     </div>
-</div>
 <!-- [ Main Content ] end -->
+</div>
 
 {% endblock content %}
 
