@@ -20237,3 +20237,23 @@ Help Desk Application css start
     width: 100%
 }
 /**====== overide highchart end ======**/
+
+/**====== Customize Login Page start ======**/
+
+.rectangle-grey {
+    position: relative;
+    border-radius: 1% 1% 1% 1%;
+    background-color: rgba(132, 132, 132, 0.5);
+    color: white;
+    padding: 20px;
+    font-size: 18px;
+  }
+
+  .big-inner-text {
+    color: white;
+    text-align: left;
+    opacity: 1;
+    font-size: 22px !important;
+    font-weight: 500;
+  }
+/**====== Customize Login Page End ======**/
