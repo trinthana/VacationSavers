@@ -15,8 +15,6 @@
     </a>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto">
-            <li><a href="#!" class="full-screen" onclick="javascript:toggleFullScreen()"><i
-                        class="feather icon-maximize"></i></a></li>
             <li class="nav-item dropdown">
                 <!--
                 <a class="dropdown-toggle" href="#" data-bs-toggle="dropdown">Quick Links</a>
@@ -27,9 +25,6 @@
                     <li><a class="dropdown-item" href="/access-travel/">Travel Deals</a></li>
                 </ul>
                 -->
-            </li>
-            <li class="nav-item">
-                <img class="header-badge" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Discover the world with VacationSavers - where your dream journey meets unmatched affordability and your dollars go further. Dive into our handpicked marketplace, brimming with exceptional travel deals exclusive to our members. With access to special unpublished rates, private fares, and members-only offers, we bring you savings unseen elsewhere. Our longstanding partnerships, cultivated over years, unlock extraordinary travel bargains that transform the way you experience luxury and adventure. Start comparing the industry's best deals now. Your next unforgettable trip is just a click away, promising luxury and exploration at prices beyond your wildest dreams." src="{% static 'assets/images/header_badge3.png' %}">
             </li>
             <li class="nav-item">
                 <div class="main-search">
@@ -48,6 +43,13 @@
             </li>
         </ul>
         <ul class="navbar-nav ms-auto">
+            <li>
+                <button type="button" class="btn  btn-primary me-2 mb-2" data-bs-toggle="modal" data-bs-target="#gettingStartedModal">Need Help Getting Started?</button>
+            </li>
+            <li>
+                <a href="#!" class="full-screen" onclick="javascript:toggleFullScreen()"><i
+                    class="feather icon-maximize"></i></a>
+            </li>
             <li>
                 <div class="dropdown drp-user">
                     <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
@@ -102,8 +104,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-dark">
-                <h5 class="modal-title text-white"">Invite a friend</h5>
-                    <button type=" button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title text-white">Invite a friend</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
                     </button>
             </div>
             <div class="modal-body">
@@ -122,6 +124,59 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary shadow-2" id="btnGenerateToken">Generate Link</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-animate" id="gettingStartedModal" tabindex="-1" aria-labelledby="animateModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title text-white">Need Help Getting Started?</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+            </div>
+            <div class="modal-body">
+                <h5>Discover the world with VacationSavers</h5>
+                <p>A members-only marketplace offering exclusive travel deals and savings you won’t find elsewhere. Gain access to private fares, unpublished rates, and special offers made possible through our long-standing industry partnerships.</p>
+                <p>You can find some of our biggest discounts on Vacation Rentals<br />
+                <a href="/vacation-rentals-gtn/" class="nav-link">
+                    <span class="pcoded-micon">
+                      <i class="fas fa-couch"></i>
+                    </span>
+                    <span class="pcoded-mtext">Vacation Rentals</span>
+                  </a>
+                </p>
+                <p>Extra savings on every flight <br />
+                    <a href="/flight-vs/" class="nav-link">
+                        <span class="pcoded-micon">
+                          <i class="fas fa-plane"></i>
+                        </span>
+                        <span class="pcoded-mtext">Flights</span>
+                    </a>
+                </p>
+                <p>Exclusive theme park deals in Activities <br/>
+                    <a href="/access-travel/" class="nav-link">
+                        <span class="pcoded-micon">
+                          <i class="fas fa-helicopter"></i>
+                        </span>
+                        <span class="pcoded-mtext">Activities</span>
+                      </a>
+                </p>
+                <p>And up to 25% off major Car Rental brands <br />
+                    <a href="/car-access/" class="nav-link">
+                        <span class="pcoded-micon">
+                          <i class="fas fa-car"></i>
+                        </span>
+                        <span class="pcoded-mtext">Cars</span>
+                    </a>
+                </p>
+                <b>Start exploring today and see how far your travel budget can go.</b> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Got It</button>
             </div>
         </div>
     </div>
