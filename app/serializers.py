@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import datetime, timedelta
 from rest_framework import serializers
-from app.models import UserProfile, PackageChoices
+from app.models import UserProfile, PackageChoices, SubscriptionHistory, ApplicationToken
 import random
 import string
 
@@ -107,3 +107,70 @@ class ResponseSerializer(serializers.Serializer):
 class StatusSerializer(serializers.Serializer):
     status = serializers.CharField(allow_blank=True, required=False, help_text="Status will be returned")
 
+class SubscriptionSerializer(serializers.Serializer):
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    email = serializers.EmailField()
+    address = serializers.CharField()
+    city = serializers.CharField()
+    state_code = serializers.CharField()
+    postal_code = serializers.CharField()
+    country_code = serializers.CharField()
+    phone_country = serializers.CharField()
+    phone_area = serializers.CharField()
+    phone_number = serializers.CharField()
+    addon_code = serializers.CharField()
+    locator = serializers.CharField()
+    cc_number = serializers.CharField(write_only=True)
+    cc_exp = serializers.CharField(write_only=True)
+    cc_cvv = serializers.CharField(write_only=True)
+    subscribed_date = serializers.DateField()
+
+    def create(self, validated_data):
+        # Combine phone
+        phone = f"+{validated_data['phone_country']}-{validated_data['phone_area']}-{validated_data['phone_number']}"
+
+        # Create user
+        user = User.objects.create(
+            username=validated_data['email'],
+            email=validated_data['email'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name']
+        )
+
+        # Mask CC info (store only last 4, NEVER store full number in production)
+        cc_masked = f"**** **** **** {validated_data['cc_number'][-4:]}"
+        exp_masked = f"**/**"
+        cvv_masked = "***"
+
+        # Save profile
+        UserProfile.objects.create(
+            user=user,
+            address=validated_data['address'],
+            city=validated_data['city'],
+            state_code=validated_data['state_code'],
+            country_code=validated_data['country_code'],
+            postal_code=validated_data['postal_code'],
+            phone=phone,
+            subscribed_package=validated_data['addon_code'],
+            subscribed_date=validated_data['subscribed_date']
+        )
+
+        # Save subscription history
+        SubscriptionHistory.objects.create(
+            user=user,
+            subscribed_package=validated_data['addon_code'],
+            subscribed_date=validated_data['subscribed_date']
+        )
+
+        # Save masked data to ApplicationToken (or another secure model if you prefer)
+        ApplicationToken.objects.create(
+            user=user,
+            application='SUBSCRIPTION',
+            token=cc_masked,
+            custom1=exp_masked,
+            custom2=cvv_masked,
+            custom3=validated_data['locator']
+        )
+
+        return user

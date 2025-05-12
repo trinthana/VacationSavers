@@ -7,31 +7,41 @@
 
     <div class="auth-wrapper aut-bg-img-side cotainer-fiuid align-items-stretch">
         <div class="row align-items-center w-100 align-items-stretch bg-white">
-            <div class="d-none d-lg-flex col-lg-8 aut-bg-img align-items-center d-flex justify-content-center">
+            <div class="d-none d-lg-flex col-lg-8 aut-bg-img align-items-center justify-content-center login-left">
+                <div>
 
-                <div class="rectangle-grey">
-                    <div class="font-weight-bold text-white">
-                        <strong class="big-inner-text">VacationSavers</strong>&nbsp;-&nbsp;We bring you direct to our suppliers to get you the best prices on ALL your travel needs.
+                    <div class="font-weight-bold text-white align-items-center justify-content-center">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <strong class="big-inner-text">VacationSavers</strong>
+                        </div>  
+                        <div class="d-flex align-items-center justify-content-center">
+                            We bring you direct to our suppliers to get you the best prices on ALL your travel needs.
+                        </div>
                     </div>
-                    <div class="text-white m-t-30">
-                        Members receive:
+
+                    <div class="rectangle-grey m-t-30">
+                        <div class="text-white m-t-5">
+                            Members receive:
+                        </div>
+                        <div class="text-white">
+                            <ul>
+                                <li>Airfare – 5% off any flight – up to $20 per ticket</li>
+                                <li>Hotels – Up to 60% off compared to the major travel sites</li>
+                                <li>Car Rentals – Up to half off what you can find elsewhere</li>
+                                <li>Resort Packages – As much as 60% to 70% off longer stays</li>
+                                <li>Plus HUGE discounts on Tours, Theme Parks and other travel services</li>
+                            </ul>
+                        </div>
+                        <div class="text-white">
+                            Use it just once and you can save many times the cost of the entire year!
+                        </div>
+                    
                     </div>
-                    <div class="text-white">
-                        <ul>
-                            <li>Airfare – 5% off any flight – up to $20 per ticket</li>
-                            <li>Hotels – Up to 60% off compared to the major travel sites</li>
-                            <li>Car Rentals – Up to half off what you can find elsewhere</li>
-                            <li>Resort Packages – As much as 60% to 70% off longer stays</li>
-                            <li>Plus HUGE discounts on Tours, Theme Parks and other travel services</li>
-                        </ul>
-                    </div>
-                    <div class="text-white">
-                        Use it just once and you can save many times the cost of the entire year!
-                    </div>
-                
+
                 </div>
+
             </div>
-            <div class="col-lg-4 align-items-stret h-100 align-items-center d-flex justify-content-center">
+            <div class="col-lg-4 align-items-stret h-100 align-items-center d-flex justify-content-center bg-img-login login-right">
                 <form method="post" class=" auth-content text-center">
                     {% csrf_token %}
 
@@ -62,12 +72,14 @@
 
                     <div class="form-group text-left">
                         <div class="checkbox checkbox-fill d-inline">
-                            <input type="checkbox" name="checkbox-fill-1" id="checkbox-fill-a1" checked="">
-                            <label for="checkbox-fill-a1" class="cr"> Save credentials</label>
+                            <span class="d-flex">
+                                <input type="checkbox" name="checkbox-fill-1" id="checkbox-fill-a1" checked="">
+                                <label for="checkbox-fill-a1" class="cr"> Save credentials</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="cr">Forgot password? <a href="{% url 'password_reset' %}">Reset</a></label>
+                            </span>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary shadow-2 mb-4">Login</button>
-                    <p class="mb-2 text-muted">Forgot password? <a href="{% url 'password_reset' %}">Reset</a></p>
                     <!--<p class="mb-0 text-muted">Don’t have an account? <a href="{% url 'register' %}">Signup</a></p>-->
                 </form>
             </div>

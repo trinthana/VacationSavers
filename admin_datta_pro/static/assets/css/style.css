@@ -12690,7 +12690,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr[role=row] > th:first-child:bef
 
 /* image varient start */
 .aut-bg-img {
-    background-image: url("../landing/landing_bg.webp");
+    background-image: url("../login/hero_img_bg.png");
     background-size: cover;
     background-attachment: fixed;
     background-position: right;
@@ -20243,17 +20243,70 @@ Help Desk Application css start
 .rectangle-grey {
     position: relative;
     border-radius: 1% 1% 1% 1%;
-    background-color: rgba(132, 132, 132, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     color: white;
     padding: 20px;
     font-size: 18px;
-  }
+}
 
-  .big-inner-text {
+.big-inner-text {
     color: white;
     text-align: left;
     opacity: 1;
-    font-size: 22px !important;
-    font-weight: 500;
-  }
+    font-size: 38px !important;
+    font-weight: 700;
+}
+
+.bg-img-login {
+    width: 505px; /* Adjust the width as needed */
+    height: 89px; /* Adjust the height as needed */
+    background-image: url('../login/wave_vector_top.png'), url('../login/wave_vector_bottom.png');
+    background-position: top left, bottom left;
+    background-repeat: no-repeat, no-repeat;
+}
+
+.login-left {
+    width: calc(100vw - 520px);
+}
+
+.login-right {
+    width: 505px;
+}
+
+.auth-wrapper li {
+    list-style-type: none;
+    text-indent: -30px;
+}
+
+.auth-wrapper li::before {
+    content: "";
+    display: inline-block;
+    background-size: cover;
+    height: 41px;
+    width: 41px;
+    margin-right: 10px;
+    margin-top: 10px;
+    vertical-align: middle;
+
+}
+
+.auth-wrapper li:nth-child(1)::before {
+    background-image: url('../login/airfare_icon.svg');
+}
+
+.auth-wrapper li:nth-child(2)::before {
+    background-image: url('../login/hotel_icon.svg');
+}
+
+.auth-wrapper li:nth-child(3)::before {
+    background-image: url('../login/car_icon.svg');
+}
+
+.auth-wrapper li:nth-child(4)::before {
+    background-image: url('../login/resort_icon.svg');
+}
+
+.auth-wrapper li:nth-child(5)::before {
+    background-image: url('../login/discount_icon.svg');
+}
 /**====== Customize Login Page End ======**/

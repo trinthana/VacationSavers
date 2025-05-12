@@ -104,7 +104,7 @@ style {
                 <a class="nav-link list-group-item list-group-item-action active"
                     id="user-set-profile-tab" data-bs-toggle="pill" href="#user-set-profile"
                     role="tab" aria-controls="user-set-profile" aria-selected="true">
-                    <span class="f-w-500"><i class="feather icon-users m-r-10 h5 "></i>My Activities</span>
+                    <span class="f-w-500"><i class="feather icon-users m-r-10 h5 "></i>Delete My Account</span>
                     <span class="float-end"><i class="feather icon-chevron-right"></i></span>
                 </a>
                 {% if not user.login_with_oauth or user.email != '' %}
@@ -121,7 +121,7 @@ style {
     </div>
     <div class="col-lg-8">
         <div class="tab-content bg-transparent p-0 shadow-none" id="user-set-tabContent">
-
+            <!--
             <div class="tab-pane fade show active" id="user-set-profile" role="tabpanel"
                 aria-labelledby="user-set-profile-tab">
                 <div class="card">
@@ -150,101 +150,101 @@ style {
                                     {% endfor %}
                                 </tbody>
                             </table>
-                          </div>
                         </div>
                     </div>
                 </div>
-                {% if not request.user.is_superuser %}
-                <div class="card">
-                        <div class="card-header">
-                            <h5>
-                                <i class="feather icon-trash-2 text-c-blue wid-20"></i>
-                                <span class="p-l-5">Delete Account</span>
-                            </h5>
-                            <p class="text-sm mb-0">
-                                Once you delete your account, there is no going back.
-                                Please be certain.
-                            </p>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between mb-3 mt-4">
-                                <div class="form-group mb-0 d-flex">
-                                    <div class="align-items-center d-flex switch switch-danger d-inline m-r-10">
-                                        <input type="checkbox" id="switch-delete-account">
-                                        <label for="switch-delete-account" class="cr"></label>
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center mt-3">
-                                        <label for="switch-delete-account"><span class="text-dark fw-bold"> Confirm </span> </label>
-                                        <p class="text-dark">I want to delete my account.</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-end">
-                                    <form id="delete-form">
-                                        <input disabled id="btn-delete-account" class="btn btn-danger" type="submit" value="Delete Account" >
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div id="deleteAlert" class="d-none alert alert-danger">Alert</div>
-                            </div>
-                        </div>
-                </div>
-                {% endif %}
             </div>
-            {% if not user.login_with_oauth or user.email != '' %}
-            <div class="tab-pane fade" id="user-set-passwort" role="tabpanel"
-                aria-labelledby="user-set-passwort-tab">
-                <div class="card">
-                    <form id="changepass-form" action="{% url 'changepassword' %}" method="post">
-                    {% csrf_token %}
+            -->
+            {% if not request.user.is_superuser %}
+            <div class="card">
                     <div class="card-header">
                         <h5>
-                            <i class="feather icon-shield text-c-blue wid-20"></i>
-                            <span class="p-l-5">Change Password</span>
+                            <i class="feather icon-trash-2 text-c-blue wid-20"></i>
+                            <span class="p-l-5">Delete Account</span>
                         </h5>
+                        <p class="text-sm mb-0">
+                            Once you delete your account, there is no going back.
+                            Please be certain.
+                        </p>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="form-label">New Password <span
-                                            class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="password" id="new_password1" name="new_password1" class="form-control"
-                                            placeholder="Enter New password">
-                                        <button class="btn btn-outline-success show-pass-btn" type="button" id="button-addon2">
-                                            <i id="show-pass-icon" class="feather icon-eye m-0"></i>
-                                        </button>
-                                    </div>
+                        <div class="d-flex justify-content-between mb-3 mt-4">
+                            <div class="form-group mb-0 d-flex">
+                                <div class="align-items-center d-flex switch switch-danger d-inline m-r-10">
+                                    <input type="checkbox" id="switch-delete-account">
+                                    <label for="switch-delete-account" class="cr"></label>
+                                </div>
+                                <div class="d-flex flex-column justify-content-center mt-3">
+                                    <label for="switch-delete-account"><span class="text-dark fw-bold"> Confirm </span> </label>
+                                    <p class="text-dark">I want to delete my account.</p>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="form-label">Confirm Password <span
-                                            class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="password" id="new_password2" name="new_password2" class="form-control"
-                                            placeholder="Enter your password again">
-                                        <button class="btn btn-outline-success copy-pass-btn" type="button" id="button-addon2">
-                                            <i class="feather icon-copy m-0"></i>
-                                        </button>
-                                    </div>
-                                </div>
+                            <div class="d-flex align-items-end">
+                                <form id="delete-form">
+                                    <input disabled id="btn-delete-account" class="btn btn-danger" type="submit" value="Delete Account" >
+                                </form>
                             </div>
                         </div>
                         <div class="row">
-                            <div id="changepassAlert" class="d-none alert alert-danger">Alert</div>
+                            <div id="deleteAlert" class="d-none alert alert-danger">Alert</div>
                         </div>
                     </div>
-                    <div class="card-footer text-end">
-                        <input class="btn btn-danger" type="submit" value="Change Password" >
-                        <button class="btn btn-outline-dark ms-2">Clear</button>
-                    </div>
-                    </form>
-                </div>
             </div>
             {% endif %}
         </div>
+        {% if not user.login_with_oauth or user.email != '' %}
+        <div class="tab-pane fade" id="user-set-passwort" role="tabpanel"
+            aria-labelledby="user-set-passwort-tab">
+            <div class="card">
+                <form id="changepass-form" action="{% url 'changepassword' %}" method="post">
+                {% csrf_token %}
+                <div class="card-header">
+                    <h5>
+                        <i class="feather icon-shield text-c-blue wid-20"></i>
+                        <span class="p-l-5">Change Password</span>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="form-label">New Password <span
+                                        class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="password" id="new_password1" name="new_password1" class="form-control"
+                                        placeholder="Enter New password">
+                                    <button class="btn btn-outline-success show-pass-btn" type="button" id="button-addon2">
+                                        <i id="show-pass-icon" class="feather icon-eye m-0"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="form-label">Confirm Password <span
+                                        class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="password" id="new_password2" name="new_password2" class="form-control"
+                                        placeholder="Enter your password again">
+                                    <button class="btn btn-outline-success copy-pass-btn" type="button" id="button-addon2">
+                                        <i class="feather icon-copy m-0"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="changepassAlert" class="d-none alert alert-danger">Alert</div>
+                    </div>
+                </div>
+                <div class="card-footer text-end">
+                    <input class="btn btn-danger" type="submit" value="Change Password" >
+                    <button class="btn btn-outline-dark ms-2">Clear</button>
+                </div>
+                </form>
+            </div>
+        </div>
+        {% endif %}
     </div>
     <!-- [ sample-page ] end -->
 </div>
@@ -252,7 +252,7 @@ style {
 
 
 <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="profileModalLabel">Edit profile</h5>
@@ -268,23 +268,23 @@ style {
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     {% endif %}
-                    <div class="d-flex flex-column">
+                    <div class="flex-column w-100">
                         <img src="{% if user.image_file %}{{user.image_file.url }}{% else %}{% static 'assets/images/user/avatar-5.jpg' %}{% endif %}" alt="User Profile Photo" class="img-radius img-fluid wid-80" id="image" />
                         <input type="file" id="image_file" name="image_file" accept="image/*">
                     </div>
-                    <div>
+                    <div class="flex-grow-1">
                         <label for="first_name">First Name*</label>
                         <input class="form-control" id="first_name" name="first_name" placeholder="Required" value="{{ user.first_name }}" />
                     </div>
-                    <div>
+                    <div class="flex-grow-1 w-50">
                         <label for="last_name">Last Name*</label>
                         <input class="form-control" id="last_name" name="last_name" placeholder="Required" value="{{ user.last_name }}" />
                     </div>
-                    <div>
+                    <div class="w-100">
                         <label for="email">Email*</label>
                         <input  class="form-control" id="email" name="email" placeholder="Required"  value="{{ user.email }}" />
                     </div>
-                    <div class="flex-grow-1">
+                    <div class="flex-grow-1 w-100">
                         <label for="address">Address</label>
                         <input  class="form-control" id="address" name="address"  value="{{ user.address }}" />
                     </div>
@@ -304,7 +304,7 @@ style {
                         <label for="postal_code">Postal Code</label>
                         <input  class="form-control" id="postal_code" name="postal_code"  value="{{ user.postal_code }}" />
                     </div>
-                    <div>
+                    <div class="flex-grow-1">
                         <label for="phone">Phone</label>
                         <input type="text" class="form-control mob_no" data-mask="999-9999-999" id="phone" name="phone"  value="{{ user.phone }}" />
                     </div>

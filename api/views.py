@@ -15,8 +15,7 @@ from rest_framework_multitoken.models import MultiToken
 from drf_spectacular.utils import extend_schema
 from api.authentication import IsValidUserToken
 from app.models import UserProfile, SubscriptionHistory, PackageChoices
-from app.serializers import UserSerializer, UserTokenSerializer, CreateUserSerializer, ResponseUserSerializer, RequestSerializer, ResponseSerializer, StatusSerializer
-
+from app.serializers import UserSerializer, UserTokenSerializer, CreateUserSerializer, ResponseUserSerializer, RequestSerializer, ResponseSerializer, StatusSerializer, SubscriptionSerializer
 
 from django.views.decorators.clickjacking import xframe_options_exempt, xframe_options_sameorigin
 
@@ -227,11 +226,10 @@ def generate_token(request):
     return JsonResponse({'token': token.key})
 
 
-#---------- Playground : can be deleted ------------------
-class HelloView(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request):
-        content = {'message': 'Hello, World!'}
-        return Response(content)
-
+class SubscribeView(APIView):
+    def post(self, request):
+        serializer = SubscriptionSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            return Response({'user_id': user.id}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
