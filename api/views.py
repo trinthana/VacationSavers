@@ -101,9 +101,15 @@ class GetUserList(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsValidUserToken]
 
-    @extend_schema(request="", responses=ResponseUserSerializer)
+    @extend_schema(request=None, responses=ResponseUserSerializer, methods=["GET", "POST"])
+    def get(self, request, *args, **kwargs):
+        return self._get_user_data(request)
+
+    @extend_schema(request=None, responses=ResponseUserSerializer)
     def post(self, request, *args, **kwargs):
-        
+        return self._get_user_data(request)
+
+    def _get_user_data(self, request):
         session_token = request.auth.key
         try:
             user_profile = UserProfile.objects.get(token=session_token)
@@ -111,7 +117,7 @@ class GetUserList(APIView):
             return Response(serializer.data)
         except UserProfile.DoesNotExist:
             return Response({'error': 'Invalid session token.'}, status=status.HTTP_404_NOT_FOUND)
-
+        
 class DeactivateUser(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsValidUserToken]
