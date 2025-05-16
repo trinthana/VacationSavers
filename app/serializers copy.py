@@ -1,3 +1,5 @@
+# serializers.py
+
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.timezone import now
@@ -10,6 +12,7 @@ import string
 def default_expiry():
     return now().date() + timedelta(days=365)
 
+  
 class UserSerializer(serializers.ModelSerializer):
     # Add additional fields for UserProfile
     first_name          = serializers.CharField(write_only=True, allow_blank=True, required=False)

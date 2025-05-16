@@ -15,7 +15,7 @@ from rest_framework_multitoken.models import MultiToken
 from drf_spectacular.utils import extend_schema
 from api.authentication import IsValidUserToken
 from app.models import UserProfile, SubscriptionHistory, PackageChoices, ApplicationToken
-from app.serializers import UserSerializer, UserTokenSerializer, CreateUserSerializer, ResponseUserSerializer, RequestSerializer, ResponseSerializer, StatusSerializer, SubscriptionSerializer
+from app.serializers import UserSerializer, UserTokenSerializer, BaseUserSerializer, ResponseUserSerializer, RequestSerializer, ResponseSerializer, StatusSerializer, SubscriptionSerializer
 
 from django.views.decorators.clickjacking import xframe_options_exempt, xframe_options_sameorigin
 
@@ -40,7 +40,7 @@ class CreateUser(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsValidUserToken]
 
-    @extend_schema(request=CreateUserSerializer, responses=ResponseUserSerializer)
+    @extend_schema(request=BaseUserSerializer, responses=ResponseUserSerializer)
     def post(self, request, *args, **kwargs):
         # At this point, the token is already validated
         # You can now proceed to create the user or perform other actions
@@ -227,68 +227,22 @@ def generate_token(request):
 
 
 class SubscribeView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsValidUserToken]
+
     @extend_schema(
         request=SubscriptionSerializer,
         responses={201: dict, 400: dict},
         tags=["Subscription"],
         description="Create a new user subscription and store masked credit card + locator."
     )
-    def post(self, request):
-        serializer = SubscriptionSerializer(data=request.data)
+    def post(self, request, *args, **kwargs):
+        session_token = request.auth.key
+        current_user = request.user
 
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        data = serializer.validated_data
-        email = data['email']
-
-        # Check if user already exists
-        if User.objects.filter(username=email).exists():
-            return Response({'error': 'User with this email already exists.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Create user
-        user = User.objects.create_user(
-            username=email,
-            email=email,
-            first_name=data['first_name'],
-            last_name=data['last_name'],
-            password=User.objects.make_random_password()
-        )
-
-        # Build masked credit card info
-        cc_masked = f"**** **** **** {data['cc_number'][-4:]}"
-        exp_masked = "**/**"
-        cvv_masked = "***"
-        phone = f"+{data['phone_country']}-{data['phone_area']}-{data['phone_number']}"
-
-        # Create UserProfile
-        UserProfile.objects.create(
-            user=user,
-            address=data['address'],
-            city=data['city'],
-            state_code=data['state_code'],
-            country_code=data['country_code'],
-            postal_code=data['postal_code'],
-            phone=phone,
-            subscribed_package=data['addon_code'],
-            subscribed_date=data['subscribed_date']
-        )
-
-        # Create SubscriptionHistory
-        SubscriptionHistory.objects.create(
-            user=user,
-            subscribed_package=data['addon_code'],
-            subscribed_date=data['subscribed_date']
-        )
-
-        # Store masked payment info in ApplicationToken
-        ApplicationToken.objects.create(
-            user=user,
-            application="SUBSCRIPTION",
-            token=cc_masked,
-            custom1=exp_masked,
-            custom2=cvv_masked,
-            custom3=data['locator']
-        )
-
-        return Response({'user_id': user.id}, status=status.HTTP_201_CREATED)
+        serializer = SubscriptionSerializer(data=request.data, context={'token': session_token})
+        if serializer.is_valid():
+            user = serializer.save()
+            return Response({'user_id': user.id}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    

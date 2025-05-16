@@ -5,8 +5,8 @@ Accept-Type: application/json
 Authorization: Token 856c39fd3c72a0ef5e5ccc782b8bd2386a9e7028
 
 {
-    "username":"TinTin",
-    "email":"trin@ymail.com",
+    "username":"TrinBW3",
+    "email":"trin@xxxx.com",
     "first_name":"Trin",
     "last_name":"Thana",
     "address":"394",
@@ -58,3 +58,38 @@ GET https://www.vacationsavers.com/api/GenTokens/?number=1000
 Content-Type: application/json
 Accept-Type: application/json
 Authorization: Token 8177f6634a6c3ccdd4d8319de1e264d58bf6d29d
+
+###################
+POST https://www.vacationsavers.com/api/GetUserList/
+Content-Type: application/json
+Accept-Type: application/json
+Authorization: Token 8177f6634a6c3ccdd4d8319de1e264d58bf6d29d
+
+
+
+###################
+POST http://127.0.0.1:8000/api/subscribe/
+Content-Type: application/json
+Accept-Type: application/json
+Authorization: Token 856c39fd3c72a0ef5e5ccc782b8bd2386a9e7028
+{
+  "first_name": "William",
+  "last_name": "Riker",
+  "email": "cdr.williamriker@gmail.com",
+  "username": "WilliamRiker",
+  "address": "XXX",
+  "city": "XXX",
+  "state_code": "XX",
+  "postal_code": "99999",
+  "country_code": "US",
+  "phone": "123456789",
+  "addon_code": "STARTREK",
+  "subscribed_date": "2025-05-16",
+  "phone_country": "66",
+  "phone_area": "89",
+  "phone_number": "9999999",
+  "cc_number": "1111111111111111",
+  "cc_exp": "11/31",
+  "cc_cvv": "234",
+  "locator": "9999999"
+}
