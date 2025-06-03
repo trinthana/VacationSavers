@@ -189,7 +189,7 @@ urlpatterns = [
   path('accounts/login-v4/', views.LoginViewV4.as_view(), name="login_v4"),
   path('accounts/login-v5/', views.LoginViewV5.as_view(), name="login_v5"),
   # Authentication -> Reset Password
-  path('accounts/password-reset/', views.PasswordResetV1.as_view(), name="password_reset"),
+  path('accounts/password-reset/', views.CampaignerPasswordResetView.as_view(), name="password_reset"),
   path('accounts/password-reset-v2/', views.PasswordResetV2.as_view(), name="password_reset_v2"),
   path('accounts/password-reset-v3/', views.PasswordResetV3.as_view(), name="password_reset_v3"),
   path('accounts/password-reset-v4/', views.PasswordResetV4.as_view(), name="password_reset_v4"),

@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from app.models import Sessions
-from admin_datta_pro.forms import RegistrationForm, LoginForm, UserPasswordResetForm, UserSetPasswordForm, UserPasswordChangeForm, RegistrationWithCodeForm
+from admin_datta_pro.forms import RegistrationForm, LoginForm, UserPasswordResetForm, UserSetPasswordForm, UserPasswordChangeForm, RegistrationWithCodeForm, CustomPasswordResetForm
 
 # Dashboard
 def default(request):
@@ -1170,6 +1170,10 @@ class LoginViewV5(LoginView):
 
 
 # Authentication -> Reset Password
+class CampaignerPasswordResetView(PasswordResetView):
+  template_name = 'accounts/auth-reset-password.html'
+  form_class = CustomPasswordResetForm
+
 class PasswordResetV1(PasswordResetView):
   template_name = 'accounts/auth-reset-password.html'
   form_class = UserPasswordResetForm

@@ -17,3 +17,5 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['address', 'city', 'state_code', 'country_code', 'postal_code', 'phone', 'image_file', 'subscribed_package', 'subscribed_date', 'expired_date']
+
+        

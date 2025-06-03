@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from app.models import UserProfile, SubscriptionHistory, ApplicationToken, PackageChoices
+from app.campaigner_email import send_welcome_email
 from django.utils import timezone
 from datetime import timedelta
 import random
@@ -69,18 +70,8 @@ class BaseUserSerializer(serializers.Serializer):
 
             user_profile.save()
 
-            # Create UserProfile
-            #UserProfile.objects.create(
-            #    user=user,
-            #    address=validated_data.get('address', ''),
-            #    city=validated_data.get('city', ''),
-            #    state_code=validated_data.get('state_code', ''),
-            #    country_code=validated_data.get('country_code', ''),
-            #    postal_code=validated_data.get('postal_code', ''),
-            #    phone=phone,
-            #    subscribed_package=subscribed_package,
-            #    subscribed_date=validated_data.get('subscribed_date', timezone.now())
-            #)
+            # Send Welcome Email
+            send_welcome_email(user.email, f"{user.first_name} {user.last_name}", username, password)
 
             return user
 

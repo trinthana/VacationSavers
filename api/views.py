@@ -251,4 +251,4 @@ class SubscribeView(APIView):
             user = serializer.save()
             return Response({'user_id': user.id}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
