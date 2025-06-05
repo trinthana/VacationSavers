@@ -12409,8 +12409,8 @@ table.dataTable.dtr-inline.collapsed > tbody > tr[role=row] > th:first-child:bef
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    min-width: 100%;
-    min-height: 100vh;
+    width: 100%;
+    height: 100vh;
 }
 
 .auth-wrapper a,
@@ -20310,3 +20310,30 @@ Help Desk Application css start
     background-image: url('../login/discount_icon.svg');
 }
 /**====== Customize Login Page End ======**/
+.content-wrapper-height {
+    height: calc(100vh - 160px) !important;
+    max-height: calc(100vh - 160px) !important;
+}
+
+.auth-height {
+    height: calc(100vh - 60px) !important;
+    max-height: calc(100vh - 60px) !important;
+}
+
+.site-footer {
+    background-color: #f8f8f8;
+    padding: 10px;
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+
+.site-footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+.site-footer a:hover {
+    text-decoration: underline;
+}
+

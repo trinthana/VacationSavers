@@ -6,6 +6,7 @@ from .views import token_login
 urlpatterns = [
     path('', views.index, name='index'),
     path('home/', views.home, name='home'),
+    path('terms/', views.terms, name='terms'),
     path('user/profile/', views.profile, name='user_profile'),
     path("delete_account/", views.delete_account, name="delete-account"),
     path('change_plan/', views.change_plan, name='change_plan'),

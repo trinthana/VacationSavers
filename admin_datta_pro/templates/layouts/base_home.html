@@ -39,9 +39,11 @@
   {% endblock header %}
 
   	<!-- [ Main Content ] start -->
-	<div class="">
+	<div class="d-flex">
       {% block content %}{% endblock content %}
   </div>
+
+  {% include 'includes/footer.html' %}
 
   {% include 'includes/scripts.html' %}
  

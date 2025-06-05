@@ -273,6 +273,9 @@ def index(request):
 def home(request):
     return render(request, 'pages/home.html')
 
+def terms(request):
+    return render(request, 'pages/terms.html')
+
 @login_required(login_url="/accounts/login/")
 def profile(request, **kwargs):
 
