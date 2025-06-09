@@ -128,10 +128,10 @@ Accept-Type: application/json
 Authorization: Token 87beeb0fc2990a8c08a960172aec299f951e0808
 
 {
-  "first_name": "William",
-  "last_name": "Riker",
-  "email": "cdr.williamriker@gmail.com",
-  "username": "WilliamRiker",
+  "first_name": "Michael",
+  "last_name": "Thomas",
+  "email": "mthomas@lbftravel.com",
+  "username": "MThomas01",
   "address": "XXX",
   "city": "XXX",
   "state_code": "XX",
@@ -139,7 +139,7 @@ Authorization: Token 87beeb0fc2990a8c08a960172aec299f951e0808
   "country_code": "US",
   "phone": "123456789",
   "addon_code": "STARTREK",
-  "subscribed_date": "2025-05-16",
+  "subscribed_date": "2025-06-06",
   "phone_country": "66",
   "phone_area": "89",
   "phone_number": "9999999",
