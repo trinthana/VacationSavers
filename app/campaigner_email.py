@@ -48,7 +48,7 @@ def send_welcome_email(email, first_name, username, password, login_link):
 
             <div class="font-size: 16px; color: #333333; line-height: 1.6; margin-top: 20px;">
                 <p>To access your exclusive travel discounts, click the button below or use your username and password:</p>
-                <div style="font-size: 16px; font-weight: bold; color: coral; background-color: rgb(58, 214, 238); border: dotted 2px; margin-top: 20px; width: 400px; ">
+                <div style="font-size: 16px; font-weight: bold; color: rgb(29, 6, 121); background-color: rgb(58, 214, 238); border: dotted 2px; margin-top: 20px; width: 400px; ">
                     <ul style="padding-left: 20px; list-style: none;">
                         <li>Username : { username } </li>
                         <li>Password : { password } </li>
