@@ -8,7 +8,7 @@ WELCOME_GROUP_ID = "11290"
 PROFILE_GROUP_ID = "11293"
 
 
-def send_welcome_email(email, first_name, username, password):
+def send_welcome_email(email, first_name, username, password, login_link):
     current_year = datetime.now().year
 
     subject = "Welcome to VacationSavers - Your Passport to Exclusive Travel Savings!"
@@ -47,16 +47,18 @@ def send_welcome_email(email, first_name, username, password):
             </div>
 
             <div class="font-size: 16px; color: #333333; line-height: 1.6; margin-top: 20px;">
-                <p>To access your exclusive travel discounts, Please use the below username and password:</p>
-                <ul style="padding-left: 20px; list-style: none;">
-                    <li>Username : {{ username }}</li>
-                    <li>Password : {{ password }}</li>
-                </ul>
+                <p>To access your exclusive travel discounts, click the button below or use your username and password:</p>
+                <div style="font-size: 16px; font-weight: bold; color: coral; background-color: rgb(58, 214, 238); border: dotted 2px; margin-top: 20px; width: 400px; ">
+                    <ul style="padding-left: 20px; list-style: none;">
+                        <li>Username : { username } </li>
+                        <li>Password : { password } </li>
+                    </ul>
+                </div>
 
                 <p>Your membership can pay for itself with just one booking. Start exploring today and see how far your
                     savings can take you!</p>
                 <p style="text-align:center; margin-top: 40px;">
-                    <a href="https://www.vacationsavers.com/accounts/login/"
+                    <a href=" { login_link } "
                         style="background-color:#f4c22b;color:white;padding:14px 30px;text-decoration:none;border-radius:6px;">Start
                         Saving Now</a>
                 </p>
@@ -64,7 +66,7 @@ def send_welcome_email(email, first_name, username, password):
             </div>
 
             <div style="text-align: center; font-size: 12px; color: #777777; margin-top: 40px;">
-                &copy; {{ current_year }} VacationSavers. All rights reserved.
+                &copy; { current_year } VacationSavers. All rights reserved.
             </div>
         </div>
     </body>
@@ -73,8 +75,6 @@ def send_welcome_email(email, first_name, username, password):
     """
     # Replace {{ current_year }} with actual year
     html_content = html_content.replace("{ current_year }", str(current_year))
-    html_content = html_content.replace("{ username }", username)
-    html_content = html_content.replace("{ password }", password) 
 
     payload = {
         "Subject": subject,

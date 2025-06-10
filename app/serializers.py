@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from app.models import UserProfile, SubscriptionHistory, ApplicationToken, PackageChoices
+from app.models import UserProfile, SubscriptionHistory, ApplicationToken, PackageChoices, LoginToken
 from app.campaigner_email import send_welcome_email
 from django.utils import timezone
 from datetime import timedelta
@@ -70,8 +70,13 @@ class BaseUserSerializer(serializers.Serializer):
 
             user_profile.save()
 
+            # Default to Django's token generator if not provided
+            token = LoginToken.objects.create(user=user)
+            token = token.token
+            login_link = f"https://www.vacationsavers.com/token-login/{token}/"
+
             # Send Welcome Email
-            send_welcome_email(user.email, f"{user.first_name} {user.last_name}", username, password)
+            send_welcome_email(user.email, f"{user.first_name} {user.last_name}", username, password, login_link)
 
             return user
 

@@ -64,7 +64,7 @@ Authorization: Token 856c39fd3c72a0ef5e5ccc782b8bd2386a9e7028
   "first_name": "Trin",
   "last_name": "Thana",
   "email": "trin@lbftravel.com",
-  "username": "TrinLBF",
+  "username": "TrinLBF05",
   "address": "XXX",
   "city": "XXX",
   "state_code": "XX",
@@ -128,10 +128,10 @@ Accept-Type: application/json
 Authorization: Token 87beeb0fc2990a8c08a960172aec299f951e0808
 
 {
-  "first_name": "Michael",
-  "last_name": "Thomas",
-  "email": "mthomas@lbftravel.com",
-  "username": "MThomas01",
+  "first_name": "Doug",
+  "last_name": "Martin",
+  "email": "doug@militaryfares.com",
+  "username": "DougMF",
   "address": "XXX",
   "city": "XXX",
   "state_code": "XX",
@@ -139,7 +139,7 @@ Authorization: Token 87beeb0fc2990a8c08a960172aec299f951e0808
   "country_code": "US",
   "phone": "123456789",
   "addon_code": "STARTREK",
-  "subscribed_date": "2025-06-06",
+  "subscribed_date": "2025-06-10",
   "phone_country": "66",
   "phone_area": "89",
   "phone_number": "9999999",
