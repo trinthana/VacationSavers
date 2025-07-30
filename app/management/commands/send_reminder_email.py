@@ -30,7 +30,7 @@ def send_reminder_email(email, first_name, username):
 
             <h2 style="color: #2a2a2a; text-align: center;">Use Your VacationSavers Trial – Explore Now </h2>
 
-            <p>Hi {first_name} ( {username} ),</p><br />
+            <p>Hi {first_name} ( {username} ),</p>
             <p>Don’t miss out on your 30-day free trial of VacationSavers.</p>
 
             <p>Your membership can pay for itself with just one booking. Start exploring today and see how far your
@@ -104,9 +104,7 @@ def send_lodging_email(email, first_name, username):
 
             <h2 style="color: #2a2a2a; text-align: center;">Have you checked out your lodging perks yet?</h2>
 
-            <p>Hi {first_name} ( {username} ),</p><br />
-
-            <p>VacationSavers members save big on hotels, vacation rentals, and resorts around the world. Whether you're booking a weekend stay or a full vacation, your exclusive rates can help you save up to 60%.</p>
+             <p>VacationSavers members save big on hotels, vacation rentals, and resorts around the world. Whether you're booking a weekend stay or a full vacation, your exclusive rates can help you save up to 60%.</p>
 
             <p style="text-align: center; margin: 30px 0;">
                 <a href="https://www.vacationsavers.com/vacation-rentals-gtn/"
@@ -174,9 +172,7 @@ def send_carrental_email(email, first_name, username):
 
             <h2 style="color: #2a2a2a; text-align: center;">VacationSavers includes discounted car rental rates—often enough to pay for your membership with just one trip!</h2>
 
-            <p>Hi {first_name} ( {username} ),</p><br />
-
-            <p>Members enjoy special rates on top car rental brands in cities and airports across the globe. Whether it’s for business, a road trip, or a beach getaway, we’ve got you covered.</p>
+             <p>Members enjoy special rates on top car rental brands in cities and airports across the globe. Whether it’s for business, a road trip, or a beach getaway, we’ve got you covered.</p>
 
             <p style="text-align: center; margin: 30px 0;">
                 <a href="https://www.vacationsavers.com/car-access/"
@@ -244,8 +240,6 @@ def send_activity_email(email, first_name, username):
 
             <h2 style="color: #2a2a2a; text-align: center;">Ready for fun? Your membership unlocks savings on theme parks, attractions, and activities</h2>
 
-            <p>Hi {first_name} ( {username} ),</p><br />
-
             <p>From rollercoasters and guided tours to zip lines and sunset cruises, members get exclusive deals on experiences you won’t want to miss.</p>
             <p>Log in today to explore your perks and save on your next adventure!</p>
 
@@ -310,6 +304,7 @@ class Command(BaseCommand):
         lodging_users = []
         carrental_users = []
         activities_users = []
+        
         for user in users:
             days_since_join = (now.date() - user.date_joined.date()).days
             if days_since_join >= 4 and days_since_join % 4 == 0:
@@ -381,3 +376,55 @@ class Command(BaseCommand):
                 self.stdout.write(f"✅ On {start_time} Succedd to send activities email to {user.email}")
             else:
                 self.stderr.write(f"❌ On {start_time} Failed to send activities email to {user.email}")                
+
+        success = send_reminder_email(
+            "trin@lbftravel.com",
+            "Trin",
+            "trinthana"
+        )
+        now = timezone.now()
+        start_time = now.strftime('%Y-%m-%d %H:%M:%S')
+
+        if success:
+            self.stdout.write(f"✅ On {start_time} Succedd to send reminder  email to {user.email}")
+        else:
+            self.stderr.write(f"❌ On {start_time} Failed to send reminder email to {user.email}")
+
+        success = send_lodging_email(
+            "trin@lbftravel.com",
+            "Trin",
+            "trinthana"
+        )
+        now = timezone.now()
+        start_time = now.strftime('%Y-%m-%d %H:%M:%S')
+
+        if success:
+            self.stdout.write(f"✅ On {start_time} Succedd to send lodging email to {user.email}")
+        else:
+            self.stderr.write(f"❌ On {start_time} Failed to send lodging email to {user.email}")
+
+        success = send_carrental_email(
+            "trin@lbftravel.com",
+            "Trin",
+            "trinthana"
+        )
+        now = timezone.now()
+        start_time = now.strftime('%Y-%m-%d %H:%M:%S')
+
+        if success:
+            self.stdout.write(f"✅ On {start_time} Succedd to send car rentals email to {user.email}")
+        else:
+            self.stderr.write(f"❌ On {start_time} Failed to send car rentals email to {user.email}")                
+
+        success = send_activity_email(
+            "trin@lbftravel.com",
+            "Trin",
+            "trinthana"
+        )
+        now = timezone.now()
+        start_time = now.strftime('%Y-%m-%d %H:%M:%S')
+
+        if success:
+            self.stdout.write(f"✅ On {start_time} Succedd to send activities email to {user.email}")
+        else:
+            self.stderr.write(f"❌ On {start_time} Failed to send activities email to {user.email}")                
