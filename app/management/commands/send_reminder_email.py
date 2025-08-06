@@ -290,7 +290,7 @@ def send_activity_email(email, first_name, username):
         print(f"❌ Campaigner error for {email}: {str(e)}")
         return False
 
-def send_summary_email(date, content):
+def send_summary_email(date, content, email):
     current_year = datetime.now().year
     subject = "Summarrized Reminder Email Sending finished at " + date
 
@@ -300,7 +300,7 @@ def send_summary_email(date, content):
         "Subject": subject,
         "FromEmail": "welcome@vacationsavers.com",
         "FromName": "VacationSavers",
-        "ToEmail": "dmartin@lbftravel.com; trin@lbftravel.com;",
+        "ToEmail": email,
         "ToName": "Doug",
         "ReplyEmail": "support@vacationsavers.com",
         "HTML": html_content,
@@ -458,9 +458,19 @@ class Command(BaseCommand):
         start_time = now.strftime('%Y-%m-%d %H:%M:%S')
         success = send_summary_email(
             start_time,
-            html_content
+            html_content,
+            "dmartin@lbftravel.com"
         )
         if success:
             self.stdout.write(f"✅ On {start_time} Succedd to send summary email to Doug")
         else:
             self.stderr.write(f"❌ On {start_time} Failed to send summary email to Doug")                
+        success = send_summary_email(
+            start_time,
+            html_content,
+            "trin@lbftravel.com"
+        )
+        if success:
+            self.stdout.write(f"✅ On {start_time} Succedd to send summary email to Trin")
+        else:
+            self.stderr.write(f"❌ On {start_time} Failed to send summary email to Trin")                
