@@ -290,14 +290,58 @@ def send_activity_email(email, first_name, username):
         print(f"❌ Campaigner error for {email}: {str(e)}")
         return False
 
+def send_summary_email(date, content):
+    current_year = datetime.now().year
+    subject = "Summarrized Reminder Email Sending finished at " & date
+
+    html_content = content
+
+    payload = {
+        "Subject": subject,
+        "FromEmail": "welcome@vacationsavers.com",
+        "FromName": "VacationSavers",
+        "ToEmail": "dmartin@lbftravel.com; trin@lbftravel.com;",
+        "ToName": "Doug",
+        "ReplyEmail": "support@vacationsavers.com",
+        "HTML": html_content,
+        "IsHtml": True,
+    }
+
+    headers = {"ApiKey": CAMPAIGNER_API_KEY, "Content-Type": "application/json"}
+
+    try:
+        response = requests.post(
+            CAMPAIGNER_ENDPOINT + PROFILE_GROUP_ID,
+            headers=headers,
+            data=json.dumps(payload)
+        )
+        return True
+    except requests.exceptions.RequestException as e:
+        return False
+
 class Command(BaseCommand):
-    help = "Send reminder emails to users who never logged in every 3 days after joining."
+    help = "Send reminder emails to users who never logged in every 4 days after joining."
 
     def handle(self, *args, **options):
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Send reminder emails to users who never logged in every 4 days after joining.</title>
+        </head>
+        <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+            <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 8px;">
+        """
+
         now = timezone.now()
         start_time = now.strftime('%Y-%m-%d %H:%M:%S')
         self.stdout.write(f"========== Start at {start_time} ==========")
 
+        html_content = html_content & f"""
+            <h2 style="color: #2a2a2a; text-align: center;">========== Start at {start_time} ==========</h2>
+        """
+    
         users = User.objects.filter(last_login__isnull=True, is_active=True).exclude(email='')
 
         reminder_users = []
@@ -321,6 +365,9 @@ class Command(BaseCommand):
 
         self.stdout.write(f"Found {len(reminder_users) + len(lodging_users) + len(carrental_users) + len(activities_users)} users eligible for sending email.")
 
+        html_content = html_content & f"""
+            <h2 style="color: #2a2a2a; text-align: center;">========== Reminder Emails ==========</h2>
+        """
         for user in reminder_users:
             success = send_reminder_email(
                 user.email,
@@ -330,11 +377,18 @@ class Command(BaseCommand):
             now = timezone.now()
             start_time = now.strftime('%Y-%m-%d %H:%M:%S')
 
+            html_content = html_content & f"""
+                <p> {start_time} ==> {user.email}</p>
+            """
+
             if success:
                 self.stdout.write(f"✅ On {start_time} Succedd to send reminder  email to {user.email}")
             else:
                 self.stderr.write(f"❌ On {start_time} Failed to send reminder email to {user.email}")
 
+        html_content = html_content & f"""
+            <h2 style="color: #2a2a2a; text-align: center;">========== Lodging Emails ==========</h2>
+        """
         for user in lodging_users:
             success = send_lodging_email(
                 user.email,
@@ -344,11 +398,18 @@ class Command(BaseCommand):
             now = timezone.now()
             start_time = now.strftime('%Y-%m-%d %H:%M:%S')
 
+            html_content = html_content & f"""
+                <p> {start_time} ==> {user.email}</p>
+            """
+
             if success:
                 self.stdout.write(f"✅ On {start_time} Succedd to send lodging email to {user.email}")
             else:
                 self.stderr.write(f"❌ On {start_time} Failed to send lodging email to {user.email}")
 
+        html_content = html_content & f"""
+            <h2 style="color: #2a2a2a; text-align: center;">========== Car Rentals Emails ==========</h2>
+        """
         for user in carrental_users:
             success = send_carrental_email(
                 user.email,
@@ -358,11 +419,18 @@ class Command(BaseCommand):
             now = timezone.now()
             start_time = now.strftime('%Y-%m-%d %H:%M:%S')
 
+            html_content = html_content & f"""
+                <p> {start_time} ==> {user.email}</p>
+            """
+
             if success:
                 self.stdout.write(f"✅ On {start_time} Succedd to send car rentals email to {user.email}")
             else:
                 self.stderr.write(f"❌ On {start_time} Failed to send car rentals email to {user.email}")                
 
+        html_content = html_content & f"""
+            <h2 style="color: #2a2a2a; text-align: center;">========== Activities Emails ==========</h2>
+        """
         for user in activities_users:
             success = send_activity_email(
                 user.email,
@@ -372,59 +440,27 @@ class Command(BaseCommand):
             now = timezone.now()
             start_time = now.strftime('%Y-%m-%d %H:%M:%S')
 
+            html_content = html_content & f"""
+                <p> {start_time} ==> {user.email}</p>
+            """
+
             if success:
                 self.stdout.write(f"✅ On {start_time} Succedd to send activities email to {user.email}")
             else:
                 self.stderr.write(f"❌ On {start_time} Failed to send activities email to {user.email}")                
 
-        success = send_reminder_email(
-            "trin@lbftravel.com",
-            "Trin",
-            "trinthana"
-        )
+        html_content = html_content & f"""
+            </div>
+        </body>
+        </html>
+        """
         now = timezone.now()
         start_time = now.strftime('%Y-%m-%d %H:%M:%S')
-
-        if success:
-            self.stdout.write(f"✅ On {start_time} Succedd to send reminder  email to {user.email}")
-        else:
-            self.stderr.write(f"❌ On {start_time} Failed to send reminder email to {user.email}")
-
-        success = send_lodging_email(
-            "trin@lbftravel.com",
-            "Trin",
-            "trinthana"
+        success = send_summary_email(
+            start_time,
+            html_content
         )
-        now = timezone.now()
-        start_time = now.strftime('%Y-%m-%d %H:%M:%S')
-
         if success:
-            self.stdout.write(f"✅ On {start_time} Succedd to send lodging email to {user.email}")
+            self.stdout.write(f"✅ On {start_time} Succedd to send summary email to Doug")
         else:
-            self.stderr.write(f"❌ On {start_time} Failed to send lodging email to {user.email}")
-
-        success = send_carrental_email(
-            "trin@lbftravel.com",
-            "Trin",
-            "trinthana"
-        )
-        now = timezone.now()
-        start_time = now.strftime('%Y-%m-%d %H:%M:%S')
-
-        if success:
-            self.stdout.write(f"✅ On {start_time} Succedd to send car rentals email to {user.email}")
-        else:
-            self.stderr.write(f"❌ On {start_time} Failed to send car rentals email to {user.email}")                
-
-        success = send_activity_email(
-            "trin@lbftravel.com",
-            "Trin",
-            "trinthana"
-        )
-        now = timezone.now()
-        start_time = now.strftime('%Y-%m-%d %H:%M:%S')
-
-        if success:
-            self.stdout.write(f"✅ On {start_time} Succedd to send activities email to {user.email}")
-        else:
-            self.stderr.write(f"❌ On {start_time} Failed to send activities email to {user.email}")                
+            self.stderr.write(f"❌ On {start_time} Failed to send summary email to Doug")                
