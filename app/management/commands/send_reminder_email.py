@@ -292,7 +292,7 @@ def send_activity_email(email, first_name, username):
 
 def send_summary_email(date, content):
     current_year = datetime.now().year
-    subject = "Summarrized Reminder Email Sending finished at " & date
+    subject = "Summarrized Reminder Email Sending finished at " + date
 
     html_content = content
 
@@ -338,7 +338,7 @@ class Command(BaseCommand):
         start_time = now.strftime('%Y-%m-%d %H:%M:%S')
         self.stdout.write(f"========== Start at {start_time} ==========")
 
-        html_content = html_content & f"""
+        html_content = html_content + f"""
             <h2 style="color: #2a2a2a; text-align: center;">========== Start at {start_time} ==========</h2>
         """
     
@@ -365,7 +365,7 @@ class Command(BaseCommand):
 
         self.stdout.write(f"Found {len(reminder_users) + len(lodging_users) + len(carrental_users) + len(activities_users)} users eligible for sending email.")
 
-        html_content = html_content & f"""
+        html_content = html_content + f"""
             <h2 style="color: #2a2a2a; text-align: center;">========== Reminder Emails ==========</h2>
         """
         for user in reminder_users:
@@ -377,7 +377,7 @@ class Command(BaseCommand):
             now = timezone.now()
             start_time = now.strftime('%Y-%m-%d %H:%M:%S')
 
-            html_content = html_content & f"""
+            html_content = html_content + f"""
                 <p> {start_time} ==> {user.email}</p>
             """
 
@@ -386,7 +386,7 @@ class Command(BaseCommand):
             else:
                 self.stderr.write(f"❌ On {start_time} Failed to send reminder email to {user.email}")
 
-        html_content = html_content & f"""
+        html_content = html_content + f"""
             <h2 style="color: #2a2a2a; text-align: center;">========== Lodging Emails ==========</h2>
         """
         for user in lodging_users:
@@ -398,7 +398,7 @@ class Command(BaseCommand):
             now = timezone.now()
             start_time = now.strftime('%Y-%m-%d %H:%M:%S')
 
-            html_content = html_content & f"""
+            html_content = html_content + f"""
                 <p> {start_time} ==> {user.email}</p>
             """
 
@@ -407,7 +407,7 @@ class Command(BaseCommand):
             else:
                 self.stderr.write(f"❌ On {start_time} Failed to send lodging email to {user.email}")
 
-        html_content = html_content & f"""
+        html_content = html_content + f"""
             <h2 style="color: #2a2a2a; text-align: center;">========== Car Rentals Emails ==========</h2>
         """
         for user in carrental_users:
@@ -419,7 +419,7 @@ class Command(BaseCommand):
             now = timezone.now()
             start_time = now.strftime('%Y-%m-%d %H:%M:%S')
 
-            html_content = html_content & f"""
+            html_content = html_content + f"""
                 <p> {start_time} ==> {user.email}</p>
             """
 
@@ -428,7 +428,7 @@ class Command(BaseCommand):
             else:
                 self.stderr.write(f"❌ On {start_time} Failed to send car rentals email to {user.email}")                
 
-        html_content = html_content & f"""
+        html_content = html_content + f"""
             <h2 style="color: #2a2a2a; text-align: center;">========== Activities Emails ==========</h2>
         """
         for user in activities_users:
@@ -440,7 +440,7 @@ class Command(BaseCommand):
             now = timezone.now()
             start_time = now.strftime('%Y-%m-%d %H:%M:%S')
 
-            html_content = html_content & f"""
+            html_content = html_content + f"""
                 <p> {start_time} ==> {user.email}</p>
             """
 
@@ -449,7 +449,7 @@ class Command(BaseCommand):
             else:
                 self.stderr.write(f"❌ On {start_time} Failed to send activities email to {user.email}")                
 
-        html_content = html_content & f"""
+        html_content = html_content + f"""
             </div>
         </body>
         </html>
