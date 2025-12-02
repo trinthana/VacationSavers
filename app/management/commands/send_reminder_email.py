@@ -13,14 +13,14 @@ PROFILE_GROUP_ID = "11293"
 
 def send_reminder_email(email, first_name, username):
     current_year = datetime.now().year
-    subject = "Reminder: Use Your VacationSavers Trial – Explore Now"
+    subject = "Reminder: Use Your VacationSavers Membership – Explore Now"
 
     html_content = f"""
     <!DOCTYPE html>
     <html>
     <head>
         <meta charset="UTF-8">
-        <title>Use Your VacationSavers Trial – Explore Now - VacationSavers</title>
+        <title>Use Your VacationSavers Membership – Explore Now - VacationSavers</title>
     </head>
     <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
         <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 8px;">
@@ -28,13 +28,12 @@ def send_reminder_email(email, first_name, username):
                 <img src="https://www.vacationsavers.com/static/assets/images/logo.png" alt="VacationSavers" style="width: 300px;" />
             </div>
 
-            <h2 style="color: #2a2a2a; text-align: center;">Use Your VacationSavers Trial – Explore Now </h2>
+            <h2 style="color: #2a2a2a; text-align: center;">Use Your VacationSavers Membership – Explore Now </h2>
 
             <p>Hi {first_name} ( {username} ),</p>
-            <p>Don’t miss out on your 30-day free trial of VacationSavers.</p>
+            <p>Don’t miss out on your VacationSavers exclusive benefits.</p>
 
-            <p>Your membership can pay for itself with just one booking. Start exploring today and see how far your
-                savings can take you!</p>
+            <p>Start exploring today and see how far your savings can take you!</p>
             <p style="text-align: center; margin: 30px 0;">
                 <a href="https://www.vacationsavers.com/accounts/login/"
                     style="background-color:#f4c22b;color:white;padding:14px 30px;text-decoration:none;border-radius:6px;">Start
@@ -42,7 +41,7 @@ def send_reminder_email(email, first_name, username):
             </p>
 
             <div class="font-size: 16px; color: #333333; line-height: 1.6; margin-top: 20px;">
-                <p>With your free trial, you get:</p>
+                <p>VacationSavers members get:</p>
                 <ul style="padding-left: 20px;">
                     <li>5% off all flights (up to $20 per ticket)</li>
                     <li>Save up to 60% on vacation rentals</li>
@@ -170,7 +169,7 @@ def send_carrental_email(email, first_name, username):
                 <img src="https://www.vacationsavers.com/static/assets/images/logo.png" alt="VacationSavers" style="width: 300px;" />
             </div>
 
-            <h2 style="color: #2a2a2a; text-align: center;">VacationSavers includes discounted car rental rates—often enough to pay for your membership with just one trip!</h2>
+            <h2 style="color: #2a2a2a; text-align: center;">VacationSavers includes discounted car rental rates</h2>
 
              <p>Members enjoy special rates on top car rental brands in cities and airports across the globe. Whether it’s for business, a road trip, or a beach getaway, we’ve got you covered.</p>
 

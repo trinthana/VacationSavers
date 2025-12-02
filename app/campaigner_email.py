@@ -55,8 +55,7 @@ def send_welcome_email(email, first_name, username, password, login_link):
                     </ul>
                 </div>
 
-                <p>Your membership can pay for itself with just one booking. Start exploring today and see how far your
-                    savings can take you!</p>
+                <p>Start exploring today and see how far your savings can take you!</p>
                 <p style="text-align:center; margin-top: 40px;">
                     <a href=" { login_link } "
                         style="background-color:#f4c22b;color:white;padding:14px 30px;text-decoration:none;border-radius:6px;">Start
