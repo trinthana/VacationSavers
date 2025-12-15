@@ -1,5 +1,6 @@
 import requests
 import json
+import logging
 from datetime import datetime
 
 CAMPAIGNER_API_KEY = "8831bdf3-663b-4692-80ab-fb1729ddce57"
@@ -7,6 +8,14 @@ CAMPAIGNER_ENDPOINT = "https://edapi.campaigner.com/v1/RelaySends/"
 WELCOME_GROUP_ID = "11290"
 PROFILE_GROUP_ID = "11293"
 
+# Configure logging
+log_filename = f"subscription_{datetime.now().strftime('%Y%m%d')}.log"
+logging.basicConfig(
+    filename=log_filename,
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
 
 def send_welcome_email(email, first_name, username, password, login_link):
     current_year = datetime.now().year
@@ -93,10 +102,13 @@ def send_welcome_email(email, first_name, username, password, login_link):
             CAMPAIGNER_ENDPOINT + WELCOME_GROUP_ID, headers=headers, data=json.dumps(payload)
         )
         print(f"Campaigner success: {response.json()}")
+        logging.info(f"Email to {email} succeeded: {response.json()}")
         response.raise_for_status()
         return response.json()
+        
     except requests.exceptions.RequestException as e:
         print(f"Campaigner error: {e.response.status_code} - {e.response.text}")
+        logging.error(f"Email to {email} failed: {e.response.text}")
         return f"Campaigner error: {e.response.status_code} - {e.response.text}"
 
 
