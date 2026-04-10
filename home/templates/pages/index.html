@@ -103,9 +103,11 @@
 			<div class="col-xl-2 col-md-4 col-sm-6 element-item Cruises">
 				{% include 'pages/products/card-cruises-cruisedirect.html' %}
 			</div>
+			<!--
 			<div class="col-xl-2 col-md-4 col-sm-6 element-item Vacation-Rentals Hotels">
 				{% include 'pages/products/card-hotels-booking.html' %}
 			</div>
+			!-->
 			<div class="col-xl-2 col-md-4 col-sm-6 element-item Tours All-In-1 Hotels Tours Vacation-Rentals Cruises Activities">
 				{% include 'pages/products/card-special-deals.html' %}
 			</div>
@@ -157,17 +159,25 @@
 <script src="{% static 'assets/js/plugins/isotope.pkgd.min.js' %}"></script>
 <script>
 	(function () {
-		var grid = new Isotope('.grid', {
+		const gridElement = document.querySelector('.grid');
+		if (!gridElement) return;
+
+		var grid = new Isotope(gridElement, {
 			itemSelector: '.element-item',
 			layoutMode: 'fitRows'
 		});
+
 		var filterFns = {
 			numberGreaterThan50: function (itemElem) {
-				var number = itemElem.querySelector('.number').textContent;
+				var numberEl = itemElem.querySelector('.number');
+				if (!numberEl) return false;
+				var number = numberEl.textContent;
 				return parseInt(number, 10) > 50;
 			},
 			ium: function (itemElem) {
-				var name = itemElem.querySelector('.name').textContent;
+				var nameEl = itemElem.querySelector('.name');
+				if (!nameEl) return false;
+				var name = nameEl.textContent;
 				return name.match(/ium$/);
 			}
 		};
@@ -190,24 +200,30 @@
 		var buttonGroups = document.querySelectorAll('.btn-filter');
 		for (var i = 0, len = buttonGroups.length; i < len; i++) {
 			var buttonGroup = buttonGroups[i];
-			console.log(i);
 			radioButtonGroup(buttonGroup);
 		}
 
 		function radioButtonGroup(buttonGroup) {
 			buttonGroup.addEventListener('click', function (event) {
-				buttonGroup.querySelector('.active').classList.remove('active');
+				const activeBtn = buttonGroup.querySelector('.active');
+				if (activeBtn) {
+					activeBtn.classList.remove('active');
+				}
 				event.target.classList.add('active');
 			});
 		}
 	})();
+
 	(function () {
-		var grid = new Isotope('.grid-masonry', {
-			itemSelector: '.masonry-item',
-			masonry: {
-				columnWidth: 1
-			}
-		});
+		const masonryGrid = document.querySelector('.grid-masonry');
+		if (masonryGrid) {
+			new Isotope(masonryGrid, {
+				itemSelector: '.masonry-item',
+				masonry: {
+					columnWidth: 1
+				}
+			});
+		}
 	})();
 </script>
 {% if showModal %}
