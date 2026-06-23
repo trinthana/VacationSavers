@@ -4,12 +4,23 @@ from datetime import datetime, timedelta
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from dateutil.relativedelta import relativedelta
 
 User = get_user_model()
 
 CAMPAIGNER_API_KEY = "8831bdf3-663b-4692-80ab-fb1729ddce57"
 CAMPAIGNER_ENDPOINT = "https://edapi.campaigner.com/v1/RelaySends/"
 PROFILE_GROUP_ID = "11293"
+
+def should_send_reminder(user, offset_days):
+    today = timezone.now().date()
+    joined_date = user.date_joined.date()
+    send_date = joined_date + timedelta(days=offset_days)
+    while send_date <= today:
+        if today == send_date:
+            return True
+        send_date = send_date + relativedelta(months=3)
+    return False
 
 def send_reminder_email(email, first_name, username):
     current_year = datetime.now().year
@@ -350,16 +361,16 @@ class Command(BaseCommand):
         
         for user in users:
             days_since_join = (now.date() - user.date_joined.date()).days
-            if days_since_join >= 4 and days_since_join % 4 == 0:
+            if should_send_reminder(user, 4):
                 reminder_users.append(user)
 
-            if days_since_join >= 8 and days_since_join % 8 == 0:
+            if should_send_reminder(user, 8):
                 lodging_users.append(user)
 
-            if days_since_join >= 12 and days_since_join % 12 == 0:
+            if should_send_reminder(user, 12):
                 carrental_users.append(user)
 
-            if days_since_join >= 16 and days_since_join % 16 == 0:
+            if should_send_reminder(user, 16):
                 activities_users.append(user)
 
         self.stdout.write(f"Found {len(reminder_users) + len(lodging_users) + len(carrental_users) + len(activities_users)} users eligible for sending email.")
