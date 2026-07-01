@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from app.models import UserProfile, SubscriptionHistory, ApplicationToken, PackageChoices, LoginToken
+from app.models import UserProfile, SubscriptionHistory, ApplicationToken, PackageChoices, LoginToken, EmailUnsubscribe
 from app.campaigner_email import send_welcome_email
 from django.utils import timezone
 from datetime import timedelta
@@ -48,6 +48,9 @@ class BaseUserSerializer(serializers.Serializer):
                 last_name=validated_data['last_name'],
                 password=password
             )
+
+            #  Create EmailUnsubscribe entry for the user
+            EmailUnsubscribe.objects.get_or_create(user=user)
 
             # Combine phone parts
             phone = f"+{validated_data.get('phone_country', '')}-{validated_data.get('phone_area', '')}-{validated_data.get('phone_number', '')}"
@@ -109,15 +112,7 @@ class SubscriptionSerializer(BaseUserSerializer):
         exp_masked = "**/**"
         cvv_masked = "***"
 
-        ApplicationToken.objects.create(
-            user=user,
-            application='SUBSCRIPTION',
-            token=cc_masked,
-            custom1=exp_masked,
-            custom2=cvv_masked,
-            custom3=validated_data['locator']
-        )
-
+        
         # Save subscription history
         SubscriptionHistory.objects.create(
             user=user,

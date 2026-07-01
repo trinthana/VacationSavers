@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 
 from home import views
-from .views import token_login
+from .views import token_login, unsubscribe_email
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -45,6 +45,8 @@ urlpatterns = [
     path('transfer-talixo/', views.transfer_talixo, name='transfer_talixo'),
 
     path('token-login/<uuid:token>/', token_login, name='token_login'),
+
+    path("unsubscribe/<uuid:token>/", unsubscribe_email, name="unsubscribe_email"),
     
     # Matches any html file
     #re_path(r'^.*\.*', views.pages, name='pages'),

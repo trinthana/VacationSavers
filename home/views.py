@@ -812,3 +812,30 @@ def transfer_talixo(request):
     # Page from the theme 
     ClickDetails.add(request=request, application=ApplicationChoices.TALIXO, tx_url=url) 
     return redirect(url)
+
+#------------------------------------------------------------------------------------------------------------------------<<< Unsubscribe >>>
+def unsubscribe_email(request, token):
+
+    try:
+
+        unsubscribe = EmailUnsubscribe.objects.select_related("user").get(token=token)
+
+        if not unsubscribe.is_unsubscribed:
+
+            unsubscribe.is_unsubscribed = True
+
+            unsubscribe.unsubscribed_datetime = timezone.now()
+
+        unsubscribe.updated_datetime = timezone.now()
+
+        unsubscribe.save()
+
+        return render(request, "pages/unsubscribe-success.html", {
+
+            "email": unsubscribe.user.email
+
+        })
+
+    except EmailUnsubscribe.DoesNotExist:
+
+        return render(request, "pages/unsubscribe-invalid.html")

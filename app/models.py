@@ -21,18 +21,28 @@ class LoginToken(models.Model):
         # Check if the token is less than 24 hours old
         return (timezone.now() - self.created_at) <= timedelta(hours=168)
 
+class EmailUnsubscribe(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    is_unsubscribed = models.BooleanField(default=False)
+    unsubscribed_datetime = models.DateTimeField(null=True, blank=True)
+    updated_datetime = models.DateTimeField(default=timezone.now)
+
 class EventChoices (models.TextChoices):     
+
     FIRSTLOGIN = 'FIRSTLOGIN', 'First Login'
     WINTERSALE = 'WINTERSALE', 'Winter Sales'
     SUMMERSALE = 'SUMMERSALE', 'Summer Sales'
     HALLOWEEN = 'HALLOWEEN', 'Halloween Sales'
 
 class PackageChoices(models.TextChoices):     
+
     PREMIER = 'PREMIER', 'Premier Savings Plan'
     ELITE = 'ELITE', 'Elite Savings Plan'
     ULTIMATE = 'ULTIMATE', 'Ultimate Savings Bundle'
 
 class ApplicationChoices(models.TextChoices):     
+
     ACCESS = "ACCESS", "Access Development"
     ACCESSIFRAME = "ACCESSIFRAME", "Access Development Iframe"
     ACCESSDEAL = "ACCESSDEAL", "Access Development Deals"
