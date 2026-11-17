@@ -15,9 +15,9 @@ from django.conf import settings
 
 User = get_user_model()
 
-CAMPAIGNER_API_KEY = "8831bdf3-663b-4692-80ab-fb1729ddce57"
+CAMPAIGNER_API_KEY = "2b6f77c6-ee8e-4326-8a04-4c7dc76b4a3c"
 CAMPAIGNER_ENDPOINT = "https://edapi.campaigner.com/v1/RelaySends/"
-PROFILE_GROUP_ID = "11293"
+PROFILE_GROUP_ID = "12036"
 
 SITE_URL = "https://www.vacationsavers.com"
 

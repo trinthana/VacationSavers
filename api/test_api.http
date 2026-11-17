@@ -150,9 +150,9 @@ Authorization: Token 87beeb0fc2990a8c08a960172aec299f951e0808
 }
 
 #### - Send EMail
-POST https://edapi.campaigner.com/v1/RelaySends/11290
+POST https://edapi.campaigner.com/v1/RelaySends/12036
 Content-Type: application/json
-ApiKey: 8831bdf3-663b-4692-80ab-fb1729ddce57
+ApiKey: 2b6f77c6-ee8e-4326-8a04-4c7dc76b4a3c
 
 {
   "ToEmail": "trinthana@hotmail.com",
@@ -164,13 +164,13 @@ ApiKey: 8831bdf3-663b-4692-80ab-fb1729ddce57
 #### -Create SENDCATEGORY
 POST https://edapi.campaigner.com/v1/RelaySends
 Content-Type: application/json
-ApiKey: 8831bdf3-663b-4692-80ab-fb1729ddce57
+ApiKey: 2b6f77c6-ee8e-4326-8a04-4c7dc76b4a3c
 
-"VacationSavers Profile Change"
+"VacationSavers Reminder Email"
 
 #Integration Keys ccba7a68-6909-4cf0-ba61-55287bb1f713
 
 #### - Query SMTP SENDCATEGORY
 GET https://edapi.campaigner.com/v1/RelaySends
 Content-Type: application/json
-ApiKey: 8831bdf3-663b-4692-80ab-fb1729ddce57
+ApiKey: 2b6f77c6-ee8e-4326-8a04-4c7dc76b4a3c
